@@ -1,0 +1,222 @@
+<section class="padding">
+  <div class="boxes grid grid-padding" style="position: relative; height: 2054.219px;">
+    <div class="box wide" style="margin-bottom: 0px">
+      <button *ngIf="carrierInvoiceList[carrierInvoiceList?.length-1]?.status != 'Pending'" type="button"
+        (click)="addCarrierInvoice()" type="button" class="primary button float-right" id="create-button"><span
+          class="mat-icon-add"></span>Add</button>
+    </div>
+
+    <div class="box accordion element-item" id="box-2">
+      <header>
+        <button class="block accordion-toggle button" data-target="accordion-1" type="button">
+          <span>
+            Original Quotation as per Rate Sheet
+          </span>
+        </button>
+      </header>
+      <div class="clip" id="accordion-1">
+        <div class="accordion-content">
+          <dx-data-grid [dataSource]="originalQuotationRateSheet" class="pmt-order pmt-originalQuotation">
+            <dxo-paging [enabled]="false"></dxo-paging>
+            <dxo-editing mode="cell" [allowUpdating]="false">
+            </dxo-editing>
+            <dxi-column dataField="item" caption="{{'Items' | i18n}}" [allowEditing]="false" hint="Items"
+              dataType="string" columnAutoWidth="true" [allowSorting]="false"></dxi-column>
+            <dxi-column dataField="amount" caption="{{'Amount' | i18n}}" dataType="number" hint="Amount"
+              [allowSorting]="false">
+            </dxi-column>
+            <dxi-column dataField="currency" caption="Currency" [allowEditing]="false" hint="Currency"
+              dataType="string" columnAutoWidth="true" [allowSorting]="false"></dxi-column>
+          </dx-data-grid>
+
+          <div class="row margin-top-5">
+            <div class="col-sm-4">
+              <b class="pull-left margin-left-total">Total</b>
+            </div>
+            <div class="col-sm-4">
+              <b class="pull-right margin-right-val">{{claculateTotalOriginalQuotaionAmount()}}</b>
+            </div>
+            <div class="col-sm-4">
+              <b class="pull-left margin-left-currency">USD</b>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="box accordion element-item" id="box-3">
+      <header>
+        <button class="block accordion-toggle button" data-target="accordion-1" type="button">
+          <span>
+            Carrier Invoice (Cost)
+          </span>
+        </button>
+      </header>
+      <div class="clip" id="accordion-1">
+        <div class="accordion-content">
+          <dx-data-grid [dataSource]="carrierInvoice" class="pmt-order pmt-carrierInvoice">
+            <dxo-paging [enabled]="false"></dxo-paging>
+            <dxo-editing mode="cell" [allowUpdating]="true">
+            </dxo-editing>
+            <dxi-column dataField="item" caption="{{'Items' | i18n}}" [allowEditing]="true" hint="Items"
+              dataType="string" columnAutoWidth="true" [allowSorting]="false"></dxi-column>
+            <dxi-column dataField="amount" caption="{{'Amount' | i18n}}" dataType="number" hint="Amount"
+              [allowSorting]="false">
+            </dxi-column>
+            <dxi-column dataField="currency" caption="Currency" [allowEditing]="true" hint="Currency"
+              dataType="string" columnAutoWidth="true" [allowSorting]="false"></dxi-column>
+          </dx-data-grid>
+
+          <div class="row margin-top-5">
+            <div class="col-sm-4">
+              <b class="pull-left margin-left-total">Total</b>
+            </div>
+            <div class="col-sm-4">
+              <b class="pull-right margin-right-val">{{claculateTotalCarrierInvoiceAmount()}}</b>
+            </div>
+            <div class="col-sm-4">
+              <b class="pull-left margin-left-currency">USD</b>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="box wide">
+      <button *ngIf="carrierInvoiceList[carrierInvoiceList?.length-1]?.status == 'New'"
+        class="primary button float-right" (click)="createInvoice()">
+        {{'Create Invoice' | i18n}}
+      </button>
+      <button
+        *ngIf="carrierInvoiceList[carrierInvoiceList?.length-1]?.status == 'Reject' || carrierInvoiceList[carrierInvoiceList?.length-1]?.status == 'Cancel'"
+        class="primary button float-right" (click)="editInvoice()">
+        {{'Resend Invoice' | i18n}}
+      </button>
+      <button *ngIf="carrierInvoiceList[carrierInvoiceList?.length-1]?.status == 'Accept'"
+        class="primary button float-right" (click)="reviseInvoice()">
+        {{'Revise Invoice' | i18n}}
+      </button>
+      <button *ngIf="carrierInvoiceList[carrierInvoiceList?.length-1]?.status == 'Pending'"
+        class="primary button float-right" (click)="cancelInvoice()">
+        {{'Cancel Invoice' | i18n}}
+      </button>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- <section class="content container-fluid" id="details">
+  <div class="col-md-6">
+    <div class="box box-solid">
+      <div class="box-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="box-header padding-top pull-left">
+              <h3 class="box-title">Original Quotation as per Rate Sheet</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <dx-data-grid [dataSource]="originalQuotationRateSheet" class="pmt-projecttable pmt-originalQuotation">
+              <dxo-paging [enabled]="false"></dxo-paging>
+              <dxo-editing mode="cell" [allowUpdating]="false">
+              </dxo-editing>
+              <dxi-column dataField="item" caption="{{'Items' | i18n}}" [allowEditing]="false" hint="Items"
+                dataType="string" columnAutoWidth="true" [allowSorting]="false"></dxi-column>
+              <dxi-column dataField="amount" caption="{{'Amount' | i18n}}" dataType="number" hint="Amount"
+                [allowSorting]="false">
+              </dxi-column>
+              <dxi-column dataField="currency" caption="Currency" [allowEditing]="false" hint="Currency"
+                dataType="string" columnAutoWidth="true" [allowSorting]="false"></dxi-column>
+            </dx-data-grid>
+          </div>
+        </div>
+
+        <div class="row margin-top-5">
+          <div class="col-md-4">
+            <b class="pull-left margin-left-total">Total</b>
+          </div>
+          <div class="col-md-4">
+            <b class="pull-right margin-right-val">{{claculateTotalOriginalQuotaionAmount()}}</b>
+          </div>
+          <div class="col-md-4">
+            <b class="pull-left margin-left-currency">USD</b>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="box box-solid">
+      <div class="box-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="box-header padding-top pull-left">
+              <h3 class="box-title">Carrier Invoice (Cost)</h3>
+            </div>
+            <button *ngIf="carrierInvoiceList[carrierInvoiceList?.length-1]?.status != 'Pending'"
+              class="btn btn-primary btn-sm pull-right btn-margin-bottom-grid" (click)="addCarrierInvoice()">
+              <i class="fa fa-plus fa-margin-right"></i>
+              {{'Add'}}
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <dx-data-grid [dataSource]="carrierInvoice" class="pmt-projecttable pmt-carrierInvoice">
+              <dxo-paging [enabled]="false"></dxo-paging>
+              <dxo-editing mode="cell" [allowUpdating]="true">
+              </dxo-editing>
+              <dxi-column dataField="item" caption="{{'Items' | i18n}}" [allowEditing]="true" hint="Items"
+                dataType="string" columnAutoWidth="true" [allowSorting]="false"></dxi-column>
+              <dxi-column dataField="amount" caption="{{'Amount' | i18n}}" dataType="number" hint="Amount"
+                [allowSorting]="false">
+              </dxi-column>
+              <dxi-column dataField="currency" caption="Currency" [allowEditing]="true" hint="Currency"
+                dataType="string" columnAutoWidth="true" [allowSorting]="false"></dxi-column>
+            </dx-data-grid>
+          </div>
+        </div>
+
+        <div class="row margin-top-5">
+          <div class="col-md-4">
+            <b class="pull-left margin-left-total">Total</b>
+          </div>
+          <div class="col-md-4">
+            <b class="pull-right margin-right-val">{{claculateTotalCarrierInvoiceAmount()}}</b>
+          </div>
+          <div class="col-md-4">
+            <b class="pull-left margin-left-currency">USD</b>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <button *ngIf="carrierInvoiceList[carrierInvoiceList?.length-1]?.status == 'New'"
+              class="btn btn-success pull-right btn-margin-top" (click)="createInvoice()">
+              {{'Create Invoice' | i18n}}
+            </button>
+            <button
+              *ngIf="carrierInvoiceList[carrierInvoiceList?.length-1]?.status == 'Reject' || carrierInvoiceList[carrierInvoiceList?.length-1]?.status == 'Cancel'"
+              class="btn btn-success pull-right btn-margin-top" (click)="editInvoice()">
+              {{'Resend Invoice' | i18n}}
+            </button>
+            <button *ngIf="carrierInvoiceList[carrierInvoiceList?.length-1]?.status == 'Accept'"
+              class="btn btn-success pull-right btn-margin-top" (click)="reviseInvoice()">
+              {{'Revise Invoice' | i18n}}
+            </button>
+            <button *ngIf="carrierInvoiceList[carrierInvoiceList?.length-1]?.status == 'Pending'"
+              class="btn btn-danger pull-right btn-margin-top" (click)="cancelInvoice()">
+              {{'Cancel Invoice' | i18n}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->

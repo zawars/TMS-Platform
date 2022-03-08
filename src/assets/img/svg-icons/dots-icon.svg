@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="3" height="16" viewBox="0 0 3 16">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #b9babd;
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <path id="Ellipse_1627_copy_2" data-name="Ellipse 1627 copy 2" class="cls-1" d="M1700.5,811a1.7,1.7,0,1,1-1.5,1.684A1.6,1.6,0,0,1,1700.5,811Zm0,6.737a1.7,1.7,0,1,1-1.5,1.684A1.6,1.6,0,0,1,1700.5,817.737Zm0,5.894a1.7,1.7,0,1,1-1.5,1.685A1.6,1.6,0,0,1,1700.5,823.631Z" transform="translate(-1699 -811)"/>
+</svg>

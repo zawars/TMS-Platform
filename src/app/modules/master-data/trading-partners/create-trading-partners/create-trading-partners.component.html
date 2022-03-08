@@ -1,0 +1,1323 @@
+<div class="at-maincontentholder at-evaluations">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 float-left">
+    <div class="at-pagehead">
+      <h2> Create Trading Partner</h2>
+    </div>
+    <div class="at-contentbox">
+      <form class="at-formtheme at-formemployeedetail" [formGroup]="formGroup">
+        <section>
+          <fieldset class="section-header">
+            <div class="form-group">
+              <label class="section-header-label">General</label>
+              <!-- <i class="fa fa-chevron-right section-header-icon" aria-hidden="true"></i> -->
+              <i class="fa fa-chevron-down section-header-icon" aria-hidden="true"></i>
+            </div>
+          </fieldset>
+
+          <fieldset class="section-body">
+            <div class="row">
+              <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                <div class="form-group">
+                  <label>{{'UID' | i18n}}</label>
+                  <input type="text" name="employee-name" class="form-control" placeholder="UID" formControlName="uid">
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Company Name' | i18n}} <sup>*</sup></label>
+                  <input type="text" name="employee-name" class="form-control" placeholder="Company Name"
+                    formControlName="name">
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Street' | i18n}} <sup>*</sup></label>
+                  <input type="text" name="employee-name" class="form-control" placeholder="{{'Street' | i18n}}"
+                    formControlName="street">
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Postal Code & City' | i18n}} <sup>*</sup></label>
+                  <dx-select-box [dataSource]="citiesList" displayExpr="name" valueExpr="name" [searchEnabled]="true"
+                    [minSearchLength]="0" [searchExpr]="['name']" [showDropDownButton]="false"
+                    (onSelectionChanged)="cityValueChanged($event)" (onInput)="cityOnInputEvent($event)"
+                    [value]="postalCodeAndCity.name" #postalCode>
+                  </dx-select-box>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'State' | i18n}} <sup>*</sup></label>
+                  <dx-select-box [dataSource]="stateList" displayExpr="name" valueExpr="id" formControlName="state">
+                  </dx-select-box>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Country' | i18n}} <sup>*</sup></label>
+                  <dx-select-box [dataSource]="countryList" displayExpr="name" valueExpr="id" formControlName="country">
+                  </dx-select-box>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Organisation' | i18n}} <sup>*</sup></label>
+                  <dx-select-box [dataSource]="organisationsList" displayExpr="name" valueExpr="id"
+                    [searchEnabled]="true" [minSearchLength]="0" [searchExpr]="['name']" [showDropDownButton]="false"
+                    #organisationElem (onSelectionChanged)="organisationValueChanged($event)"
+                    (onInput)="organisationOnInputEvent($event)" formControlName="organisation">
+                  </dx-select-box>
+                </div>
+
+                <div class="form-group">
+                  <label>Contact Name <sup>*</sup></label>
+                  <input type="text" name="employee-designation" class="form-control"
+                    placeholder="{{'Contact Name' | i18n}}" formControlName="contactName">
+                </div>
+
+                <div class="form-group">
+                  <label>Contact Number <sup>*</sup></label>
+                  <input type="text" name="employee-designation" class="form-control"
+                    placeholder="{{'Contact Number' | i18n}}" formControlName="contactNumber">
+                </div>
+
+                <div class="form-group">
+                  <label>Contact Email <sup>*</sup></label>
+                  <input type="email" name="employee-email" class="form-control"
+                    placeholder="{{'Contact Email' | i18n}}" formControlName="contactEmail">
+                </div>
+
+                <div class="form-group">
+                  <label>Status <sup>*</sup></label>
+                  <dx-select-box [dataSource]="statusList" displayExpr="name" valueExpr="id" formControlName="status">
+                  </dx-select-box>
+                </div>
+
+                <div class="form-group">
+                  <dx-check-box text="Customer" formControlName="isCustomer"></dx-check-box>
+                </div>
+
+                <div class="form-group">
+                  <dx-check-box text="Vendor" formControlName="isVendor"></dx-check-box>
+                </div>
+
+                <div class="form-group">
+                  <dx-check-box text="Third Party" formControlName="isThirdParty"></dx-check-box>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                  <label>{{'Logo'| i18n}}</label>
+                  <!-- <label for="logo" class="at-userimage">
+                    <img [src]="logoSrc" id="picturePreview" alt="image description">
+                    <span>
+                      <i class="fa fa-camera"></i>
+                    </span>
+                  </label> -->
+                  <figure class="uploadimg">
+                    <img [src]="logoSrc" alt="upload image" id="picturePreview" style="height: 266px;">
+                  </figure>
+
+                  <a href="javascript:void(0);" class="at-btn at-btnupload at-btnwhite">
+                    <input type="file" name="logo" id="logo" class="form-control" style="display: none;"
+                      formControlName="logo" (change)="onFileSelected($event)">
+                    <label for="logo">Upload Picture</label>
+                  </a>
+                </div>
+
+                <a class="at-btnadduser" href="javascript:void(0)" *ngIf="!isEdit && !isBlocked" (click)="create()"><i
+                    class="fa fa-save"></i></a>
+                <a class="at-btnadduser" href="javascript:void(0)" *ngIf="isEdit && !isBlocked" (click)="update()"><i
+                    class="fa fa-save"></i></a>
+                <a class="at-btnadduser" href="javascript:void(0)" *ngIf="isBlocked">
+                  <i class="fa fa-refresh fa-spin"></i>
+                </a>
+              </div>
+            </div>
+
+          </fieldset>
+        </section>
+      </form>
+    </div>
+
+    <div class="at-contentbox" *ngIf="form.isCustomer.value">
+      <form class="at-formtheme at-formemployeedetail" [formGroup]="customerFormGroup">
+        <section>
+          <fieldset class="section-header" style="padding: 15px 30px;">
+            <div class="form-group">
+              <label class="section-header-label">Customer</label>
+              <!-- <i class="fa fa-chevron-right section-header-icon" aria-hidden="true"></i> -->
+              <i class="fa fa-chevron-down section-header-icon" aria-hidden="true"></i>
+            </div>
+          </fieldset>
+          <fieldset class="section-body">
+            <div class="row">
+              <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                <h4 class="card-title">Billing</h4>
+
+                <div class="form-group">
+                  <!-- <label>{{'Same as above' | i18n}}</label> -->
+                  <dx-check-box text="{{'Same as above' | i18n}}" formControlName="customerSameAsAbove"
+                    (onValueChanged)="sameAsAboveToggle($event, 'customer')">
+                  </dx-check-box>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Name' | i18n}} <sup>*</sup></label>
+                  <input type="text" name="employee-name" class="form-control" placeholder="Name"
+                    formControlName="customerBillingName">
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Street' | i18n}} <sup>*</sup></label>
+                  <input type="text" name="employee-name" class="form-control" placeholder="{{'Street' | i18n}}"
+                    formControlName="customerBillingStreet">
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Postal Code & City' | i18n}} <sup>*</sup></label>
+                  <dx-select-box [dataSource]="customerBillingCitiesList" displayExpr="name" valueExpr="name"
+                    [searchEnabled]="true" [minSearchLength]="0" [searchExpr]="['name']" [showDropDownButton]="false"
+                    (onSelectionChanged)="billingCityValueChanged($event, 'customer')"
+                    (onInput)="billingCityOnInputEvent($event, 'customerBillingCities')"
+                    [value]="customerBillingPostalCodeAndCity.name" #customerBillingPostalCode>
+                  </dx-select-box>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'State' | i18n}} <sup>*</sup></label>
+                  <dx-select-box [dataSource]="customerStateList" displayExpr="name" valueExpr="id"
+                    formControlName="customerBillingState">
+                  </dx-select-box>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Country' | i18n}} <sup>*</sup></label>
+                  <dx-select-box [dataSource]="countryList" displayExpr="name" valueExpr="id"
+                    formControlName="customerBillingCountry">
+                  </dx-select-box>
+                </div>
+
+                <div class="form-group">
+                  <label>Contact Name <sup>*</sup></label>
+                  <input type="text" name="employee-designation" class="form-control"
+                    placeholder="{{'Contact Name' | i18n}}" formControlName="customerBillingContactName">
+                </div>
+
+                <div class="form-group">
+                  <label>Contact Email <sup>*</sup></label>
+                  <input type="email" name="employee-email" class="form-control"
+                    placeholder="{{'Contact Email' | i18n}}" formControlName="customerBillingContactEmail">
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Payment Terms'| i18n}} (days)<sup>*</sup></label>
+                  <input type="text" name="employee-designation" class="form-control"
+                    placeholder="{{'Payment Terms' | i18n}}" formControlName="customerPaymentTerms">
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Credit Limit'| i18n}} <sup>*</sup></label>
+                  <input type="text" name="employee-designation" class="form-control"
+                    placeholder="{{'Credit Limit' | i18n}}" formControlName="creditLimit">
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Freight Terms'| i18n}} <span style="color: red;">*</span></label>
+                  <dx-select-box [dataSource]="freightTermsList" displayExpr="name" valueExpr="id"
+                    formControlName="customerFreightTerms">
+                  </dx-select-box>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Currency'| i18n}} <sup>*</sup></label>
+                  <dx-select-box [dataSource]="currencyList" displayExpr="name" valueExpr="id"
+                    formControlName="customerCurrency">
+                  </dx-select-box>
+                </div>
+
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="at-pagehead margin-top-20">
+                  <h4>Locations</h4>
+
+                  <div class="at-formtheme at-formsearchemployee">
+                    <button class="at-btn at-btnborderradius float-right"
+                      (click)="openAddLocationPopupCustomer(customerPopUp)">
+                      <i class="fa fa-plus"></i>
+                      {{'Add Location'}}
+                    </button>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="at-themetableholder">
+                    <table class="table at-themetable at-tableemployees">
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>{{'Location Type' | i18n}}</th>
+                          <th>{{'Street' | i18n}}</th>
+                          <th>{{'City' | i18n}}</th>
+                          <th>{{'Postal Code' | i18n}}</th>
+                          <th>{{'State' | i18n}}</th>
+                          <th>{{'Country' | i18n}}</th>
+                          <th>{{'Action' | i18n}}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of customerLocationsList; let i = index">
+                          <td>
+                            <h3>{{item?.name}}</h3>
+                          </td>
+                          <td><span>{{item.type.name}}</span></td>
+                          <td>{{item?.street}}</td>
+                          <td>{{item?.city.name}}</td>
+                          <td>{{item?.postalCode.name}}</td>
+                          <td>{{item?.state.name}}</td>
+                          <td>{{item?.country.name}}</td>
+                          <td>
+                            <span>
+                              <a class="edit" (click)="openLocationsEditDialog(customerPopUp, item, 'customer', i)">
+                                <span class="icon-pencil at-margin-right"></span>
+                                <span>{{'Edit' | i18n}}</span>
+                              </a>
+                            </span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="at-pagehead margin-top-20">
+                  <h4>Products</h4>
+
+                  <div class="at-formtheme at-formsearchemployee">
+                    <button class="at-btn at-btnborderradius float-right" (click)="openAddProductPopup(popUpProduct)">
+                      <i class="fa fa-plus"></i>
+                      {{'Add Product'}}
+                    </button>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="at-themetableholder">
+                    <table class="table at-themetable at-tableemployees">
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>{{'NMFC' | i18n}}</th>
+                          <th>{{'Handling Unit' | i18n}}</th>
+                          <th>{{'Class' | i18n}}</th>
+                          <th>{{'HU Count' | i18n}}</th>
+                          <th>{{'Action' | i18n}}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of productsList; let idx = index">
+                          <td>
+                            <h3>{{item?.name}}</h3>
+                          </td>
+                          <td><span>{{item.nmfc}}</span></td>
+                          <td>{{item?.handlingUnit.name}}</td>
+                          <td>{{item?.classType.name}}</td>
+                          <td>{{item?.huCount}}</td>
+                          <td>
+                            <span>
+                              <a class="edit" (click)="openProductsEditDialog(popUpProduct, item, idx)">
+                                <span class="icon-pencil at-margin-right"></span>
+                                <span>{{'Edit' | i18n}}</span>
+                              </a>
+                            </span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                <div class="margin-top-20">
+                  <h4>Accessorials</h4>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Services'| i18n}}</label>
+                  <dx-tag-box [items]="servicesList" [hideSelectedItems]="true" displayExpr="name" valueExpr="id"
+                    [searchEnabled]="true" formControlName="customerServices">
+                  </dx-tag-box>
+                </div>
+
+                <h4 class="card-title">Interface</h4>
+
+                <div class="form-group">
+                  <label>{{'Order Confirmation Email'| i18n}} <span style="color: red;">*</span></label>
+                  <input type="text" class="form-control" name="customerConfirmationEmail"
+                    placeholder="{{'Order Confirmation Email' | i18n}}" formControlName="customerConfirmationEmail">
+                </div>
+              </div>
+            </div>
+
+          </fieldset>
+        </section>
+      </form>
+    </div>
+
+    <div class="at-contentbox" *ngIf="form.isVendor.value">
+      <form class="at-formtheme at-formemployeedetail" [formGroup]="vendorFormGroup">
+        <section>
+          <fieldset class="section-header" style="padding: 15px 30px;">
+            <div class="form-group">
+              <label class="section-header-label">Vendor</label>
+              <!-- <i class="fa fa-chevron-right section-header-icon" aria-hidden="true"></i> -->
+              <i class="fa fa-chevron-down section-header-icon" aria-hidden="true"></i>
+            </div>
+          </fieldset>
+          <fieldset class="section-body">
+            <div class="row">
+              <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                <h4 class="card-title">Billing</h4>
+
+                <div class="form-group">
+                  <!-- <label>{{'Same as above' | i18n}}</label> -->
+                  <dx-check-box text="{{'Same as above' | i18n}}" formControlName="vendorSameAsAbove"
+                    (onValueChanged)="sameAsAboveToggle($event, 'vendor')">
+                  </dx-check-box>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Name' | i18n}} <sup>*</sup></label>
+                  <input type="text" name="employee-name" class="form-control" placeholder="Name"
+                    formControlName="vendorBillingName">
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Street' | i18n}} <sup>*</sup></label>
+                  <input type="text" name="employee-name" class="form-control" placeholder="{{'Street' | i18n}}"
+                    formControlName="vendorBillingStreet">
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Postal Code & City' | i18n}} <sup>*</sup></label>
+                  <dx-select-box [dataSource]="vendorBillingCitiesList" displayExpr="name" valueExpr="name"
+                    [searchEnabled]="true" [minSearchLength]="0" [searchExpr]="['name']" [showDropDownButton]="false"
+                    (onSelectionChanged)="billingCityValueChanged($event, 'vendor')"
+                    (onInput)="billingCityOnInputEvent($event, 'vendorBillingCities')"
+                    [value]="vendorBillingPostalCodeAndCity.name" #vendorBillingPostalCode>
+                  </dx-select-box>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'State' | i18n}} <sup>*</sup></label>
+                  <dx-select-box [dataSource]="vendorStateList" displayExpr="name" valueExpr="id"
+                    formControlName="vendorBillingState">
+                  </dx-select-box>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Country' | i18n}} <sup>*</sup></label>
+                  <dx-select-box [dataSource]="countryList" displayExpr="name" valueExpr="id"
+                    formControlName="vendorBillingCountry">
+                  </dx-select-box>
+                </div>
+
+                <div class="form-group">
+                  <label>Contact Name <sup>*</sup></label>
+                  <input type="text" name="employee-designation" class="form-control"
+                    placeholder="{{'Contact Name' | i18n}}" formControlName="vendorBillingContactName">
+                </div>
+
+                <div class="form-group">
+                  <label>Contact Email <sup>*</sup></label>
+                  <input type="email" name="employee-email" class="form-control"
+                    placeholder="{{'Contact Email' | i18n}}" formControlName="vendorBillingContactEmail">
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Payment Terms'| i18n}} (days)<sup>*</sup></label>
+                  <input type="text" name="employee-designation" class="form-control"
+                    placeholder="{{'Payment Terms' | i18n}}" formControlName="vendorPaymentTerms">
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Freight Terms'| i18n}} <span style="color: red;">*</span></label>
+                  <dx-select-box [dataSource]="freightTermsList" displayExpr="name" valueExpr="id"
+                    formControlName="vendorFreightTerms">
+                  </dx-select-box>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Currency'| i18n}} <sup>*</sup></label>
+                  <dx-select-box [dataSource]="currencyList" displayExpr="name" valueExpr="id"
+                    formControlName="vendorCurrency">
+                  </dx-select-box>
+                </div>
+
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="at-pagehead margin-top-20">
+                  <h4>Locations</h4>
+
+                  <div class="at-formtheme at-formsearchemployee">
+                    <button class="at-btn at-btnborderradius float-right"
+                      (click)="openAddLocationPopupVendor(vendorPopUp)">
+                      <i class="fa fa-plus"></i>
+                      {{'Add Location'}}
+                    </button>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="at-themetableholder">
+                    <table class="table at-themetable at-tableemployees">
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>{{'Location Type' | i18n}}</th>
+                          <th>{{'Street' | i18n}}</th>
+                          <th>{{'City' | i18n}}</th>
+                          <th>{{'Postal Code' | i18n}}</th>
+                          <th>{{'State' | i18n}}</th>
+                          <th>{{'Country' | i18n}}</th>
+                          <th>{{'Action' | i18n}}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of vendorLocationsList; let i = index;">
+                          <td>
+                            <h3>{{item?.name}}</h3>
+                          </td>
+                          <td><span>{{item.type.name}}</span></td>
+                          <td>{{item?.street}}</td>
+                          <td>{{item?.city.name}}</td>
+                          <td>{{item?.postalCode.name}}</td>
+                          <td>{{item?.state.name}}</td>
+                          <td>{{item?.country.name}}</td>
+                          <td>
+                            <span>
+                              <a class="edit" (click)="openLocationsEditDialog(vendorPopUp, item, 'vendor', i)">
+                                <span class="icon-pencil at-margin-right"></span>
+                                <span>{{'Edit' | i18n}}</span>
+                              </a>
+                            </span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                <div class="margin-top-20">
+                  <h4>Accessorials</h4>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Services'| i18n}}</label>
+                  <dx-tag-box [items]="servicesList" [hideSelectedItems]="true" displayExpr="name" valueExpr="id"
+                    [searchEnabled]="true" formControlName="vendorServices">
+                  </dx-tag-box>
+                </div>
+
+                <h4 class="card-title">Interface</h4>
+
+                <div class="form-group">
+                  <label>{{'Order Confirmation Email'| i18n}} <span style="color: red;">*</span></label>
+                  <input type="text" class="form-control" name="confirmationEmail"
+                    placeholder="{{'Order Confirmation Email' | i18n}}" formControlName="vendorConfirmationEmail">
+                </div>
+              </div>
+            </div>
+
+          </fieldset>
+        </section>
+      </form>
+    </div>
+
+    <div class="at-contentbox" *ngIf="form.isThirdParty.value">
+      <form class="at-formtheme at-formemployeedetail" [formGroup]="thirdPartyFormGroup">
+        <section>
+          <fieldset class="section-header" style="padding: 15px 30px;">
+            <div class="form-group">
+              <label class="section-header-label">Third Party</label>
+              <!-- <i class="fa fa-chevron-right section-header-icon" aria-hidden="true"></i> -->
+              <i class="fa fa-chevron-down section-header-icon" aria-hidden="true"></i>
+            </div>
+          </fieldset>
+          <fieldset class="section-body">
+            <div class="row">
+              <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                <h4 class="card-title">Billing</h4>
+
+                <div class="form-group">
+                  <!-- <label>{{'Same as above' | i18n}}</label> -->
+                  <dx-check-box text="{{'Same as above' | i18n}}" formControlName="thirdPartySameAsAbove"
+                    (onValueChanged)="sameAsAboveToggle($event, 'thirdParty')">
+                  </dx-check-box>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Name' | i18n}} <sup>*</sup></label>
+                  <input type="text" name="employee-name" class="form-control" placeholder="Name"
+                    formControlName="thirdPartyBillingName">
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Street' | i18n}} <sup>*</sup></label>
+                  <input type="text" name="employee-name" class="form-control" placeholder="{{'Street' | i18n}}"
+                    formControlName="thirdPartyBillingStreet">
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Postal Code & City' | i18n}} <sup>*</sup></label>
+                  <dx-select-box [dataSource]="thirdPartyBillingCitiesList" displayExpr="name" valueExpr="name"
+                    [searchEnabled]="true" [minSearchLength]="0" [searchExpr]="['name']" [showDropDownButton]="false"
+                    (onSelectionChanged)="billingCityValueChanged($event, 'thirdParty')"
+                    (onInput)="billingCityOnInputEvent($event, 'thirdPartyBillingCities')"
+                    [value]="thirdPartyBillingPostalCodeAndCity.name" #thirdPartyBillingPostalCode>
+                  </dx-select-box>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'State' | i18n}} <sup>*</sup></label>
+                  <dx-select-box [dataSource]="thirdPartyStateList" displayExpr="name" valueExpr="id"
+                    formControlName="thirdPartyBillingState">
+                  </dx-select-box>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Country' | i18n}} <sup>*</sup></label>
+                  <dx-select-box [dataSource]="countryList" displayExpr="name" valueExpr="id"
+                    formControlName="thirdPartyBillingCountry">
+                  </dx-select-box>
+                </div>
+
+                <div class="form-group">
+                  <label>Contact Name <sup>*</sup></label>
+                  <input type="text" name="employee-designation" class="form-control"
+                    placeholder="{{'Contact Name' | i18n}}" formControlName="thirdPartyBillingContactName">
+                </div>
+
+                <div class="form-group">
+                  <label>Contact Email <sup>*</sup></label>
+                  <input type="email" name="employee-email" class="form-control"
+                    placeholder="{{'Contact Email' | i18n}}" formControlName="thirdPartyBillingContactEmail">
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Payment Terms'| i18n}} (days)<sup>*</sup></label>
+                  <input type="text" name="employee-designation" class="form-control"
+                    placeholder="{{'Payment Terms' | i18n}}" formControlName="thirdPartyPaymentTerms">
+                </div>
+
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="at-pagehead margin-top-20">
+                  <h4>Locations</h4>
+
+                  <div class="at-formtheme at-formsearchemployee">
+                    <button class="at-btn at-btnborderradius float-right"
+                      (click)="openAddLocationPopupVendor(thirdPartyPopUp)">
+                      <i class="fa fa-plus"></i>
+                      {{'Add Location'}}
+                    </button>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="at-themetableholder">
+                    <table class="table at-themetable at-tableemployees">
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>{{'Location Type' | i18n}}</th>
+                          <th>{{'Street' | i18n}}</th>
+                          <th>{{'City' | i18n}}</th>
+                          <th>{{'Postal Code' | i18n}}</th>
+                          <th>{{'State' | i18n}}</th>
+                          <th>{{'Country' | i18n}}</th>
+                          <th>{{'Action' | i18n}}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of thirdPartyLocationsList; let i = index;">
+                          <td>
+                            <h3>{{item?.name}}</h3>
+                          </td>
+                          <td><span>{{item.type.name}}</span></td>
+                          <td>{{item?.street}}</td>
+                          <td>{{item?.city.name}}</td>
+                          <td>{{item?.postalCode.name}}</td>
+                          <td>{{item?.state.name}}</td>
+                          <td>{{item?.country.name}}</td>
+                          <td>
+                            <span>
+                              <a class="edit" (click)="openLocationsEditDialog(thirdPartyPopUp, item, 'thirdParty', i)">
+                                <span class="icon-pencil at-margin-right"></span>
+                                <span>{{'Edit' | i18n}}</span>
+                              </a>
+                            </span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                <div class="margin-top-20">
+                  <h4>Accessorials</h4>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Services'| i18n}}</label>
+                  <dx-tag-box [items]="servicesList" [hideSelectedItems]="true" displayExpr="name" valueExpr="id"
+                    [searchEnabled]="true" formControlName="thirdPartyServices">
+                  </dx-tag-box>
+                </div>
+
+                <h4 class="card-title">Interface</h4>
+
+                <div class="form-group">
+                  <label>{{'Notification Email'| i18n}} <span style="color: red;">*</span></label>
+                  <input type="text" class="form-control" name="notificationEmail"
+                    placeholder="{{'Notification Email' | i18n}}" formControlName="thirdPartyNotificationEmail">
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="at-pagehead margin-top-20">
+                <h4>Bill To</h4>
+
+                <div class="at-formtheme at-formsearchemployee">
+                  <button class="at-btn at-btnborderradius float-right" (click)="openAddBillTo(billToPopUp)">
+                    <i class="fa fa-plus"></i>
+                    {{'Add Trading Partner'}}
+                  </button>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="at-themetableholder">
+                  <table class="table at-themetable at-tableemployees">
+                    <thead>
+                      <tr>
+                        <th>UID</th>
+                        <th>Name</th>
+                        <th>{{'Street' | i18n}}</th>
+                        <th>{{'Action' | i18n}}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of thirdPartyBillToList; let i = index;">
+                        <td>{{item.uid}}</td>
+                        <td>
+                          <h3>{{item?.name}}</h3>
+                        </td>
+                        <td>{{item?.street}}</td>
+                        <td>
+                          <span>
+                            <a class="edit" (click)="openBillToDeleteDialog(item, i)">
+                              <span class="fa fa-trash at-margin-right red"></span>
+                              <span class="red">{{'Delete' | i18n}}</span>
+                            </a>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+            </div>
+
+          </fieldset>
+        </section>
+      </form>
+    </div>
+
+    <div class="at-contentbox">
+      <form class="at-formtheme at-formemployeedetail">
+        <section>
+          <fieldset class="section-header" style="padding: 15px 30px;">
+            <div class="form-group">
+              <label class="section-header-label">Users</label>
+              <!-- <i class="fa fa-chevron-right section-header-icon" aria-hidden="true"></i> -->
+              <i class="fa fa-chevron-down section-header-icon" aria-hidden="true"></i>
+            </div>
+          </fieldset>
+          <fieldset class="section-body">
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="at-pagehead margin-top-20">
+                  <h4>Users</h4>
+
+                  <div class="at-formtheme at-formsearchemployee">
+                    <button class="at-btn at-btnborderradius float-right" (click)="openAddUserPopup(userPopUp)">
+                      <i class="fa fa-plus"></i>
+                      {{'Add User'}}
+                    </button>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="at-themetableholder">
+                    <table class="table at-themetable at-tableemployees">
+                      <thead>
+                        <tr>
+                          <th>{{'First Name' | i18n}}</th>
+                          <th>{{'Last Name' | i18n}}</th>
+                          <th>{{'Email' | i18n}}</th>
+                          <th>{{'Phone' | i18n}}</th>
+                          <th>{{'Roles' | i18n}}</th>
+                          <th>{{'Action' | i18n}}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of usersList">
+                          <td>
+                            <h3>{{item?.firstName}}</h3>
+                          </td>
+                          <td>
+                            <h3>{{item?.lastName}}</h3>
+                          </td>
+                          <td>{{item?.email}}</td>
+                          <td>{{item?.phone}}</td>
+                          <td>{{item?.roles}}</td>
+                          <td>
+                            <span>
+                              <a class="edit" (click)="openUsersEditDialog(userPopUp, item, data)">
+                                <span class="icon-pencil at-margin-right"></span>
+                                <span>{{'Edit' | i18n}}</span>
+                              </a>
+                            </span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </fieldset>
+        </section>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #customerPopUp>
+  <div id="modal-report" class="at-thememodal at-customfieldsmodal">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+          <img class="at-themesvg" src="assets/img/svg-icons/close-icon.svg">
+        </button>
+
+        <h4 *ngIf="!isEditLocation">{{'Add Location' | i18n}}</h4>
+        <h4 *ngIf="isEditLocation">{{'Edit Location' | i18n}}</h4>
+
+        <form class="at-formtheme at-formcustomfield" [formGroup]="locationsFormGroup">
+          <fieldset>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group">
+                  <label>{{'Name' | i18n}} <sup>*</sup></label>
+                  <input type="text" class="form-control" name="name" placeholder="{{'Name' | i18n}}"
+                    formControlName="name">
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group">
+                  <label>{{'Location Type' | i18n}} <sup>*</sup></label>
+                  <dx-select-box [dataSource]="locationTypeList" displayExpr="name" valueExpr="id" fieldTemplate="field"
+                    formControlName="type">
+                    <div *dxTemplate="let data of 'field'">
+                      <dx-text-box [value]="data && data.name | i18n" [readOnly]="true" placeholder="Select">
+                      </dx-text-box>
+                    </div>
+                    <div *dxTemplate="let data of 'item'">
+                      <div>
+                        {{data.name | i18n}}
+                      </div>
+                    </div>
+                  </dx-select-box>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                  <label>{{'Street' | i18n}} <sup>*</sup></label>
+                  <input type="text" class="form-control" name="street" placeholder="{{'Street' | i18n}}"
+                    formControlName="street">
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                  <label>{{'Postal Code & City' | i18n}} <sup>*</sup></label>
+                  <dx-select-box [dataSource]="addLocationCitiesList" displayExpr="name" valueExpr="name"
+                    [searchEnabled]="true" [minSearchLength]="0" [searchExpr]="['name']" [showDropDownButton]="false"
+                    (onSelectionChanged)="addLocationCityValueChanged($event)"
+                    (onInput)="billingCityOnInputEvent($event, 'addLocationCities')"
+                    [value]="addLocationPostalCodeAndCity.name" #addLocationCustomerPostalCode>
+                  </dx-select-box>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label>{{'State' | i18n}} <sup>*</sup></label>
+                  <dx-select-box [dataSource]="stateList" displayExpr="name" valueExpr="id" formControlName="state">
+                  </dx-select-box>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label>{{'Country' | i18n}} <sup>*</sup></label>
+                  <dx-select-box [dataSource]="countryList" displayExpr="name" valueExpr="id" formControlName="country">
+                  </dx-select-box>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group at-marginbottomzero">
+                  <button class="at-btn at-btnborderradius" *ngIf="!isEditLocation" (click)="addLocation('customer')">
+                    {{'Add' | i18n}}
+                  </button>
+                  <button class="at-btn at-btnborderradius" *ngIf="isEditLocation" (click)="updateLocation('customer')">
+                    {{'Edit' | i18n}}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</ng-template>
+
+
+<ng-template #vendorPopUp>
+  <div id="modal-report" class="at-thememodal at-customfieldsmodal">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+          <img class="at-themesvg" src="assets/img/svg-icons/close-icon.svg">
+        </button>
+
+        <h4 *ngIf="!isEditLocation">{{'Add Location' | i18n}}</h4>
+        <h4 *ngIf="isEditLocation">{{'Edit Location' | i18n}}</h4>
+
+        <form class="at-formtheme at-formcustomfield" [formGroup]="locationsFormGroup">
+          <fieldset>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group">
+                  <label>{{'Name' | i18n}} <sup>*</sup></label>
+                  <input type="text" class="form-control" name="name" placeholder="{{'Name' | i18n}}"
+                    formControlName="name">
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group">
+                  <label>{{'Location Type' | i18n}} <sup>*</sup></label>
+                  <dx-select-box [dataSource]="locationTypeList" displayExpr="name" valueExpr="id" fieldTemplate="field"
+                    formControlName="type">
+                    <div *dxTemplate="let data of 'field'">
+                      <dx-text-box [value]="data && data.name | i18n" [readOnly]="true" placeholder="Select">
+                      </dx-text-box>
+                    </div>
+                    <div *dxTemplate="let data of 'item'">
+                      <div>
+                        {{data.name | i18n}}
+                      </div>
+                    </div>
+                  </dx-select-box>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                  <label>{{'Street' | i18n}} <sup>*</sup></label>
+                  <input type="text" class="form-control" name="street" placeholder="{{'Street' | i18n}}"
+                    formControlName="street">
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                  <label>{{'Postal Code & City' | i18n}} <sup>*</sup></label>
+                  <dx-select-box [dataSource]="addLocationCitiesList" displayExpr="name" valueExpr="name"
+                    [searchEnabled]="true" [minSearchLength]="0" [searchExpr]="['name']" [showDropDownButton]="false"
+                    (onSelectionChanged)="addLocationCityValueChanged($event)"
+                    (onInput)="billingCityOnInputEvent($event, 'addLocationCities')"
+                    [value]="addLocationPostalCodeAndCity.name" #addLocationVendorPostalCode>
+                  </dx-select-box>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label>{{'State' | i18n}} <sup>*</sup></label>
+                  <dx-select-box [dataSource]="stateList" displayExpr="name" valueExpr="id" formControlName="state">
+                  </dx-select-box>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label>{{'Country' | i18n}} <sup>*</sup></label>
+                  <dx-select-box [dataSource]="countryList" displayExpr="name" valueExpr="id" formControlName="country">
+                  </dx-select-box>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group at-marginbottomzero">
+                  <button class="at-btn at-btnborderradius" *ngIf="!isEditLocation" (click)="addLocation('vendor')">
+                    {{'Add' | i18n}}
+                  </button>
+                  <button class="at-btn at-btnborderradius" *ngIf="isEditLocation" (click)="updateLocation('vendor')">
+                    {{'Edit' | i18n}}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</ng-template>
+
+
+<ng-template #thirdPartyPopUp>
+  <div id="modal-report" class="at-thememodal at-customfieldsmodal">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+          <img class="at-themesvg" src="assets/img/svg-icons/close-icon.svg">
+        </button>
+
+        <h4 *ngIf="!isEditLocation">{{'Add Location' | i18n}}</h4>
+        <h4 *ngIf="isEditLocation">{{'Edit Location' | i18n}}</h4>
+
+        <form class="at-formtheme at-formcustomfield" [formGroup]="locationsFormGroup">
+          <fieldset>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group">
+                  <label>{{'Name' | i18n}} <sup>*</sup></label>
+                  <input type="text" class="form-control" name="name" placeholder="{{'Name' | i18n}}"
+                    formControlName="name">
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group">
+                  <label>{{'Location Type' | i18n}} <sup>*</sup></label>
+                  <dx-select-box [dataSource]="locationTypeList" displayExpr="name" valueExpr="id" fieldTemplate="field"
+                    formControlName="type">
+                    <div *dxTemplate="let data of 'field'">
+                      <dx-text-box [value]="data && data.name | i18n" [readOnly]="true" placeholder="Select">
+                      </dx-text-box>
+                    </div>
+                    <div *dxTemplate="let data of 'item'">
+                      <div>
+                        {{data.name | i18n}}
+                      </div>
+                    </div>
+                  </dx-select-box>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                  <label>{{'Street' | i18n}} <sup>*</sup></label>
+                  <input type="text" class="form-control" name="street" placeholder="{{'Street' | i18n}}"
+                    formControlName="street">
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                  <label>{{'Postal Code & City' | i18n}} <sup>*</sup></label>
+                  <dx-select-box [dataSource]="addLocationCitiesList" displayExpr="name" valueExpr="name"
+                    [searchEnabled]="true" [minSearchLength]="0" [searchExpr]="['name']" [showDropDownButton]="false"
+                    (onSelectionChanged)="addLocationCityValueChanged($event)"
+                    (onInput)="billingCityOnInputEvent($event, 'addLocationCities')"
+                    [value]="addLocationPostalCodeAndCity.name" #addLocationThirdPartyPostalCode>
+                  </dx-select-box>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label>{{'State' | i18n}} <sup>*</sup></label>
+                  <dx-select-box [dataSource]="stateList" displayExpr="name" valueExpr="id" formControlName="state">
+                  </dx-select-box>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label>{{'Country' | i18n}} <sup>*</sup></label>
+                  <dx-select-box [dataSource]="countryList" displayExpr="name" valueExpr="id" formControlName="country">
+                  </dx-select-box>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group at-marginbottomzero">
+                  <button class="at-btn at-btnborderradius" *ngIf="!isEditLocation" (click)="addLocation('thirdParty')">
+                    {{'Add' | i18n}}
+                  </button>
+                  <button class="at-btn at-btnborderradius" *ngIf="isEditLocation"
+                    (click)="updateLocation('thirdParty')">
+                    {{'Edit' | i18n}}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</ng-template>
+
+
+<ng-template #popUpProduct>
+  <div id="modal-report" class="at-thememodal at-customfieldsmodal">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+          <img class="at-themesvg" src="assets/img/svg-icons/close-icon.svg">
+        </button>
+
+        <h4 *ngIf="!isEditProduct">{{'Add Product' | i18n}}</h4>
+        <h4 *ngIf="isEditProduct">{{'Edit Product' | i18n}}</h4>
+
+        <form class="at-formtheme at-formcustomfield" [formGroup]="productsFormGroup">
+          <fieldset>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group">
+                  <label>{{'Name' | i18n}} <sup>*</sup></label>
+                  <input type="text" class="form-control" name="name" placeholder="{{'Name' | i18n}}"
+                    formControlName="name">
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                  <label>{{'Handling Unit' | i18n}}</label>
+                  <dx-select-box [dataSource]="handlingUnitList" displayExpr="name" valueExpr="id" fieldTemplate="field"
+                    formControlName="handlingUnit">
+                    <div *dxTemplate="let data of 'field'">
+                      <dx-text-box [value]="data && data.name | i18n" [readOnly]="true" placeholder="Select">
+                      </dx-text-box>
+                    </div>
+                    <div *dxTemplate="let data of 'item'">
+                      <div>
+                        {{data.name | i18n}}
+                      </div>
+                    </div>
+                  </dx-select-box>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                  <label>{{'Class' | i18n}} <sup>*</sup></label>
+                  <dx-select-box [dataSource]="classList" displayExpr="name" valueExpr="id" fieldTemplate="field"
+                    formControlName="classType">
+                    <div *dxTemplate="let data of 'field'">
+                      <dx-text-box [value]="data && data.name | i18n" [readOnly]="true" placeholder="Select">
+                      </dx-text-box>
+                    </div>
+                    <div *dxTemplate="let data of 'item'">
+                      <div>
+                        {{data.name | i18n}}
+                      </div>
+                    </div>
+                  </dx-select-box>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="form-group">
+                  <div class="form-group">
+                    <label>{{'NMFC' | i18n}} <sup>*</sup></label>
+                    <input type="text" class="form-control" name="nmfc" placeholder="{{'NMFC' | i18n}}"
+                      formControlName="nmfc">
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label>{{'HU Count' | i18n}} </label>
+                  <input type="text" class="form-control" name="huCount" placeholder="{{'HU Count' | i18n}}"
+                    formControlName="huCount">
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group at-marginbottomzero">
+                  <button class="at-btn at-btnborderradius" *ngIf="!isEditProduct" (click)="addProduct()">
+                    {{'Add' | i18n}}
+                  </button>
+                  <button class="at-btn at-btnborderradius" *ngIf="isEditProduct" (click)="updateProduct()">
+                    {{'Edit' | i18n}}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</ng-template>
+
+<ng-template #billToPopUp>
+  <div id="modal-report" class="at-thememodal at-customfieldsmodal">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+          <img class="at-themesvg" src="assets/img/svg-icons/close-icon.svg">
+        </button>
+
+        <h4 *ngIf="!isEditBillTo">{{'Add Trading Partner' | i18n}}</h4>
+
+        <form class="at-formtheme at-formcustomfield">
+          <fieldset>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group">
+                  <label>{{'Trading Partner' | i18n}} <sup>*</sup></label>
+                  <dx-select-box [dataSource]="tradingPartnersList" displayExpr="name" valueExpr="id"
+                    [searchEnabled]="true" [minSearchLength]="0" [searchExpr]="['name']" [showDropDownButton]="false"
+                    (onSelectionChanged)="tradingPartnerValueChanged($event)"
+                    (onInput)="tradingPartnerOnInputEvent($event)">
+                  </dx-select-box>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group at-marginbottomzero">
+                  <button class="at-btn at-btnborderradius" *ngIf="!isEditBillTo" (click)="addBillTo()">
+                    {{'Add' | i18n}}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</ng-template>
+
+<ng-template #userPopUp>
+  <div id="modal-report" class="at-thememodal at-customfieldsmodal">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+          <img class="at-themesvg" src="assets/img/svg-icons/close-icon.svg">
+        </button>
+
+        <h4 *ngIf="!isEditUser">{{'Add User' | i18n}}</h4>
+        <h4 *ngIf="isEditUser">{{'Edit User' | i18n}}</h4>
+
+        <form class="at-formtheme at-formcustomfield" [formGroup]="userFormGroup">
+          <fieldset>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group">
+                  <label>{{'First Name' | i18n}} <sup>*</sup></label>
+                  <input type="text" class="form-control" placeholder="{{'First Name' | i18n}}" name="firstName"
+                    formControlName="firstName">
+                </div>
+                <div class="form-group">
+                  <label>{{'Last Name' | i18n}} <sup>*</sup></label>
+                  <input type="text" class="form-control" placeholder="{{'Last Name' | i18n}}" name="lastName"
+                    formControlName="lastName">
+                </div>
+                <div class="form-group">
+                  <label>{{'Email' | i18n}} <sup>*</sup></label>
+                  <input type="text" class="form-control" placeholder="{{'Email' | i18n}}" name="email"
+                    formControlName="email">
+
+                  <!-- (keyup)="checkEmailValidation()"
+                    [ngClass]="{'is-invalid': isSubmitted && userForm.email.invalid && (userForm.email.errors.required || userForm.email.errors.email)}" -->
+                  <!-- <div *ngIf="isSubmitted && userForm.email.invalid">
+                    <span *ngIf="userForm.email.errors.required">
+                      Email is required.
+                    </span>
+                    <span *ngIf="userForm.email.errors.email">
+                      Email is invalid.
+                    </span>
+                  </div> -->
+                </div>
+                <div class="form-group">
+                  <label>{{'Phone' | i18n}}</label>
+                  <input type="text" class="form-control" formControlName="phone" name="phone"
+                    placeholder="{{'Phone' | i18n}}">
+                </div>
+                <div class="form-group">
+                  <label>{{'Password' | i18n}} <sup>*</sup></label>
+                  <input type="password" class="form-control" formControlName="password" name="password"
+                    placeholder="{{'Password' | i18n}}">
+                </div>
+                <div class="form-group">
+                  <label>{{'Confirm Password' | i18n}} <sup>*</sup></label>
+                  <input type="password" class="form-control" formControlName="cpassword" name="confirmPassword"
+                    placeholder="{{'Confirm Password' | i18n}}">
+                </div>
+                <div class="form-group">
+                  <label>{{'Roles' | i18n}} <sup>*</sup></label>
+                  <dx-tag-box [items]="rolesList" [hideSelectedItems]="true" [searchEnabled]="true"
+                    formControlName="roles">
+                  </dx-tag-box>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group at-marginbottomzero">
+                  <button class="at-btn at-btnborderradius" *ngIf="!isEditUser" (click)="addUser()">
+                    {{'Add' | i18n}}
+                  </button>
+                  <button class="at-btn at-btnborderradius" *ngIf="isEditUser" (click)="updateUser()">
+                    {{'Edit' | i18n}}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</ng-template>

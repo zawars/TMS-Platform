@@ -1,0 +1,201 @@
+<!-- <form class="at-form-tradingpartner" [formGroup]="formGroup">
+  <fieldset>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label>{{'Name' | i18n}}</label>
+          <input type="text" class="form-control" name="name" placeholder="{{'Name' | i18n}}" formControlName="name">
+        </div>
+      </div>
+      <div class="col-sm-6"></div>
+      <div class="clearfix"></div>
+
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label>{{'Description' | i18n}}</label>
+          <textarea class="form-control" name="description" placeholder="{{'Description' | i18n}}"
+            formControlName="description" cols="30" rows="9"></textarea>
+        </div>
+      </div>
+      <div class="col-sm-6"></div>
+      <div class="clearfix"></div>
+
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label>{{'Mode' | i18n}}</label>
+          <dx-radio-group [items]="modes" [value]="modes[0]" layout="horizontal"
+            (onValueChanged)="onModeValueChanged($event)">
+          </dx-radio-group>
+        </div>
+      </div>
+      <div class="col-sm-6"></div>
+      <div class="clearfix"></div>
+
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label>{{'State' | i18n}} ({{'Included this area' | i18n}})</label>
+          <dx-tag-box [items]="statesList" [searchEnabled]="true" [hideSelectedItems]="true" displayExpr="name"
+            valueExpr="id" [searchExpr]="['name']" (onValueChanged)="statesOnValueChanges($event)"
+            (onInput)="statesOnInputEvent($event)" [disabled]="!isPostalCodeDisabled">
+          </dx-tag-box>
+        </div>
+      </div>
+      <div class="col-sm-6"></div>
+      <div class="clearfix"></div>
+
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label>{{'City' | i18n}} ({{'Included this area' | i18n}})</label>
+          <dx-tag-box [items]="citiesList" [searchEnabled]="true" [hideSelectedItems]="true" displayExpr="name"
+            valueExpr="id" [searchExpr]="['name']" (onValueChanged)="citySelectionChanged($event)"
+            (onInput)="cityOnInputEvent($event)" [disabled]="!isPostalCodeDisabled">
+          </dx-tag-box>
+        </div>
+      </div>
+      <div class="col-sm-6"></div>
+      <div class="clearfix"></div>
+
+      <div class="col-sm-12">
+        <button class="btn btn-success" (click)="getPostalCodes()" [disabled]="!isPostalCodeDisabled">
+          {{'Get Postal Codes' | i18n}}
+        </button>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label>{{'Postal Code' | i18n}} ({{'Included this area' | i18n}})</label>
+          <dx-select-box [dataSource]="postalCodesList" displayExpr="name" valueExpr="id" [searchEnabled]="true"
+            [minSearchLength]="0" [searchExpr]="['name']" [showDropDownButton]="false"
+            (onSelectionChanged)="postalCodeSelectionChanged($event)" (onInput)="postalCodeOnInputEvent($event)"
+            fieldTemplate="field" [value]="formGroup.get('postalCode')?.value?.id" [disabled]="isPostalCodeDisabled">
+            <div *dxTemplate="let val of 'field'">
+              <dx-text-box [value]="val && val.name | i18n" placeholder="Select">
+              </dx-text-box>
+            </div>
+            <div *dxTemplate="let item of 'item'">
+              <div>
+                {{item.name}}, {{item.dropdownMapper?.name}}
+              </div>
+            </div>
+          </dx-select-box>
+        </div>
+      </div>
+      <div class="col-sm-6"></div>
+      <div class="clearfix"></div>
+
+
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label>{{'Results' | i18n}}</label>
+          <dx-list [dataSource]="selectedPostalCodesList" displayExpr="name" [searchEnabled]="true"
+            [searchExpr]="['name', 'city']" searchMode="contains" height="500" *ngIf="showList">
+            <div *dxTemplate="let item of 'item'">
+              {{item.name}}, {{item?.city || item?.dropdownMapper?.name}}
+              <i class="fa fa-close pull-right" style="color: red;"></i>
+            </div>
+          </dx-list>
+        </div>
+      </div>
+      <div class="col-sm-6"></div>
+      <div class="clearfix"></div>
+
+
+
+      <div class="col-sm-12">
+        <button class="btn btn-success pull-right" *ngIf="!isEdit" (click)="create()"
+          [disabled]="isBlocked">{{'Create' | i18n}}</button>
+        <button class="btn btn-success pull-right" *ngIf="isEdit" (click)="update()"
+          [disabled]="isBlocked">{{'Update' | i18n}}</button>
+      </div>
+
+    </div>
+  </fieldset>
+</form> -->
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <form class="form-horizontal" [formGroup]="formGroup">
+        <div class="card-body">
+
+          <div class="form-group m-t-20">
+            <label>{{'Name'| i18n}}</label>
+            <input type="text" class="form-control" name="name" placeholder="{{'Name' | i18n}}" formControlName="name">
+          </div>
+
+          <div class="form-group m-t-20">
+            <label>{{'Description'| i18n}}</label>
+            <textarea class="form-control" name="description" placeholder="{{'Description' | i18n}}" formControlName="description"
+              cols="30" rows="9"></textarea>
+          </div>
+
+          <div class="form-group m-t-20">
+            <label>{{'Mode'| i18n}}</label>
+            <dx-radio-group [items]="modes" [value]="modes[0]" layout="horizontal" (onValueChanged)="onModeValueChanged($event)">
+            </dx-radio-group>
+          </div>
+         
+          <div class="form-group m-t-20" [ngClass]="{'disabled-state': !isPostalCodeDisabled}">
+            <label>{{'State' | i18n}} ({{'Included this area' | i18n}})</label>
+            <dx-tag-box [items]="statesList" [searchEnabled]="true" [hideSelectedItems]="true" displayExpr="name" valueExpr="id"
+              [searchExpr]="['name']" (onValueChanged)="statesOnValueChanges($event)" (onInput)="statesOnInputEvent($event)"
+              [disabled]="!isPostalCodeDisabled">
+            </dx-tag-box>
+          </div>
+          
+          <div class="form-group m-t-20" [ngClass]="{'disabled-state': !isPostalCodeDisabled}">
+            <label>{{'City' | i18n}} ({{'Included this area' | i18n}})</label>
+            <dx-tag-box [items]="citiesList" [searchEnabled]="true" [hideSelectedItems]="true" displayExpr="name" valueExpr="id"
+              [searchExpr]="['name']" (onValueChanged)="citySelectionChanged($event)" (onInput)="cityOnInputEvent($event)"
+              [disabled]="!isPostalCodeDisabled">
+            </dx-tag-box>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-12">
+              <button class="btn btn-primary pull-right" (click)="getPostalCodes()" [disabled]="!isPostalCodeDisabled">
+                {{'Get Postal Codes' | i18n}}
+              </button>
+            </div>
+          </div>
+          
+          <div class="form-group m-t-20" [ngClass]="{'disabled-state': isPostalCodeDisabled}">
+            <label>{{'Postal Code' | i18n}} ({{'Included this area' | i18n}})</label>
+            <dx-select-box [dataSource]="postalCodesList" displayExpr="name" valueExpr="id" [searchEnabled]="true"
+              [minSearchLength]="0" [searchExpr]="['name']" [showDropDownButton]="false"
+              (onSelectionChanged)="postalCodeSelectionChanged($event)" (onInput)="postalCodeOnInputEvent($event)"
+              fieldTemplate="field" [value]="formGroup.get('postalCode')?.value?.id" [disabled]="isPostalCodeDisabled">
+              <div *dxTemplate="let val of 'field'">
+                <dx-text-box [value]="val && val.name | i18n" placeholder="Select">
+                </dx-text-box>
+              </div>
+              <div *dxTemplate="let item of 'item'">
+                <div>
+                  {{item.name}}, {{item.dropdownMapper?.name}}
+                </div>
+              </div>
+            </dx-select-box>
+          </div>
+          
+          <div class="form-group m-t-20">
+            <label>{{'Results' | i18n}}</label>
+            <dx-list [dataSource]="selectedPostalCodesList" displayExpr="name" [searchEnabled]="true"
+              [searchExpr]="['name', 'city']" searchMode="contains" *ngIf="showList">
+              <!-- height="500" -->
+              <div *dxTemplate="let item of 'item'">
+                {{item.name}}, {{item?.city || item?.dropdownMapper?.name}}
+                <i class="fa fa-close pull-right" style="color: red;"></i>
+              </div>
+            </dx-list>
+          </div>
+        </div>
+        <div class="border-top">
+          <div class="card-body">
+            <button class="btn btn-primary" *ngIf="!isEdit" (click)="create()" [disabled]="isBlocked">{{'Create' | i18n}}</button>
+            <button class="btn btn-primary" *ngIf="isEdit" (click)="update()" [disabled]="isBlocked">{{'Update' | i18n}}</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

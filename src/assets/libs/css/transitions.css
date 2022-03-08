@@ -1,0 +1,23 @@
+*:after,
+*:before,
+p a,
+a,
+.at-socialicons li a,
+.at-roundicontext,
+.at-roundicontext .at-usericonholder,
+.at-logoholder,
+.at-rightarea,
+.at-sidebarwrapper,
+.at-wrapper,
+.at-navigation ul li,
+.at-navigation ul li a,
+.at-navigation ul li a span,
+.at-btnupload label,
+.at-navigation ul li a i,
+.at-navigation>ul>li>a i {
+  -webkit-transition: all 300ms ease-in-out;
+  -moz-transition: all 300ms ease-in-out;
+  -ms-transition: all 300ms ease-in-out;
+  -o-transition: all 300ms ease-in-out;
+  transition: all 300ms ease-in-out;
+}

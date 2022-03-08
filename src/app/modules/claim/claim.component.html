@@ -1,0 +1,49 @@
+<div class="at-maincontentholder at-pendingovertimes">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 float-left">
+    <div class="at-pagehead">
+      <h2>{{'Claims'| i18n}}</h2>
+    </div>
+
+    <div class="at-contentbox">
+      <div class="at-themetableholder">
+        <table class="table at-themetable at-tableemployees">
+          <thead>
+            <tr>
+              <th>{{'ID' | i18n}}</th>
+              <th>{{'Customer' | i18n}}</th>
+              <th>{{'Company Name' | i18n}}</th>
+              <th>{{'BOL Number' | i18n}}</th>
+              <th>{{'Claim Amount (USD)' | i18n}}</th>
+              <th>{{'Status' | i18n}}</th>
+              <th>{{'Action' | i18n}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of claimsList">
+              <td>{{item.uid}}</td>
+              <td>
+                <h3>{{item.customer?.name}}</h3>
+              </td>
+              <td>{{item.claimantName}}</td>
+              <td>{{item.bolNumber}}</td>
+              <td>{{item.claimFor}}</td>
+              <td>{{item.status}}</td>
+              <td>
+                <span>
+                  <a class="edit" [routerLink]="['/claim/edit', {claimId: item.id}]">
+                    <span class="icon-pencil at-margin-right"></span>
+                    <span>{{'Edit' | i18n}}</span>
+                  </a>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <mat-paginator [length]="totalCount" [pageSize]="10" (page)="onPageChange($event)">
+      </mat-paginator>
+
+    </div>
+  </div>
+</div>

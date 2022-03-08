@@ -1,0 +1,45 @@
+::ng-deep table tbody tr:nth-of-type(odd) {
+  background-color: transparent;
+}
+
+.at-contentbox h3 {
+  margin: 8px 0 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+::ng-deep.dx-treelist-rowsview .dx-row.dx-row-lines:first-child>td,
+.dx-treelist-rowsview .dx-row.dx-row-lines:first-child>tr>td {
+  border-right: none;
+}
+
+::ng-deep.dx-treelist-rowsview .dx-row.dx-row-lines>td,
+.dx-treelist-rowsview .dx-row.dx-row-lines>tr>td {
+  border-right: none;
+  border-left: none;
+}
+
+dx-tree-list {
+  border: 1px solid #dddddd;
+}
+
+::ng-deep.dx-treelist-content .dx-treelist-table.dx-treelist-table-fixed {
+  border: none;
+}
+
+::ng-deep.dx-treelist-content .dx-treelist-table.dx-treelist-table-fixed {
+  border: none;
+}
+
+::ng-deep.dx-treelist-rowsview .dx-row.dx-row-lines:first-child>td,
+.dx-treelist-rowsview .dx-row.dx-row-lines:first-child>tr>td {
+  border: none;
+}
+
+::ng-deep.dx-treelist-rowsview .dx-row {
+  border-bottom: 1px solid #dddddd;
+}
+
+::ng-deep.dx-treelist-rowsview .dx-row:nth-last-child(2) {
+  border-bottom: none;
+}

@@ -1,0 +1,39 @@
+<div class="at-maincontentholder at-pendingovertimes">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 float-left">
+    <div class="at-pagehead">
+      <h2>{{'Organisation'| i18n}}</h2>
+
+      <div class="at-formtheme at-formsearchemployee">
+        <button class="at-btn at-btnborderradius float-right" routerLink="create">
+          <i class="fa fa-plus at-margin-right"></i>
+          <span>
+            {{'Organisation' | i18n}}
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <div class="at-contentbox">
+      <dx-tree-list id="employees" [dataSource]="organisationsList" keyExpr="id" parentIdExpr="parent.id"
+        [columnAutoWidth]="true" [rootValue]="rootValueId" dataStructure="plain" [rowAlternationEnabled]="true"
+        [showRowLines]="true">
+        <dxi-column dataField="uid" caption="UID" dataType="string"></dxi-column>
+        <dxi-column dataField="name" cellTemplate="nameTemplate"></dxi-column>
+        <dxi-column dataField="description"></dxi-column>
+        <dxi-column dataField="currency.name" caption="Currency"></dxi-column>
+        <dxi-column dataField="city.name" caption="City"></dxi-column>
+
+        <div *dxTemplate="let item of 'nameTemplate'">
+          <h3>{{item.data.name}}</h3>
+        </div>
+      </dx-tree-list>
+
+
+      <mat-paginator [length]="totalCount" [pageSize]="10" (page)="onPageChange($event)">
+      </mat-paginator>
+
+    </div>
+
+
+  </div>
+</div>

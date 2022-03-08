@@ -1,0 +1,146 @@
+.margin-lable {
+  margin: 0 15px 0 0 !important;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.rotateimg180 {
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
+.at-btnwhite {
+  line-height: 47px;
+}
+
+// Drill Down Chart
+::ng-deep #chart.pointer-on-bars .dxc-series rect {
+  cursor: pointer;
+}
+
+.button-container {
+  text-align: center;
+  height: 40px;
+  position: absolute;
+  top: 32px;
+  left: 20px;
+}
+
+@media (max-width: 1600px) {
+  .btn-responsive {
+    padding: 0 18.7%;
+  }
+}
+
+@media (max-width: 1302px) {
+  .btn-responsive {
+    padding: 0 18.6%;
+  }
+}
+
+@media (max-width: 1289px) {
+  .btn-responsive {
+    padding: 0 18.5%;
+  }
+}
+
+@media (max-width: 1277px) {
+  .btn-responsive {
+    padding: 0 18.4%;
+  }
+}
+
+@media (max-width: 1265px) {
+  .btn-responsive {
+    padding: 0 18.3%;
+  }
+}
+
+@media (max-width: 1253px) {
+  .btn-responsive {
+    padding: 0 18.2%;
+  }
+}
+
+@media (max-width: 1242px) {
+  .btn-responsive {
+    padding: 0 18.1%;
+  }
+}
+
+@media (max-width: 1232px) {
+  .btn-responsive {
+    padding: 0 18%;
+  }
+}
+
+@media (max-width: 1221px) {
+  .btn-responsive {
+    padding: 0 17.9%;
+  }
+}
+
+@media (max-width: 1211px) {
+  .btn-responsive {
+    padding: 0 17.8%;
+  }
+}
+
+@media (max-width: 1201px) {
+  .btn-responsive {
+    padding: 0 17.7%;
+  }
+}
+
+@media (max-width: 1117px) {
+  .btn-responsive {
+    padding: 0 18.6%;
+  }
+}
+
+@media (max-width: 1104px) {
+  .btn-responsive {
+    padding: 0 18.5%;
+  }
+}
+
+@media (max-width: 1092px) {
+  .btn-responsive {
+    padding: 0 18.4%;
+  }
+}
+
+@media (max-width: 1080px) {
+  .btn-responsive {
+    padding: 0 19%;
+  }
+}
+
+@media (max-width: 1047px) {
+  .btn-responsive {
+    padding: 0 18.9%;
+  }
+}
+
+@media (max-width: 1033px) {
+  .btn-responsive {
+    padding: 0 18.8%;
+  }
+}
+
+@media (max-width: 1020px) {
+  .btn-responsive {
+    padding: 0 18.7%;
+  }
+}
+
+@media (max-width: 1007px) {
+  .btn-responsive {
+    padding: 0 18.6%;
+  }
+}

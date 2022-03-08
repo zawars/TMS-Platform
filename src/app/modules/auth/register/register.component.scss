@@ -1,0 +1,135 @@
+.input-group-text {
+  color: #fff;
+}
+
+.login-container {
+  min-height: 320px;
+  border-left: 1px solid #b7a9a9;
+}
+
+::ng-deep.dx-texteditor {
+  height: auto !important;
+}
+
+.input-group-text {
+  color: #fff;
+}
+
+.login-container {
+  min-height: 320px;
+  border-left: 1px solid #b7a9a9;
+}
+
+.wrapper.wrapper-full-page {
+  height: auto;
+  min-height: 100vh;
+}
+
+.wrapper {
+  position: relative;
+  top: 0;
+  height: 100vh;
+}
+
+.page-header {
+  min-height: 100vh;
+  height: auto;
+  display: inherit;
+}
+
+.page-header {
+  height: 100%;
+  min-height: -webkit-fill-available;
+  min-height: -moz-available;
+  min-height: stretch;
+  background-position: center center;
+  background-size: cover;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: flex;
+  align-items: center;
+}
+.header-filter:after,
+.header-filter:before {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: block;
+  left: 0;
+  top: 0;
+  content: "";
+}
+.header-filter::before {
+  position: fixed;
+  background: rgba(0, 0, 0, .8);
+}
+.page-header .container {
+  padding-top: 0vh !important;
+}
+
+.header-filter .container {
+  z-index: 2;
+  position: relative;
+}
+
+.page-header .title,
+.page-header>.container {
+  color: #fff;
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+
+@media (min-width: 992px) {
+  .col-lg-4 {
+    flex: 0 0 33.33333333%;
+    max-width: 33.33333333%;
+  }
+}
+
+.mr-auto,
+.mx-auto {
+  margin-right: auto !important;
+}
+
+.ml-auto,
+.mx-auto {
+  margin-left: auto !important;
+}
+
+.login-container {
+  min-height: 320px;
+  border-left: 1px solid #b7a9a9;
+}
+
+.input-block {
+  margin-bottom: 15px;
+}
+
+.input-group-append,
+.input-group-prepend {
+  display: flex;
+}
+
+.input-group-prepend {
+  margin-right: -1px;
+}
+
+.input-group>.input-group-append:last-child>.btn:not(:last-child):not(.dropdown-toggle),
+.input-group>.input-group-append:last-child>.input-group-text:not(:last-child),
+.input-group>.input-group-append:not(:last-child)>.btn,
+.input-group>.input-group-append:not(:last-child)>.input-group-text,
+.input-group>.input-group-prepend>.btn,
+.input-group>.input-group-prepend>.input-group-text {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+::ng-deep.dx-switch-container{
+  border: 0 !important;
+  background: transparent !important;
+}

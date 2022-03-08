@@ -1,0 +1,81 @@
+  <div class="page-header login-page header-filter" filter-color="black"
+    style="overflow:hidden;background: url('./assets/img/lock.jpg'); background-size: cover; background-position: top center; background-attachment: fixed;">
+    <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
+    <div class="container">
+      <!-- <div class="col-lg-4 col-md-6 col-sm-6 mr-auto" style="position: absolute;">
+        <dx-gallery [items]="galleryData" [height]="500" [width]="650" loop="true" [showIndicator]="false"
+          [slideshowDelay]="3000">
+        </dx-gallery>
+      </div> -->
+      <div class="col-lg-4 col-md-6 col-sm-6 ml-auto" style="float: right;">
+        <div class="login-container">
+          <h2 style="margin:90px 0 0 15px; padding-bottom:30px;">Sign Up</h2>
+          <div class="login-form" style="margin: 0 0 50px 15px;">
+            <div class="form-group has-default">
+              <input type="text" class="form-control" name="firstName" [(ngModel)]="formObj.firstName"
+                placeholder="{{'First Name' | i18n}}">
+            </div>
+
+            <div class="form-group has-default">
+              <input type="text" class="form-control" name="lastName" [(ngModel)]="formObj.lastName"
+                placeholder="{{'Last Name' | i18n}}">
+            </div>
+
+            <div class="form-group has-default">
+              <input type="text" class="form-control" name="username" [(ngModel)]="formObj.username"
+                placeholder="{{'Username' | i18n}}">
+            </div>
+
+            <div class="form-group has-default">
+              <input type="text" class="form-control" name="email" [(ngModel)]="formObj.email"
+                placeholder="{{'Email' | i18n}}">
+            </div>
+
+            <div class="form-group has-default">
+              <input type="password" name="password" [(ngModel)]="formObj.password" placeholder="{{'Password' | i18n}}"
+                class="form-control">
+            </div>
+
+            <div class="form-group has-default">
+              <input type="password" name="cpassword" [(ngModel)]="formObj.cpassword"
+                placeholder="{{'Confirm Password' | i18n}}" class="form-control">
+            </div>
+
+            <div class="form-group has-default">
+              <input type="text" class="form-control" name="phone" [(ngModel)]="formObj.phone"
+                placeholder="{{'Phone' | i18n}}" prefix="+" mask="00 (000) 000 00 00" [showMaskTyped]="true"
+                [clearIfNotMatch]="true">
+            </div>
+
+            <div class="form-group has-default">
+              <input type="text" class="form-control" name="address" [(ngModel)]="formObj.address"
+                placeholder="{{'Address' | i18n}}">
+            </div>
+
+            <div class="form-group has-default">
+              <input type="text" class="form-control" name="city" [(ngModel)]="formObj.city"
+                placeholder="{{'City' | i18n}}">
+            </div>
+
+            <div class="form-group has-default">
+              <input type="text" class="form-control" name="country" [(ngModel)]="formObj.country"
+                placeholder="{{'Country' | i18n}}">
+            </div>
+
+            <div class="form-check">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" name="terms" [(ngModel)]="termsCheck">
+                <span class="form-check-sign"><span class="check"></span></span>I agree to the
+                <a href="#something">terms and conditions</a>.
+              </label>
+            </div>
+
+            <div class="text-center">
+              <button (click)="signup()" class="btn btn-primary btn-round mt-4"
+                [disabled]="isLocked">{{'Sign Up' | i18n}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

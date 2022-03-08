@@ -1,0 +1,14 @@
+<div id="at-wrapper" class="at-wrapper">
+  <app-header-cmp (updateToggle)="updateToggle($event)"></app-header-cmp>
+  <app-sidebar-cmp></app-sidebar-cmp>
+
+  <!-- <app-breadcrumbs-cmp></app-breadcrumbs-cmp> -->
+
+  <main id="at-main" class="at-main at-haslayout">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="footer text-center">
+    TMS - All Rights Reserved.
+  </footer>
+</div>

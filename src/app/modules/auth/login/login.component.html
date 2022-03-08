@@ -1,0 +1,30 @@
+<form class="at-formtheme at-formlogin" [formGroup]="loginForm" (ngSubmit)="login()">
+  <fieldset>
+    <span class="logo">
+      <img src="assets/img/rohlig.jpg">
+      <h4>RL-TMS Admin</h4>
+    </span>
+    <legend>Sign In</legend>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="text" name="username" class="form-control" placeholder="sample@crekey.com" formControlName="email">
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" name="password" class="form-control" placeholder="************" formControlName="password">
+    </div>
+    <div class="form-group">
+      <!-- <div class="at-checkbox">
+        <input type="checkbox" name="remember-me" id="at-rememberme">
+        <label for="at-rememberme">Remember me</label>
+      </div> -->
+      <a class="at-btnforgotpass" [routerLink]="['/auth/forget']">
+        <img class="at-themesvg" src="assets/img/svg-icons/lock-icon.svg">
+        <span>Forgot password?</span>
+      </a>
+    </div>
+    <div class="form-group">
+      <button class="at-btn at-btnborderradius">Login</button>
+    </div>
+  </fieldset>
+</form>

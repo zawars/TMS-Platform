@@ -1,0 +1,61 @@
+<div class="at-maincontentholder at-evaluations">
+  <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 float-left">
+    <div class="at-pagehead">
+      <h2>Create Organisation</h2>
+    </div>
+
+    <div class="at-contentbox">
+      <form class="at-formtheme at-formemployeedetail" [formGroup]="formGroup">
+        <div class="form-group">
+          <label>{{'Name' | i18n}} <sup>*</sup></label>
+          <input type="text" name="employee-name" class="form-control" placeholder="Organisation Name"
+            formControlName="name">
+        </div>
+
+        <div class="form-group">
+          <label>{{'Parent Organisation' | i18n}}</label>
+          <dx-select-box [dataSource]="organisationsList" displayExpr="name" valueExpr="id" [searchEnabled]="true"
+            [minSearchLength]="0" [searchExpr]="['name']" [showDropDownButton]="false" #organisationElem
+            (onSelectionChanged)="organisationValueChanged($event)" (onInput)="organisationOnInputEvent($event)"
+            formControlName="parent">
+          </dx-select-box>
+        </div>
+
+        <div class="form-group">
+          <label>{{'Description' | i18n}} <sup>*</sup></label>
+          <textarea name="description" cols="30" rows="6" formControlName="description"
+            placeholder="Description"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>{{'Currency' | i18n}} <sup>*</sup></label>
+          <dx-select-box [dataSource]="currencyList" displayExpr="name" valueExpr="id" formControlName="currency">
+          </dx-select-box>
+        </div>
+
+        <div class="form-group">
+          <label>{{'City' | i18n}} <sup>*</sup></label>
+          <dx-select-box [dataSource]="citiesList" displayExpr="name" valueExpr="id" [searchEnabled]="true"
+            [minSearchLength]="0" [searchExpr]="['name']" [showDropDownButton]="false" #cityElem
+            (onSelectionChanged)="cityValueChanged($event)" (onInput)="cityOnInputEvent($event)" formControlName="city">
+          </dx-select-box>
+        </div>
+
+        <div class="form-group">
+          <label>{{'Country' | i18n}} <sup>*</sup></label>
+          <dx-select-box [dataSource]="countryList" displayExpr="name" valueExpr="id" formControlName="country">
+          </dx-select-box>
+        </div>
+
+        <a class="at-btnadduser" href="javascript:void(0)" *ngIf="!isEdit && !isLocked" (click)="create()"><i
+            class="fa fa-save"></i></a>
+        <a class="at-btnadduser" href="javascript:void(0)" *ngIf="isEdit && !isLocked" (click)="update()"><i
+            class="fa fa-save"></i></a>
+        <a class="at-btnadduser" href="javascript:void(0)" *ngIf="isLocked">
+          <i class="fa fa-refresh fa-spin"></i>
+        </a>
+
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,428 @@
+<div class="at-maincontentholder at-evaluations">
+  <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 float-left">
+    <div class="at-pagehead">
+      <h2>Claim</h2>
+    </div>
+
+    <div class="at-contentbox">
+      <form class="at-formtheme at-formemployeedetail" [formGroup]="claimFormGroup">
+        <section>
+          <fieldset class="section-header">
+            <div class="form-group">
+              <label class="section-header-label">General</label>
+              <!-- <i class="fa fa-chevron-right section-header-icon" aria-hidden="true"></i> -->
+              <i class="fa fa-chevron-down section-header-icon" aria-hidden="true"></i>
+            </div>
+          </fieldset>
+
+          <fieldset class="section-body">
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group">
+                  <label>{{'Created Date & Time'| i18n}}</label>
+                  <dx-date-box [value]="now" [displayFormat]="'dd.MM.yyyy h:mm a'" type="datetime"
+                    [ngModelOptions]="{standalone: true}" [(ngModel)]="createdAt" [disabled]="true" width="100%"
+                    height="100%" openOnFieldClick="true">
+                  </dx-date-box>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Last Modified Date & Time'| i18n}}</label>
+                  <dx-date-box [value]="now" type="datetime" [displayFormat]="'dd.MM.yyyy h:mm a'"
+                    [ngModelOptions]="{standalone: true}" [(ngModel)]="updatedAt" [disabled]="true" width="100%"
+                    height="100%" openOnFieldClick="true">
+                  </dx-date-box>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'BOL Number'| i18n}} <sup>*</sup></label>
+                  <input type="text" class="form-control" name="bolNumber" formControlName="bolNumber"
+                    [ngClass]="{'valid': claimFormGroup.controls.bolNumber.value != '' && claimFormGroup.controls.bolNumber.value != null, 'error-2': claimFormGroup.controls.bolNumber.value == '' || claimFormGroup.controls.bolNumber.value == null}">
+                </div>
+
+                <div class="form-group">
+                  <label>{{'PRO Number'| i18n}} <sup>*</sup></label>
+                  <input type="text" class="form-control" name="proNumber" formControlName="proNumber">
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Claim Amount (USD)'| i18n}} <sup>*</sup></label>
+                  <input type="number" class="form-control" name="claimFor" formControlName="claimFor"
+                    [ngClass]="{'valid': claimFormGroup.controls.claimFor.value != '' && claimFormGroup.controls.claimFor.value != null, 'error-2': claimFormGroup.controls.claimFor.value == '' || claimFormGroup.controls.claimFor.value == null}">
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Claim Types' | i18n}} <sup>*</sup></label>
+                  <div class="row">
+                    <div class="col-sm-6" *ngFor="let type of claimTypes">
+                      <dx-check-box [(value)]="type.value" text="{{type.name}}" class="width100 margin-bot-15">
+                      </dx-check-box>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </fieldset>
+        </section>
+      </form>
+    </div>
+
+    <div class="at-contentbox">
+      <form class="at-formtheme at-formemployeedetail" [formGroup]="claimFormGroup">
+        <section>
+          <fieldset class="section-header">
+            <div class="form-group">
+              <label class="section-header-label">Claimant Information</label>
+              <!-- <i class="fa fa-chevron-right section-header-icon" aria-hidden="true"></i> -->
+              <i class="fa fa-chevron-down section-header-icon" aria-hidden="true"></i>
+            </div>
+          </fieldset>
+
+          <fieldset class="section-body">
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group">
+                  <label>{{'Claimant Name'| i18n}} <sup>*</sup></label>
+                  <input type="text" class="form-control" name="claimantName" formControlName="claimantName"
+                    [ngClass]="{'valid': claimFormGroup.controls.claimantName.value != '' && claimFormGroup.controls.claimantName.value != null, 'error-2': claimFormGroup.controls.claimantName.value == '' || claimFormGroup.controls.claimantName.value == null}">
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Address'| i18n}} <sup>*</sup></label>
+                  <input type="text" class="form-control" name="address1" formControlName="address1"
+                    placeholder="Address Line 1"
+                    [ngClass]="{'valid': claimFormGroup.controls.address1.value != '' && claimFormGroup.controls.address1.value != null, 'error-2': claimFormGroup.controls.address1.value == '' || claimFormGroup.controls.address1.value == null}">
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" name="address2" formControlName="address2"
+                    placeholder="Address Line 2">
+                </div>
+
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <label>{{'Postal Code & City'| i18n}} <sup>*</sup></label>
+                    </div>
+                    <div class="col-sm-6">
+                      <label>{{'State'| i18n}} <sup>*</sup></label>
+                    </div>
+                    <div class="col-sm-6"
+                      [ngClass]="{'dx-valid-2': claimFormGroup.controls.city.value != '' && claimFormGroup.controls.city.value != null, 'dx-error-2': claimFormGroup.controls.city.value == '' || claimFormGroup.controls.city.value == null}">
+                      <dx-select-box [dataSource]="citiesList" displayExpr="name" valueExpr="name"
+                        [searchEnabled]="true" [minSearchLength]="0" [searchExpr]="['name']"
+                        [showDropDownButton]="false" (onSelectionChanged)="cityValueChanged($event)"
+                        (onInput)="cityOnInputEvent($event)" [value]="cityPostalCodeValue?.name" fieldTemplate="field">
+                        <div *dxTemplate="let val of 'field'">
+                          <dx-text-box [value]="val && val.name | i18n" placeholder="Select">
+                          </dx-text-box>
+                        </div>
+                        <div *dxTemplate="let item of 'item'">
+                          <div>
+                            {{item.name | i18n}}
+                          </div>
+                        </div>
+                      </dx-select-box>
+                    </div>
+                    <div class="col-sm-6"
+                      [ngClass]="{'dx-valid-2': claimFormGroup.controls.state.value != '' && claimFormGroup.controls.state.value != null, 'dx-error-2': claimFormGroup.controls.state.value == '' || claimFormGroup.controls.state.value == null}">
+                      <dx-select-box [dataSource]="stateList" displayExpr="name" valueExpr="id" fieldTemplate="field"
+                        formControlName="state">
+                        <div *dxTemplate="let data of 'field'">
+                          <dx-text-box [value]="data && data.name | i18n" [readOnly]="true" placeholder="Select">
+                          </dx-text-box>
+                        </div>
+                        <div *dxTemplate="let data of 'item'">
+                          <div>
+                            {{data.name | i18n}}
+                          </div>
+                        </div>
+                      </dx-select-box>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <label>{{'Contact Phone'| i18n}} <sup>*</sup></label>
+                    </div>
+                    <div class="col-sm-6">
+                      <label>{{'Contact Fax'| i18n}}</label>
+                    </div>
+                    <div class="col-sm-6">
+                      <input type="text" class="form-control" name="phone" formControlName="contactNumber"
+                        [ngClass]="{'valid': claimFormGroup.controls.contactNumber.value != '' && claimFormGroup.controls.contactNumber.value != null, 'error-2': claimFormGroup.controls.contactNumber.value == '' || claimFormGroup.controls.contactNumber.value == null}">
+                    </div>
+                    <div class="col-sm-6">
+                      <input type="text" class="form-control" name="fax" formControlName="fax">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Contact Email'| i18n}} <sup>*</sup></label>
+                  <input type="text" class="form-control" name="email" formControlName="contactEmail"
+                    [ngClass]="{'valid': claimFormGroup.controls.contactEmail.value != '' && claimFormGroup.controls.contactEmail.value != null, 'error-2': claimFormGroup.controls.contactEmail.value == '' || claimFormGroup.controls.contactEmail.value == null}">
+                </div>
+
+              </div>
+            </div>
+          </fieldset>
+        </section>
+      </form>
+    </div>
+
+    <div class="at-contentbox">
+      <form class="at-formtheme at-formemployeedetail" [formGroup]="claimFormGroup">
+        <section>
+          <fieldset class="section-header">
+            <div class="form-group">
+              <label class="section-header-label">Explanation of Claim</label>
+              <!-- <i class="fa fa-chevron-right section-header-icon" aria-hidden="true"></i> -->
+              <i class="fa fa-chevron-down section-header-icon" aria-hidden="true"></i>
+            </div>
+          </fieldset>
+
+          <fieldset class="section-body">
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group at-documenthead">
+                  <span>{{'Detailed statement showing how amount of claim is determined (Number and description of articles, nature and extent of loss or damage, invoice price of articles, amount of claim, etc.)'| i18n}}</span>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Description'| i18n}}</label>
+                  <textarea maxlength="500" formControlName="description" cols="30" rows="3"
+                    [ngClass]="{'valid': claimFormGroup.controls.description.value != '' && claimFormGroup.controls.description.value != null, 'error-2': claimFormGroup.controls.description.value == '' || claimFormGroup.controls.description.value == null}"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <div class="at-documenthead">
+                    <label>{{'Upload Documents'| i18n}}</label>
+                    <span>
+                      {{'A copy of the invoice is required to process the claim.'| i18n}}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="at-documenthead">
+                    <label>{{'Supporting document examples include:'| i18n}}</label>
+                    <span>{{'- Original invoice' | i18n}} <sup style="color: red;">*</sup></span>
+                    <span>{{'- Original bill of lading' | i18n}}</span>
+                    <span>{{'- Copy of delivery receipt' | i18n}}</span>
+                    <span>{{'- Copy of inspection report (if available)' | i18n}}</span>
+                    <span>{{'- Photos of freight damage (if applicable)' | i18n}}</span>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="at-documenthead">
+                    <label>{{'Supporting file types include:'| i18n}}</label>
+                    <span>{{'- DOC/DOCX' | i18n}}</span>
+                    <span>{{'- PDF' | i18n}}</span>
+                    <span>{{'- PNG' | i18n}}</span>
+                    <span>{{'- JPEG' | i18n}}</span>
+                    <span>{{'- GIF' | i18n}}</span>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Documents'| i18n}}</label>
+                  <div class="row form-group" [ngClass]="{'show-attachment': showAttachmentViewDeleteButton('1')}">
+                    <div class="col-sm-7 attachment">
+                      <span id="attach1-span"></span>
+                    </div>
+                    <div class="col-sm-3">
+                      <a href="javascript:void(0);" class="at-btn at-btnupload at-btnwhite">
+                        <input type="file" name="logo" id="pmt-uploader1" class="form-control" style="display: none;"
+                          (change)="onFileSelected1($event)">
+                        <label for="pmt-uploader1">Upload</label>
+                      </a>
+                    </div>
+                    <div class="col-sm-1 attachment-icon">
+                      <i *ngIf="showAttachmentViewDeleteButton('1')" (click)="deleteAttachment('1')"
+                        class="fa fa-trash fa-2x attachment-deletion" style="top:auto;"></i>
+                    </div>
+                    <div class="col-sm-1 attachment-icon">
+                      <i *ngIf="showAttachmentViewDeleteButton('1')" (click)="openAttachment('1')"
+                        class="fa fa-eye fa-2x attachment-view" style="top:auto;"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="row form-group" [ngClass]="{'show-attachment': showAttachmentViewDeleteButton('2')}">
+                    <div class="col-sm-7 attachment">
+                      <span id="attach2-span"></span>
+                    </div>
+                    <div class="col-sm-3">
+                      <a href="javascript:void(0);" class="at-btn at-btnupload at-btnwhite">
+                        <input type="file" name="logo" id="pmt-uploader2" class="form-control" style="display: none;"
+                          (change)="onFileSelected2($event)">
+                        <label for="pmt-uploader2">Upload</label>
+                      </a>
+                    </div>
+                    <div class="col-sm-1 attachment-icon">
+                      <i *ngIf="showAttachmentViewDeleteButton('2')" (click)="deleteAttachment('2')"
+                        class="fa fa-trash fa-2x attachment-deletion" style="top:auto;"></i>
+                    </div>
+                    <div class="col-sm-1 attachment-icon">
+                      <i *ngIf="showAttachmentViewDeleteButton('2')" (click)="openAttachment('2')"
+                        class="fa fa-eye fa-2x attachment-view" style="top:auto;"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="row form-group" [ngClass]="{'show-attachment': showAttachmentViewDeleteButton('3')}">
+                    <div class="col-sm-7 attachment">
+                      <span id="attach3-span"></span>
+                    </div>
+                    <div class="col-sm-3">
+                      <a href="javascript:void(0);" class="at-btn at-btnupload at-btnwhite">
+                        <input type="file" name="logo" id="pmt-uploader3" class="form-control" style="display: none;"
+                          (change)="onFileSelected3($event)">
+                        <label for="pmt-uploader3">Upload</label>
+                      </a>
+                    </div>
+                    <div class="col-sm-1 attachment-icon">
+                      <i *ngIf="showAttachmentViewDeleteButton('3')" (click)="deleteAttachment('3')"
+                        class="fa fa-trash fa-2x attachment-deletion" style="top:auto;"></i>
+                    </div>
+                    <div class="col-sm-1 attachment-icon">
+                      <i *ngIf="showAttachmentViewDeleteButton('3')" (click)="openAttachment('3')"
+                        class="fa fa-eye fa-2x attachment-view" style="top:auto;"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="row form-group" [ngClass]="{'show-attachment': showAttachmentViewDeleteButton('4')}">
+                    <div class="col-sm-7 attachment">
+                      <span id="attach4-span"></span>
+                    </div>
+                    <div class="col-sm-3">
+                      <a href="javascript:void(0);" class="at-btn at-btnupload at-btnwhite">
+                        <input type="file" name="logo" id="pmt-uploader4" class="form-control" style="display: none;"
+                          (change)="onFileSelected4($event)">
+                        <label for="pmt-uploader4">Upload</label>
+                      </a>
+                    </div>
+                    <div class="col-sm-1 attachment-icon">
+                      <i *ngIf="showAttachmentViewDeleteButton('4')" (click)="deleteAttachment('4')"
+                        class="fa fa-trash fa-2x attachment-deletion" style="top:auto;"></i>
+                    </div>
+                    <div class="col-sm-1 attachment-icon">
+                      <i *ngIf="showAttachmentViewDeleteButton('4')" (click)="openAttachment('4')"
+                        class="fa fa-eye fa-2x attachment-view" style="top:auto;"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="row form-group" [ngClass]="{'show-attachment': showAttachmentViewDeleteButton('5')}">
+                    <div class="col-sm-7 attachment">
+                      <span id="attach5-span"></span>
+                    </div>
+                    <div class="col-sm-3">
+                      <a href="javascript:void(0);" class="at-btn at-btnupload at-btnwhite">
+                        <input type="file" name="logo" id="pmt-uploader5" class="form-control" style="display: none;"
+                          (change)="onFileSelected5($event)">
+                        <label for="pmt-uploader5">Upload</label>
+                      </a>
+                    </div>
+                    <div class="col-sm-1 attachment-icon">
+                      <i *ngIf="showAttachmentViewDeleteButton('5')" (click)="deleteAttachment('5')"
+                        class="fa fa-trash fa-2x attachment-deletion" style="top:auto;"></i>
+                    </div>
+                    <div class="col-sm-1 attachment-icon">
+                      <i *ngIf="showAttachmentViewDeleteButton('5')" (click)="openAttachment('5')"
+                        class="fa fa-eye fa-2x attachment-view" style="top:auto;"></i>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="form-group">
+                  <label>{{'Decision'| i18n}}</label>
+                  <dx-select-box [dataSource]="decisionList" formControlName="decision"></dx-select-box>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Status'| i18n}}</label>
+                  <dx-select-box [dataSource]="statusList" formControlName="status"></dx-select-box>
+                </div>
+
+              </div>
+            </div>
+          </fieldset>
+        </section>
+      </form>
+    </div>
+
+    <div class="at-contentbox">
+      <form class="at-formtheme at-formemployeedetail" [formGroup]="claimFormGroup">
+        <section>
+          <fieldset class="section-header">
+            <div class="form-group">
+              <label class="section-header-label">Comments</label>
+              <!-- <i class="fa fa-chevron-right section-header-icon" aria-hidden="true"></i> -->
+              <i class="fa fa-chevron-down section-header-icon" aria-hidden="true"></i>
+            </div>
+          </fieldset>
+
+          <fieldset class="section-body">
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group">
+                  <div class="form-section" style="max-width: 100%;">
+                    <div class="form-group">
+                      <dx-scroll-view [height]="390" direction="vertical" scrollByThumb="true"
+                        (onInitialized)="scrollToBottom($event)">
+                        <ul class="list-group">
+                          <li class="list-group-item comment-tile" *ngFor="let comment of commentsArr">
+                            <h4 class="comment-email">{{comment.user}}</h4>
+                            <h5 class="comment-text" style="word-break: break-word;">{{comment.message}}</h5>
+                            <span class="pull-right comment-time">{{comment.time | date: 'dd.MM.yyyy'}}</span>
+                            <span class="pull-right comment-time top-25">{{comment.time | date: 'h:mm a'}}</span>
+                          </li>
+                        </ul>
+                      </dx-scroll-view>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Comment'| i18n}}</label>
+                  <textarea maxlength="300" [ngModelOptions]="{standalone: true}" [(ngModel)]="commentMsg" cols="30"
+                    rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <button class="at-btn at-btnborderradius float-right" [disabled]="saveFlag" (click)="saveComments()">
+                    {{'Add Comment' | i18n}}
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <a class="at-btnadduser" *ngIf="!isEdit && !saveFlag" href="javascript:void(0)"
+                  (click)="saveClaim('New')"><i class="fa fa-save"></i></a>
+                <a class="at-btnadduser" *ngIf="isEdit && !saveFlag" href="javascript:void(0)"
+                  (click)="saveClaim('Edit')"><i class="fa fa-save"></i></a>
+                <a class="at-btnadduser" href="javascript:void(0)" *ngIf="saveFlag">
+                  <i class="fa fa-refresh fa-spin"></i>
+                </a>
+              </div>
+
+            </div>
+          </fieldset>
+        </section>
+      </form>
+    </div>
+
+  </div>
+</div>

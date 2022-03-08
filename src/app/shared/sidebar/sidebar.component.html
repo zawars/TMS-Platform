@@ -1,0 +1,93 @@
+<div id="at-sidebarwrapper" class="at-sidebarwrapper">
+  <div class="at-verticalscrollbar">
+    <div class="at-navigationarea">
+      <nav class="at-nav navbar-expand-md">
+        <button type="button" class="navbar-toggler at-btn" data-toggle="collapse" data-target="#at-navigation"
+          aria-controls="at-navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="at-navigation" class="collapse at-navigation">
+          <ul>
+            <li [routerLink]="'/dashboard'" [ngClass]="{'at-active': checkDashboardRoute()}">
+              <a href="javascript:void(0);">
+                <i class="icon-dashboard-icon"></i><span>Dashboard</span>
+              </a>
+            </li>
+            <li class="menu-item-has-children" [ngClass]="{'at-active': checkMasterDataRoute()}">
+              <a href="javascript:void(0);">
+                <i class="icon-menu" style="color:#9c9da4;"></i>
+                <span>Master Data</span>
+                <i class="icon-arrow_right_icon at-rightarrow"></i>
+              </a>
+              <ul class="sub-menu">
+                <li>
+                  <a [routerLink]="['/masterData/organisation']" href="javascript:void(0);">Organisation</a>
+                </li>
+                <li>
+                  <a [routerLink]="['/masterData/tradingPartners']" href="javascript:void(0);">Trading Partner</a>
+                </li>
+              </ul>
+            </li>
+            <li class="menu-item-has-children" [ngClass]="{'at-active': checkRatesRoute()}">
+              <a href="javascript:void(0);">
+                <i class="icon-coin-dollar" style="color:#9c9da4;"></i>
+                <span>Rate Management</span>
+                <i class="icon-arrow_right_icon at-rightarrow"></i>
+              </a>
+              <ul class="sub-menu">
+                <li>
+                  <a [routerLink]="['/rates/contracts']" href="javascript:void(0);">Contracts</a>
+                </li>
+                <li>
+                  <a [routerLink]="['/rates/markup']" href="javascript:void(0);">Markup</a>
+                </li>
+              </ul>
+            </li>
+            <li [routerLink]="['/orders']" [ngClass]="{'at-active': checkOrderRoute()}">
+              <a href="javascript:void(0);">
+                <i class="icon-clipboard" style="color:#9c9da4;"></i>
+                <span>Orders</span>
+              </a>
+            </li>
+            <li [routerLink]="['/claim']" [ngClass]="{'at-active': checkClaimRoute()}">
+              <a href="javascript:void(0);">
+                <i class="icon-notification" style="color:#9c9da4;"></i>
+                <span>Claims</span>
+              </a>
+            </li>
+            <li [routerLink]="['/pickup']" [ngClass]="{'at-active': checkPickupRoute()}">
+              <a href="javascript:void(0);">
+                <i class="icon-truck" style="color:#9c9da4;"></i>
+                <span>Pickup</span>
+              </a>
+            </li>
+            <li class="menu-item-has-children" [ngClass]="{'at-active': checkSettingsRoute()}">
+              <a href="javascript:void(0);">
+                <i class="icon-cogs" style="color:#9c9da4;"></i>
+                <span>Settings</span>
+                <i class="icon-arrow_right_icon at-rightarrow"></i>
+              </a>
+              <ul class="sub-menu">
+                <li>
+                  <a [routerLink]="['/settings/field-administration']" href="javascript:void(0);">
+                    Field Administration
+                  </a>
+                </li>
+                <li>
+                  <a [routerLink]="['/settings/user-management']" href="javascript:void(0);">
+                    User Management
+                  </a>
+                </li>
+                <li>
+                  <a [routerLink]="['/settings/translation']" href="javascript:void(0);">
+                    Translation Management
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </div>
+</div>

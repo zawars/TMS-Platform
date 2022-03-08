@@ -1,0 +1,1867 @@
+<!-- <form class="form-horizontal" [formGroup]="orderFormGroup">
+  <div class="row">
+
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Order</h4>
+
+          <div class="form-group m-t-20">
+            <label>{{'Customer'| i18n}}</label>
+            <dx-select-box [dataSource]="customersList" (onValueChanged)="customerChange($event)" displayExpr="name"
+              valueExpr="id" fieldTemplate="field" [(ngModel)]="customerId" [ngModelOptions]="{standalone: true}">
+              <div *dxTemplate="let val of 'field'">
+                <dx-text-box [value]="val && val.name | i18n" [readOnly]="true" placeholder="Select">
+                </dx-text-box>
+              </div>
+              <div *dxTemplate="let item of 'item'">
+                <div>
+                  {{item.name | i18n}}
+                </div>
+              </div>
+            </dx-select-box>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label>{{'Order#'| i18n}}</label>
+            </div>
+            <div class="col-sm-6">
+              <label>{{'Status'| i18n}}</label>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" name="orderNumber" formControlName="orderNumber"
+                placeholder="{{'Order#' | i18n}}">
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" name="status" formControlName="status"
+                placeholder="{{'Status' | i18n}}">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label>{{'Bol Number'| i18n}}</label>
+            </div>
+            <div class="col-sm-6">
+              <label>{{'Reference Number'| i18n}}</label>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" name="bolNumber" formControlName="bolNumber"
+                placeholder="{{'BOL Number' | i18n}}">
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" name="refNumValue" formControlName="refNumValue"
+                placeholder="{{'RefNum Value' | i18n}}">
+            </div>
+          </div>
+
+          <div class="form-group m-t-20">
+            <label>{{'Pickup Date'| i18n}}</label>
+            <dx-date-box formControlName="pickUpDate" [value]="now" type="datetime" width="100%" height="100%"
+              openOnFieldClick="true">
+            </dx-date-box>
+          </div>
+
+          <div class="form-group m-t-20">
+            <label>{{'Delivery Date'| i18n}}</label>
+            <dx-date-box formControlName="deliveryDate" [value]="now" type="datetime" width="100%" height="100%"
+              openOnFieldClick="true">
+            </dx-date-box>
+          </div>
+
+          <div class="form-group m-t-20">
+            <label>{{'Special Instructions'| i18n}}</label>
+            <textarea class="form-control" maxlength="150" formControlName="instructions"
+              placeholder="{{'Special Instructions' | i18n}}" cols="30" rows="3"></textarea>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+    </div>
+
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Pickup Details</h4>
+
+          <div class="form-group m-t-20">
+            <label>{{'Select Location'| i18n}}</label>
+            <dx-select-box [dataSource]="locationsList" (onValueChanged)="pickupLocationChange($event)"
+              displayExpr="name" valueExpr="id" fieldTemplate="field" formControlName="pickupLocation">
+              <div *dxTemplate="let val of 'field'">
+                <dx-text-box [value]="val && val.name | i18n" [readOnly]="true" placeholder="Select">
+                </dx-text-box>
+              </div>
+              <div *dxTemplate="let item of 'item'">
+                <div>
+                  {{item.name | i18n}}
+                </div>
+              </div>
+            </dx-select-box>
+          </div>
+
+          <div class="form-group m-t-20">
+            <label>{{'Shipper Name'| i18n}}</label>
+            <input type="text" class="form-control" name="shipperName" formControlName="shipperName"
+              placeholder="{{'Shipper Name' | i18n}}">
+          </div>
+
+          <div class="form-group m-t-20">
+            <label>{{'Address'| i18n}}</label>
+            <input type="text" class="form-control" name="pickupAddress" formControlName="pickupAddress"
+              placeholder="{{'Address' | i18n}}">
+          </div>
+
+          <div class="form-group m-t-20">
+            <label>{{'Postal Code & City'| i18n}}</label>
+            <dx-select-box [dataSource]="utilityService.citiesList" displayExpr="name" valueExpr="name"
+              [searchEnabled]="true" [minSearchLength]="0" [searchExpr]="['name']" [showDropDownButton]="false"
+              (onSelectionChanged)="cityValueChanged($event)" (onInput)="cityOnInputEvent($event)"
+              [value]="postalCodeAndCity.name" fieldTemplate="field">
+              <div *dxTemplate="let val of 'field'">
+                <dx-text-box [value]="val && val.name | i18n" placeholder="Select">
+                </dx-text-box>
+              </div>
+              <div *dxTemplate="let item of 'item'">
+                <div>
+                  {{item.name | i18n}}
+                </div>
+              </div>
+            </dx-select-box>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label>{{'State'| i18n}}</label>
+            </div>
+            <div class="col-sm-6">
+              <label>{{'Country'| i18n}}</label>
+            </div>
+            <div class="col-sm-6">
+              <dx-select-box [dataSource]="stateList" displayExpr="name" valueExpr="id" fieldTemplate="field"
+                formControlName="pickupState">
+                <div *dxTemplate="let data of 'field'">
+                  <dx-text-box [value]="data && data.name | i18n" [readOnly]="true" placeholder="Select">
+                  </dx-text-box>
+                </div>
+                <div *dxTemplate="let data of 'item'">
+                  <div>
+                    {{data.name | i18n}}
+                  </div>
+                </div>
+              </dx-select-box>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" name="pickupCountry" formControlName="pickupCountry"
+                placeholder="{{'Country' | i18n}}">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label>{{'Contact'| i18n}}</label>
+            </div>
+            <div class="col-sm-6">
+              <label>{{'Email'| i18n}}</label>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" name="pickupContact" formControlName="pickupContact"
+                placeholder="{{'Contact' | i18n}}">
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" name="pickupEmail" formControlName="pickupEmail"
+                placeholder="{{'Email' | i18n}}">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label>{{'Phone'| i18n}}</label>
+            </div>
+            <div class="col-sm-6">
+              <label>{{'Fax'| i18n}}</label>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" name="pickupPhone" formControlName="pickupPhone"
+                placeholder="{{'Phone' | i18n}}">
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" name="pickupFax" formControlName="pickupFax"
+                placeholder="{{'Fax' | i18n}}">
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">DropOff Details</h4>
+
+          <div class="form-group m-t-20">
+            <label>{{'Select Location'| i18n}}</label>
+            <dx-select-box [dataSource]="locationsList" displayExpr="name"
+              (onValueChanged)="dropoffLocationChange($event)" valueExpr="id" fieldTemplate="field"
+              formControlName="dropoffLocation">
+              <div *dxTemplate="let val of 'field'">
+                <dx-text-box [value]="val && val.name | i18n" [readOnly]="true" placeholder="Select">
+                </dx-text-box>
+              </div>
+              <div *dxTemplate="let item of 'item'">
+                <div>
+                  {{item.name | i18n}}
+                </div>
+              </div>
+            </dx-select-box>
+          </div>
+
+          <div class="form-group m-t-20">
+            <label>{{'Consignee Name'| i18n}}</label>
+            <input type="text" class="form-control" name="consigneeName" formControlName="consigneeName"
+              placeholder="{{'Consignee Name' | i18n}}">
+          </div>
+
+          <div class="form-group m-t-20">
+            <label>{{'Address'| i18n}}</label>
+            <input type="text" class="form-control" name="dropoffAddress" formControlName="dropoffAddress"
+              placeholder="{{'Address' | i18n}}">
+          </div>
+
+          <div class="form-group m-t-20">
+            <label>{{'Postal Code & City'| i18n}}</label>
+            <dx-select-box [dataSource]="dropOffCitiesList" displayExpr="name" valueExpr="name" [searchEnabled]="true"
+              [minSearchLength]="0" [searchExpr]="['name']" [showDropDownButton]="false"
+              (onSelectionChanged)="dropOffCityValueChanged($event)"
+              (onInput)="dropOffCityOnInputEvent($event, 'dropOff')" [value]="dropOffPostalCodeAndCity.name"
+              fieldTemplate="field">
+              <div *dxTemplate="let val of 'field'">
+                <dx-text-box [value]="val && val.name | i18n" placeholder="Select">
+                </dx-text-box>
+              </div>
+              <div *dxTemplate="let item of 'item'">
+                <div>
+                  {{item.name | i18n}}
+                </div>
+              </div>
+            </dx-select-box>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label>{{'State'| i18n}}</label>
+            </div>
+            <div class="col-sm-6">
+              <label>{{'Country'| i18n}}</label>
+            </div>
+            <div class="col-sm-6">
+              <dx-select-box [dataSource]="stateList" displayExpr="name" valueExpr="id" fieldTemplate="field"
+                formControlName="dropoffState">
+                <div *dxTemplate="let data of 'field'">
+                  <dx-text-box [value]="data && data.name | i18n" [readOnly]="true" placeholder="Select">
+                  </dx-text-box>
+                </div>
+                <div *dxTemplate="let data of 'item'">
+                  <div>
+                    {{data.name | i18n}}
+                  </div>
+                </div>
+              </dx-select-box>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" name="dropoffCountry" formControlName="dropoffCountry"
+                placeholder="{{'Country' | i18n}}">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label>{{'Contact'| i18n}}</label>
+            </div>
+            <div class="col-sm-6">
+              <label>{{'Email'| i18n}}</label>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" name="dropoffContact" formControlName="dropoffContact"
+                placeholder="{{'Contact' | i18n}}">
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" name="dropoffEmail" formControlName="dropoffEmail"
+                placeholder="{{'Email' | i18n}}">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label>{{'Phone'| i18n}}</label>
+            </div>
+            <div class="col-sm-6">
+              <label>{{'Fax'| i18n}}</label>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" name="dropoffPhone" formControlName="dropoffPhone"
+                placeholder="{{'Phone' | i18n}}">
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" name="dropoffFax" formControlName="dropoffFax"
+                placeholder="{{'Fax' | i18n}}">
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Freight</h4>
+
+          <div class="form-group row">
+            <div class="col-md-6">
+              <button class="btn btn-info" (click)="openAddProductPopup(popUpProduct)"> <i
+                  class="fa fa-plus at-margin-right"></i>
+                Product</button>
+            </div>
+            <div class="col-md-6">
+              <button class="btn btn-info pull-right" (click)="addFreight()"> <i class="fa fa-plus at-margin-right"></i>
+                Add</button>
+            </div>
+          </div>
+
+          <div class="form-group row pull-left">
+            <dx-data-grid [dataSource]="freightList" class="dx-table pull-right" wordWrapEnabled="true"
+              [columnAutoWidth]="true">
+              <dxo-editing mode="cell" [allowUpdating]="true"> </dxo-editing>
+              <dxo-master-detail [enabled]="true" dataField="frId" [template]="'template'" keyExpr="frId">
+              </dxo-master-detail>
+
+              <dxi-column caption="{{'Product' | i18n}}" width="200" cellTemplate="productTemplate" hint="Product">
+              </dxi-column>
+              <dxi-column dataField="huCount" cellTemplate="huCountTemplate" caption="{{'HU Count' | i18n}}"
+                dataType="string">
+              </dxi-column>
+              <dxi-column width="120" cellTemplate="handlingUnitTemplate" caption="{{'Handling Unit' | i18n}}"
+                hint="Handling Unit" dataType="string">
+              </dxi-column>
+              <dxi-column dataField="pieces" cellTemplate="piecesTemplate" caption="{{'Pieces' | i18n}}"
+                dataType="number">
+              </dxi-column>
+              <dxi-column dataField="weight" cellTemplate="weightTemplate" caption="{{'Weight' | i18n}}"
+                dataType="number">
+              </dxi-column>
+              <dxi-column cellTemplate="weightUnitTemplate" width="100" caption="{{'Weight Unit' | i18n}}"
+                hint="Weight Unit" dataType="string">
+              </dxi-column>
+              <dxi-column dataField="length" cellTemplate="lengthTemplate" caption="{{'L' | i18n}}" dataType="number">
+              </dxi-column>
+              <dxi-column dataField="width" cellTemplate="widthTemplate" caption="{{'W' | i18n}}" dataType="number">
+              </dxi-column>
+              <dxi-column dataField="height" cellTemplate="heightTemplate" caption="{{'H' | i18n}}" dataType="number">
+              </dxi-column>
+              <dxi-column cellTemplate="lengthUnitTemplate" width="100" caption="{{'Length Unit' | i18n}}"
+                hint="Length Unit" dataType="string">
+              </dxi-column>
+              <dxi-column dataField="cube" cellTemplate="cubeTemplate" caption="{{'Cube' | i18n}}" dataType="number">
+              </dxi-column>
+              <dxi-column cellTemplate="cubeUnitTemplate" width="100" caption="{{'Cube Unit' | i18n}}" hint="Cube Unit"
+                dataType="string">
+              </dxi-column>
+              <dxi-column dataField="density" cellTemplate="densityTemplate" caption="{{'Density' | i18n}}"
+                dataType="string">
+              </dxi-column>
+              <dxi-column caption="{{'Action' | i18n}}" cellTemplate="actionTemplate" width="80"></dxi-column>
+
+              <div *dxTemplate="let data of 'template'">
+                <div class="row row-padding">
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <p class="heading heading-margin-bottom">{{'Description' | i18n}}</p>
+                      <input type="text" class="form-control grid-input-box" [ngModelOptions]="{standalone: true}"
+                        [(ngModel)]="data.key.description" name="description" #description>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <p class="heading heading-margin-bottom">{{'NMFC' | i18n}}</p>
+                      <input type="text" class="form-control grid-input-box" [ngModelOptions]="{standalone: true}"
+                        [(ngModel)]="data.key.nmfc" name="nmfc" #huCount>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <p class="heading heading-margin-bottom">{{'Class Type' | i18n}}</p>
+                      <select name="product" class="form-control select-box grid-input-box"
+                        [ngModelOptions]="{standalone: true}" [(ngModel)]="data.key.classType">
+                        <option value="" disabled selected>Select</option>
+                        <option *ngFor="let class of classList" value="{{class?.id}}">{{class?.name}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <p class="heading heading-margin-bottom">{{'Hazmat UN#' | i18n}}</p>
+                      <input type="text" class="form-control grid-input-box" [ngModelOptions]="{standalone: true}"
+                        [(ngModel)]="data.key.hazmatUN" name="hazmatUN" #hazmatUN>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div *dxTemplate="let data of 'productTemplate'" class="center">
+                <span class="grid-dropdown">
+                  <select name="product" class="form-control grid-select-box" [ngModelOptions]="{standalone: true}"
+                    [(ngModel)]="data.key.product" (change)="productChange($event, data)">
+                    <option value="" disabled selected>Select</option>
+                    <option *ngFor="let product of productList" value="{{product?.id}}">{{product?.name}}</option>
+                  </select>
+                </span>
+              </div>
+
+              <div *dxTemplate="let data of 'handlingUnitTemplate'" class="center">
+                <span class="grid-dropdown">
+                  <select name="handlingUnit" class="form-control grid-select-box" [ngModelOptions]="{standalone: true}"
+                    [(ngModel)]="data.key.handlingUnit">
+                    <option value="" disabled selected>Select</option>
+                    <option *ngFor="let handlingUnit of handlingUnitList" value="{{handlingUnit?.id}}">
+                      {{handlingUnit?.name}}
+                    </option>
+                  </select>
+                </span>
+              </div>
+
+              <div *dxTemplate="let data of 'weightUnitTemplate'" class="center">
+                <span class="grid-dropdown">
+                  <select name="weightUnit" class="form-control grid-select-box" [ngModelOptions]="{standalone: true}"
+                    [(ngModel)]="data.key.weightUnit">
+                    <option value="" disabled selected>Select</option>
+                    <option *ngFor="let weightUnit of weightUnitList" value="{{weightUnit?.id}}">{{weightUnit?.name}}
+                    </option>
+                  </select>
+                </span>
+              </div>
+
+              <div *dxTemplate="let data of 'lengthUnitTemplate'" class="center">
+                <span class="grid-dropdown">
+                  <select name="lengthUnit" class="form-control grid-select-box" [ngModelOptions]="{standalone: true}"
+                    [(ngModel)]="data.key.lengthUnit">
+                    <option value="" disabled selected>Select</option>
+                    <option *ngFor="let lengthUnit of lengthUnitList" value="{{lengthUnit?.id}}">{{lengthUnit?.name}}
+                    </option>
+                  </select>
+                </span>
+              </div>
+
+              <div *dxTemplate="let data of 'cubeUnitTemplate'" class="center">
+                <span class="grid-dropdown">
+                  <select name="cubeUnit" class="form-control grid-select-box" [ngModelOptions]="{standalone: true}"
+                    [(ngModel)]="data.key.cubeUnit">
+                    <option value="" disabled selected>Select</option>
+                    <option *ngFor="let cubeUnit of cubeUnitList" value="{{cubeUnit?.id}}">{{cubeUnit?.name}}</option>
+                  </select>
+                </span>
+              </div>
+
+              <div *dxTemplate="let data of 'huCountTemplate'" class="text-center">
+                <input type="text" class="form-control grid-input-box" [ngModelOptions]="{standalone: true}"
+                  [(ngModel)]="data.key.huCount" name="huCount" #huCount>
+              </div>
+
+              <div *dxTemplate="let data of 'piecesTemplate'" class="text-center">
+                <input type="text" class="form-control grid-input-box" [ngModelOptions]="{standalone: true}"
+                  [(ngModel)]="data.key.pieces" name="pieces" #pieces>
+              </div>
+
+              <div *dxTemplate="let data of 'weightTemplate'" class="text-center">
+                <input type="text" class="form-control grid-input-box" [ngModelOptions]="{standalone: true}"
+                  [(ngModel)]="data.key.weight" name="weight" #weight>
+              </div>
+
+              <div *dxTemplate="let data of 'lengthTemplate'" class="text-center">
+                <input type="text" class="form-control grid-input-box" [ngModelOptions]="{standalone: true}"
+                  [(ngModel)]="data.key.length" name="length" #length>
+              </div>
+
+              <div *dxTemplate="let data of 'widthTemplate'" class="text-center">
+                <input type="text" class="form-control grid-input-box" [ngModelOptions]="{standalone: true}"
+                  [(ngModel)]="data.key.width" name="width" #width>
+              </div>
+
+              <div *dxTemplate="let data of 'heightTemplate'" class="text-center">
+                <input type="text" class="form-control grid-input-box" [ngModelOptions]="{standalone: true}"
+                  [(ngModel)]="data.key.height" name="height" #height>
+              </div>
+
+              <div *dxTemplate="let data of 'cubeTemplate'" class="text-center">
+                <input type="text" class="form-control grid-input-box" [ngModelOptions]="{standalone: true}"
+                  [(ngModel)]="data.key.cube" name="cube" #cube>
+              </div>
+
+              <div *dxTemplate="let data of 'densityTemplate'" class="text-center">
+                <input type="text" class="form-control grid-input-box" [ngModelOptions]="{standalone: true}"
+                  [(ngModel)]="data.key.density" name="density" #density>
+              </div>
+
+              <div *dxTemplate="let data of 'actionTemplate'" class="text-center">
+                <span (click)="removeFreight(data)" class="delete"><span class="material-icons cross-btn">
+                    clear
+                  </span></span>
+              </div>
+
+            </dx-data-grid>
+          </div>
+
+
+        </div>
+        <div class="border-top">
+          <div class="card-body">
+            <button class="btn btn-info" (click)="getRates()">Get Rates</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Rates</h4>
+
+          <div class="form-group row pull-left">
+            <dx-data-grid [dataSource]="rateList" class="dx-table pull-right" [columnAutoWidth]="true">
+              <dxo-paging [enabled]="true" [pageSize]="20"></dxo-paging>
+              <dxi-column dataField="vendor.logo.path" cellTemplate="logoTemplate" caption="{{'Vendor' | i18n}}">
+              </dxi-column>
+              <dxi-column dataField="pieces" width="120" caption="{{'Pieces' | i18n}}" hint="Pieces" dataType="number">
+              </dxi-column>
+              <dxi-column dataField="weight" width="120" caption="{{'Weight' | i18n}}" hint="Weight" dataType="number">
+              </dxi-column>
+              <dxi-column dataField="distance" caption="{{'Distance' | i18n}}" hint="Distance" dataType="number">
+              </dxi-column>
+              <dxi-column dataField="service" caption="{{'Service' | i18n}}" hint="Service" dataType="string">
+              </dxi-column>
+              <dxi-column dataField="appliedRate" width="120" cellTemplate="rateTemplate"
+                caption="{{'Freight Charge' | i18n}}" hint="Freight Charge" dataType="number">
+              </dxi-column>
+              <dxi-column dataField="otherCharges" caption="{{'Other Charges' | i18n}}" hint="Other Charges"
+                dataType="number">
+              </dxi-column>
+              <dxi-column dataField="totalUSD" cellTemplate="totalUSDTemplate" caption="{{'Total USD' | i18n}}"
+                hint="Total USD" dataType="number">
+              </dxi-column>
+              <dxi-column caption="{{'Action' | i18n}}" cellTemplate="actionTemplate" width="80"></dxi-column>
+
+              <div *dxTemplate="let data of 'logoTemplate'">
+                <img src="{{BASE_PATH + '/' + data.key?.vendor?.logo?.fileName}}" height="75" width="75"
+                  class="img-responsive" alt="">
+                <br>
+                <span>{{data.key?.vendor?.name}}</span>
+              </div>
+
+              <div *dxTemplate="let data of 'rateTemplate'">
+                <span> {{data.key?.appliedRate || 0}} </span>
+              </div>
+
+              <div *dxTemplate="let data of 'totalUSDTemplate'">
+                <b>
+                  <span> {{(data.key?.appliedRate || 0) + (data.key?.otherCharges || 0)}} </span>
+                </b>
+              </div>
+
+              <div *dxTemplate="let data of 'actionTemplate'">
+                <span>
+                  <button [disabled]="isSelect" (click)="selectRate(data.key.id)"
+                    class="btn btn-info line-height btn-select">{{'Select' | i18n}}</button>
+                </span>
+              </div>
+            </dx-data-grid>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Services</h4>
+
+          <div class="form-group row">
+            <div class="col-sm-2" *ngFor="let service of serviceList">
+              <dx-check-box [(value)]="service.value" text="{{service.name}}" class="width100"></dx-check-box>
+            </div>
+          </div>
+
+        </div>
+        <div class="border-top">
+          <div class="card-body">
+            <button *ngIf="isSelect" class="btn btn-primary btn-margin-right" (click)="placeOrder()">
+              {{'Order' | i18n}}
+            </button>
+            <button *ngIf="!isEdit && isSelect" class="btn btn-primary" (click)="saveOrder()">
+              {{'Save Order' | i18n}}
+            </button>
+            <button *ngIf="isEdit && isSelect" class="btn btn-primary" (click)="editOrder()">
+              {{'Edit Order' | i18n}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-12" *ngIf="orderObj?.invoices?.length > 0">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Invoices</h4>
+
+          <div class="form-group row pull-left">
+            <dx-data-grid [dataSource]="orderObj?.invoices[0]?.carrierInvoice" class="dx-table pull-right"
+              [columnAutoWidth]="true">
+              <dxo-paging [enabled]="true" [pageSize]="20"></dxo-paging>
+              <dxi-column dataField="invoiceNo" caption="{{'Invoice No' | i18n}}" dataType="string">
+              </dxi-column>
+              <dxi-column dataField="invoiceDate" cellTemplate="dateTemplate" caption="{{'Invoice Date' | i18n}}">
+              </dxi-column>
+              <dxi-column dataField="version" cellTemplate="versionTemplate" caption="{{'Version' | i18n}}">
+              </dxi-column>
+              <dxi-column dataField="status" caption="{{'Status' | i18n}}" dataType="string">
+              </dxi-column>
+              <dxi-column caption="{{'Action' | i18n}}" cellTemplate="actionTemplate" width="80"></dxi-column>
+
+              <div *dxTemplate="let data of 'dateTemplate'">
+                <span> {{data.key?.invoiceDate | date:'dd.MM.yyyy'}} </span>
+              </div>
+
+              <div *dxTemplate="let data of 'versionTemplate'">
+                <span> {{data.rowIndex + 1}} </span>
+              </div>
+
+              <div *dxTemplate="let data of 'actionTemplate'">
+                <a class="edit" (click)="openCarrierInvoice(popUp, data.key)">
+                  <span class="fa fa-eye at-margin-right"></span>
+                  <span>{{'View' | i18n}}</span>
+                </a>
+              </div>
+            </dx-data-grid>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6" *ngIf="orderObj?.invoices?.length > 0">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Calculated as per Rate Sheet</h4>
+
+          <div class="form-group row">
+            <dx-data-grid [dataSource]="originalQuotationRateSheet" class="dx-table">
+              <dxo-paging [enabled]="false"></dxo-paging>
+              <dxo-editing mode="cell" [allowUpdating]="false">
+              </dxo-editing>
+              <dxi-column dataField="item" caption="{{'Items' | i18n}}" [allowEditing]="false" hint="Items"
+                dataType="string" columnAutoWidth="true" [allowSorting]="false"></dxi-column>
+              <dxi-column dataField="amount" caption="{{'Amount' | i18n}}" dataType="number" hint="Amount"
+                [allowSorting]="false">
+              </dxi-column>
+              <dxi-column dataField="currency" caption="Currency" [allowEditing]="false" hint="Currency"
+                dataType="string" columnAutoWidth="true" [allowSorting]="false"></dxi-column>
+            </dx-data-grid>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6" *ngIf="orderObj?.invoices?.length > 0">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Carrier Invoice (Cost)</h4>
+
+          <div class="form-group row">
+            <dx-data-grid [dataSource]="specificCarrierInvoice" class="dx-table">
+              <dxo-paging [enabled]="false"></dxo-paging>
+              <dxo-editing mode="cell" [allowUpdating]="false">
+              </dxo-editing>
+              <dxi-column dataField="item" caption="{{'Items' | i18n}}" hint="Items" dataType="string"
+                columnAutoWidth="true" [allowSorting]="false"></dxi-column>
+              <dxi-column dataField="amount" caption="{{'Amount' | i18n}}" dataType="number" hint="Amount"
+                [allowSorting]="false">
+              </dxi-column>
+              <dxi-column dataField="currency" caption="Currency" hint="Currency" dataType="string"
+                columnAutoWidth="true" [allowSorting]="false"></dxi-column>
+            </dx-data-grid>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6" *ngIf="orderObj?.invoices?.length > 0">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Customer Quotation</h4>
+
+          <div class="form-group row">
+            <dx-data-grid [dataSource]="originalQuotationMargin" class="dx-table">
+              <dxo-paging [enabled]="false"></dxo-paging>
+              <dxo-editing mode="cell" [allowUpdating]="false">
+              </dxo-editing>
+              <dxi-column dataField="item" caption="{{'Items' | i18n}}" [allowEditing]="false" hint="Items"
+                dataType="string" columnAutoWidth="true" [allowSorting]="false"></dxi-column>
+              <dxi-column dataField="amount" caption="{{'Amount' | i18n}}" dataType="number" hint="Amount"
+                [allowSorting]="false">
+              </dxi-column>
+              <dxi-column dataField="currency" caption="Currency" [allowEditing]="false" hint="Currency"
+                dataType="string" columnAutoWidth="true" [allowSorting]="false"></dxi-column>
+            </dx-data-grid>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6" *ngIf="orderObj?.invoices?.length > 0">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Customer Invoice (Sales)</h4>
+
+          <div class="form-group row pull-right">
+            <button *ngIf="invoiceStatus == 'Accept' || invoiceStatus == 'Cancel'" class="btn btn-info btn-sm"
+              (click)="addCustomerBilling()">
+              <i class="fa fa-plus at-margin-right"></i>
+              {{'Add'}}
+            </button>
+          </div>
+
+          <div class="form-group row pull-left">
+            <dx-data-grid [dataSource]="customerBilling" class="dx-table">
+              <dxo-paging [enabled]="false"></dxo-paging>
+              <dxo-editing mode="cell" [allowUpdating]="true">
+              </dxo-editing>
+              <dxi-column dataField="item" caption="{{'Items' | i18n}}" [allowEditing]="true" hint="Items"
+                dataType="string" columnAutoWidth="true" [allowSorting]="false"></dxi-column>
+              <dxi-column dataField="amount" caption="{{'Amount' | i18n}}" dataType="number" hint="Amount"
+                [allowSorting]="false">
+              </dxi-column>
+              <dxi-column dataField="currency" caption="Currency" [allowEditing]="true" hint="Currency"
+                dataType="string" columnAutoWidth="true" [allowSorting]="false"></dxi-column>
+            </dx-data-grid>
+          </div>
+
+        </div>
+
+        <div class="border-top">
+          <div class="card-body">
+            <button *ngIf="invoiceStatus == 'Accept' || invoiceStatus == 'Cancel'" class="btn btn-primary btn-md"
+              (click)="createInvoice('Reject')">
+              {{'Create Invoice'}}
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</form> -->
+
+
+
+
+
+
+
+<div class="at-maincontentholder at-evaluations">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 float-left">
+    <div class="at-pagehead">
+      <h2>Order</h2>
+    </div>
+
+    <form class="at-formtheme at-formemployeedetail" [formGroup]="orderFormGroup">
+      <div class="row">
+
+        <div class="col-sm-6">
+          <div class="at-contentbox">
+
+            <section>
+              <fieldset class="section-header">
+                <div class="form-group">
+                  <label class="section-header-label">General</label>
+                  <!-- <i class="fa fa-chevron-right section-header-icon" aria-hidden="true"></i> -->
+                  <i class="fa fa-chevron-down section-header-icon" aria-hidden="true"></i>
+                </div>
+              </fieldset>
+
+              <fieldset class="section-body">
+                <div class="row">
+                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group">
+                      <label>{{'Customer'| i18n}}</label>
+                      <dx-select-box [dataSource]="customersList" displayExpr="name" valueExpr="id"
+                        [searchEnabled]="true" name="customer" [minSearchLength]="0" [searchExpr]="['name']"
+                        [showDropDownButton]="false" (onSelectionChanged)="onCustomerSelectionChanged($event)"
+                        (onInput)="clientOnInputEvent($event, 'Customer')" [value]="customerId">
+                      </dx-select-box>
+                    </div>
+                  </div>
+
+                  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group">
+                      <label>Order#</label>
+                      <input type="text" class="form-control" name="orderNumber" formControlName="orderNumber">
+                    </div>
+                  </div>
+
+                  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group">
+                      <label>Status</label>
+                      <input type="text" class="form-control" name="status" formControlName="status">
+                    </div>
+                  </div>
+
+                  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group">
+                      <label>Bol Number</label>
+                      <input type="text" class="form-control" name="bolNumber" formControlName="bolNumber">
+                    </div>
+                  </div>
+
+                  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group">
+                      <label>Reference Number</label>
+                      <input type="text" class="form-control"
+                        [ngClass]="{'valid': orderFormGroup.controls.refNumValue.value != '' && orderFormGroup.controls.refNumValue.value != null, 'error-2': orderFormGroup.controls.refNumValue.value == '' || orderFormGroup.controls.refNumValue.value == null}"
+                        name="refNumValue" formControlName="refNumValue">
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="form-group">
+                  <label>Pickup Date</label>
+                  <dx-date-box formControlName="pickUpDate" [value]="now" type="datetime" width="100%" height="100%"
+                    openOnFieldClick="true">
+                  </dx-date-box>
+                </div>
+
+                <div class="form-group">
+                  <label>Delivery Date</label>
+                  <dx-date-box formControlName="deliveryDate" [value]="now" type="datetime" width="100%" height="100%"
+                    openOnFieldClick="true">
+                  </dx-date-box>
+                </div>
+
+                <div class="form-group">
+                  <label>Special Instructions</label>
+                  <textarea maxlength="150" formControlName="instructions" cols="30" rows="7"
+                    style="min-height: 155px;"></textarea>
+                </div>
+
+              </fieldset>
+            </section>
+
+          </div>
+        </div>
+
+
+        <div class="col-sm-6"> </div>
+        <div class="clearfix"> </div>
+
+
+        <div class="col-sm-6">
+          <div class="at-contentbox">
+            <section>
+              <fieldset class="section-header">
+                <div class="form-group">
+                  <label class="section-header-label">Pickup Details</label>
+                  <!-- <i class="fa fa-chevron-right section-header-icon" aria-hidden="true"></i> -->
+                  <i class="fa fa-chevron-down section-header-icon" aria-hidden="true"></i>
+                </div>
+              </fieldset>
+
+              <fieldset class="section-body">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label>Select Location</label>
+                      <dx-select-box [dataSource]="locationsList" (onValueChanged)="pickupLocationChange($event)"
+                        displayExpr="name" valueExpr="id" fieldTemplate="field" formControlName="pickupLocation">
+                        <div *dxTemplate="let val of 'field'">
+                          <dx-text-box [value]="val && val.name | i18n" [readOnly]="true"></dx-text-box>
+                        </div>
+                        <div *dxTemplate="let item of 'item'">
+                          <div>
+                            {{item.name | i18n}}
+                          </div>
+                        </div>
+                      </dx-select-box>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label>Shipper Name</label>
+                      <input type="text" class="form-control" name="shipperName" formControlName="shipperName">
+                    </div>
+                  </div>
+
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label>Address</label>
+                      <input type="text" class="form-control" name="pickupAddress" formControlName="pickupAddress">
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label>Postal Code & City</label>
+                      <dx-select-box [dataSource]="pickupCitiesList" displayExpr="name" valueExpr="name"
+                        [searchEnabled]="true" [minSearchLength]="0" [searchExpr]="['name']"
+                        [showDropDownButton]="false" [value]="pickupCityPostalCodeValue?.name"
+                        (onSelectionChanged)="pickupCityValueChanged($event)"
+                        (onInput)="pickupCityOnInputEvent($event, 'pickup')">
+                      </dx-select-box>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label>State</label>
+                      <dx-select-box [dataSource]="pickupStatesList" displayExpr="name" valueExpr="id"
+                        fieldTemplate="field" formControlName="pickupState">
+                        <div *dxTemplate="let val of 'field'">
+                          <dx-text-box [value]="val && val.name | i18n" [readOnly]="true"></dx-text-box>
+                        </div>
+                        <div *dxTemplate="let item of 'item'">
+                          <div>
+                            {{item.name | i18n}}
+                          </div>
+                        </div>
+                      </dx-select-box>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label>Country</label>
+                      <dx-select-box [dataSource]="countryList" displayExpr="name" valueExpr="id" fieldTemplate="field"
+                        formControlName="pickupCountry">
+                        <div *dxTemplate="let val of 'field'">
+                          <dx-text-box [value]="val && val.name | i18n" [readOnly]="true"></dx-text-box>
+                        </div>
+                        <div *dxTemplate="let item of 'item'">
+                          <div>
+                            {{item.name | i18n}}
+                          </div>
+                        </div>
+                      </dx-select-box>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label>Contact Name</label>
+                      <input type="text" class="form-control" name="pickupContact" formControlName="pickupContact">
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label>Email</label>
+                      <input type="text" class="form-control" name="pickupEmail" formControlName="pickupEmail">
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label>Phone</label>
+                      <input type="text" class="form-control" name="pickupPhone" formControlName="pickupPhone">
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label>Fax</label>
+                      <input type="text" class="form-control" name="pickupFax" formControlName="pickupFax">
+                    </div>
+                  </div>
+
+                </div>
+
+              </fieldset>
+            </section>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="at-contentbox">
+            <section>
+              <fieldset class="section-header">
+                <div class="form-group">
+                  <label class="section-header-label">DropOff Details</label>
+                  <!-- <i class="fa fa-chevron-right section-header-icon" aria-hidden="true"></i> -->
+                  <i class="fa fa-chevron-down section-header-icon" aria-hidden="true"></i>
+                </div>
+              </fieldset>
+
+              <fieldset class="section-body">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label>Select Location</label>
+                      <dx-select-box [dataSource]="locationsList" displayExpr="name"
+                        (onValueChanged)="dropoffLocationChange($event)" valueExpr="id" fieldTemplate="field"
+                        formControlName="dropoffLocation">
+                        <div *dxTemplate="let val of 'field'">
+                          <dx-text-box [value]="val && val.name | i18n" [readOnly]="true"></dx-text-box>
+                        </div>
+                        <div *dxTemplate="let item of 'item'">
+                          <div>
+                            {{item.name | i18n}}
+                          </div>
+                        </div>
+                      </dx-select-box>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label>Consignee Name</label>
+                      <input type="text" class="form-control" name="consigneeName" formControlName="consigneeName">
+                    </div>
+                  </div>
+
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label>Address</label>
+                      <input type="text" class="form-control" name="dropoffAddress" formControlName="dropoffAddress">
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label>Postal Code & City</label>
+                      <dx-select-box [dataSource]="dropOffCitiesList" displayExpr="name" valueExpr="name"
+                        [searchEnabled]="true" [minSearchLength]="0" [searchExpr]="['name']"
+                        [showDropDownButton]="false" [value]="dropoffCityPostalCodeValue?.name"
+                        (onSelectionChanged)="dropoffCityValueChanged($event)"
+                        (onInput)="dropoffCityOnInputEvent($event, 'dropoff')">
+                      </dx-select-box>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label>State</label>
+                      <dx-select-box [dataSource]="dropoffStatesList" displayExpr="name" valueExpr="id"
+                        fieldTemplate="field" formControlName="dropoffState">
+                        <div *dxTemplate="let val of 'field'">
+                          <dx-text-box [value]="val && val.name | i18n" [readOnly]="true"></dx-text-box>
+                        </div>
+                        <div *dxTemplate="let item of 'item'">
+                          <div>
+                            {{item.name | i18n}}
+                          </div>
+                        </div>
+                      </dx-select-box>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label>Country</label>
+                      <dx-select-box [dataSource]="countryList" displayExpr="name" valueExpr="id" fieldTemplate="field"
+                        formControlName="dropoffCountry">
+                        <div *dxTemplate="let val of 'field'">
+                          <dx-text-box [value]="val && val.name | i18n" [readOnly]="true"></dx-text-box>
+                        </div>
+                        <div *dxTemplate="let item of 'item'">
+                          <div>
+                            {{item.name | i18n}}
+                          </div>
+                        </div>
+                      </dx-select-box>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label>Contact Name</label>
+                      <input type="text" class="form-control" name="dropoffContact" formControlName="dropoffContact">
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label>Email</label>
+                      <input type="text" class="form-control" name="dropoffEmail" formControlName="dropoffEmail">
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label>Phone</label>
+                      <input type="text" class="form-control" name="dropoffPhone" formControlName="dropoffPhone">
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label>Fax</label>
+                      <input type="text" class="form-control" name="dropoffFax" formControlName="dropoffFax">
+                    </div>
+                  </div>
+
+                </div>
+
+              </fieldset>
+            </section>
+          </div>
+        </div>
+
+      </div>
+    </form>
+
+    <div class="col-sm-12">
+      <div class="at-contentbox">
+        <form class="at-formtheme at-formemployeedetail">
+          <section>
+            <fieldset class="section-header">
+              <div class="form-group">
+                <label class="section-header-label">Freight</label>
+                <!-- <i class="fa fa-chevron-right section-header-icon" aria-hidden="true"></i> -->
+                <i class="fa fa-chevron-down section-header-icon" aria-hidden="true"></i>
+              </div>
+            </fieldset>
+
+            <fieldset class="section-body">
+              <div class="form-group">
+                <button *ngIf="!isPlaced" type="button" (click)="addFreight()" type="button"
+                  class="at-btn at-btnborderradius float-right" id="create-button">
+                  <i class="icon-plus"></i>
+                  Add
+                </button>
+              </div>
+
+              <div class="form-group">
+                <dx-data-grid [dataSource]="freightList" class="pull-right" wordWrapEnabled="true"
+                  [columnAutoWidth]="true">
+                  <dxo-editing mode="cell" [allowUpdating]="true"> </dxo-editing>
+                  <dxo-master-detail [enabled]="true" dataField="frId" [template]="'template'" keyExpr="frId">
+                  </dxo-master-detail>
+
+                  <dxi-column caption="{{'Product' | i18n}}" width="200" cellTemplate="productTemplate" hint="Product">
+                  </dxi-column>
+                  <dxi-column dataField="huCount" cellTemplate="huCountTemplate" caption="{{'HU Count' | i18n}}"
+                    dataType="string">
+                  </dxi-column>
+                  <dxi-column width="140" cellTemplate="handlingUnitTemplate" caption="{{'Handling Unit' | i18n}}"
+                    hint="Handling Unit" dataType="string">
+                  </dxi-column>
+                  <dxi-column dataField="pieces" width="80" cellTemplate="piecesTemplate" caption="{{'Pieces' | i18n}}"
+                    dataType="number">
+                  </dxi-column>
+                  <dxi-column dataField="weight" width="85" cellTemplate="weightTemplate" caption="{{'Weight' | i18n}}"
+                    dataType="number">
+                  </dxi-column>
+                  <dxi-column cellTemplate="weightUnitTemplate" width="60" caption="{{'Weight Unit' | i18n}}"
+                    hint="Weight Unit" dataType="string">
+                  </dxi-column>
+                  <dxi-column dataField="length" cellTemplate="lengthTemplate" caption="{{'L' | i18n}}"
+                    dataType="number">
+                  </dxi-column>
+                  <dxi-column dataField="width" cellTemplate="widthTemplate" caption="{{'W' | i18n}}" dataType="number">
+                  </dxi-column>
+                  <dxi-column dataField="height" cellTemplate="heightTemplate" caption="{{'H' | i18n}}"
+                    dataType="number">
+                  </dxi-column>
+                  <dxi-column cellTemplate="lengthUnitTemplate" width="60" caption="{{'Length Unit' | i18n}}"
+                    hint="Length Unit" dataType="string">
+                  </dxi-column>
+                  <dxi-column dataField="cube" cellTemplate="cubeTemplate" caption="{{'Cube' | i18n}}"
+                    dataType="number">
+                  </dxi-column>
+                  <dxi-column cellTemplate="cubeUnitTemplate" width="90" caption="{{'Cube Unit' | i18n}}"
+                    hint="Cube Unit" dataType="string">
+                  </dxi-column>
+                  <dxi-column caption="{{'Action' | i18n}}" alignment="center" cellTemplate="actionTemplate" width="80">
+                  </dxi-column>
+
+                  <div *dxTemplate="let data of 'template'">
+                    <div class="row">
+                      <div class="col-sm-2">
+                        <div class="form-group">
+                          <label>{{'Description' | i18n}}</label>
+                          <input type="text" class="form-control grid-input-box" [ngModelOptions]="{standalone: true}"
+                            [(ngModel)]="data.key.description" name="description" #description>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-1">
+                        <div class="form-group">
+                          <label>{{'NMFC' | i18n}}</label>
+                          <input type="text" class="form-control grid-input-box width-56"
+                            [ngModelOptions]="{standalone: true}" [(ngModel)]="data.key.nmfc" name="nmfc" #huCount>
+                        </div>
+                      </div>
+
+                      <div class="" style="width: 9%;">
+                        <div class="form-group">
+                          <label>{{'Class' | i18n}}</label>
+                          <select name="class" class="form-control select-box grid-input-box"
+                            [ngModelOptions]="{standalone: true}" [(ngModel)]="data.key.classType">
+                            <option value="" disabled selected>Select</option>
+                            <option *ngFor="let class of classList" value="{{class?.id}}">{{class?.name}}</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-2">
+                        <div class="form-group">
+                          <label>{{'Hazmat UN#' | i18n}}</label>
+                          <input type="text" class="form-control grid-input-box" [ngModelOptions]="{standalone: true}"
+                            [(ngModel)]="data.key.hazmatUN" name="hazmatUN" #hazmatUN>
+                        </div>
+                      </div>
+
+                      <div class="" style="width: 9%; padding-right: 15px;">
+                        <div class="form-group">
+                          <label>{{'Haz Class' | i18n}}</label>
+                          <select name="hazClass" class="form-control select-box grid-input-box"
+                            [ngModelOptions]="{standalone: true}" [(ngModel)]="data.key.hazClass">
+                            <option value="" disabled selected>Select</option>
+                            <option *ngFor="let hazClass of hazClassList" value="{{hazClass?.id}}">{{hazClass?.name}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="" style="width: 9%;">
+                        <div class="form-group">
+                          <label>{{'Packing Group' | i18n}}</label>
+                          <select name="packingGroup" class="form-control select-box grid-input-box"
+                            [ngModelOptions]="{standalone: true}" [(ngModel)]="data.key.packingGroup">
+                            <option value="" disabled selected>Select</option>
+                            <option *ngFor="let packingGroup of packingGroupList" value="{{packingGroup?.id}}">
+                              {{packingGroup?.name}}</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-2">
+                        <div class="form-group">
+                          <label>{{'Emergency Contact #' | i18n}}</label>
+                          <input type="text" class="form-control grid-input-box" [ngModelOptions]="{standalone: true}"
+                            [(ngModel)]="data.key.contactPhone" name="contactPhone">
+                        </div>
+                      </div>
+
+                      <div class="col-sm-1">
+                        <div class="form-group">
+                          <label>{{'Density' | i18n}}</label>
+                          <input type="text" class="form-control grid-input-box" [ngModelOptions]="{standalone: true}"
+                            [(ngModel)]="data.key.density" name="density" #density>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <div *dxTemplate="let data of 'productTemplate'" class="center">
+                    <span class="grid-dropdown">
+                      <select name="product" class="form-control grid-select-box"
+                        [ngClass]="{'valid': data.key.product != '' && data.key.product != null, 'error-2': data.key.product == '' || data.key.product == null}"
+                        [ngModelOptions]="{standalone: true}" [(ngModel)]="data.key.product"
+                        (change)="productChange($event, data)">
+                        <option value="" disabled selected>Select</option>
+                        <option *ngFor="let product of productList" value="{{product?.id}}">{{product?.name}}</option>
+                      </select>
+                    </span>
+                  </div>
+
+                  <div *dxTemplate="let data of 'handlingUnitTemplate'" class="center">
+                    <span class="grid-dropdown">
+                      <select name="handlingUnit" class="form-control grid-select-box"
+                        [ngModelOptions]="{standalone: true}" [(ngModel)]="data.key.handlingUnit">
+                        <option value="" disabled selected>Select</option>
+                        <option *ngFor="let handlingUnit of handlingUnitList" value="{{handlingUnit?.id}}">
+                          {{handlingUnit?.name}}
+                        </option>
+                      </select>
+                    </span>
+                  </div>
+
+                  <div *dxTemplate="let data of 'weightUnitTemplate'" class="center">
+                    <span class="grid-dropdown">
+                      <select name="weightUnit" class="form-control grid-select-box"
+                        [ngModelOptions]="{standalone: true}" [(ngModel)]="data.key.weightUnit">
+                        <option value="" disabled selected>Select</option>
+                        <option *ngFor="let weightUnit of weightUnitList" value="{{weightUnit?.id}}">
+                          {{weightUnit?.name}}
+                        </option>
+                      </select>
+                    </span>
+                  </div>
+
+                  <div *dxTemplate="let data of 'lengthUnitTemplate'" class="center">
+                    <span class="grid-dropdown">
+                      <select name="lengthUnit" class="form-control grid-select-box"
+                        [ngModelOptions]="{standalone: true}" [(ngModel)]="data.key.lengthUnit">
+                        <option value="" disabled selected>Select</option>
+                        <option *ngFor="let lengthUnit of lengthUnitList" value="{{lengthUnit?.id}}">
+                          {{lengthUnit?.name}}
+                        </option>
+                      </select>
+                    </span>
+                  </div>
+
+                  <div *dxTemplate="let data of 'cubeUnitTemplate'" class="center">
+                    <span class="grid-dropdown">
+                      <select name="cubeUnit" class="form-control grid-select-box" [ngModelOptions]="{standalone: true}"
+                        [(ngModel)]="data.key.cubeUnit">
+                        <option value="" disabled selected>Select</option>
+                        <option *ngFor="let cubeUnit of cubeUnitList" value="{{cubeUnit?.id}}">{{cubeUnit?.name}}
+                        </option>
+                      </select>
+                    </span>
+                  </div>
+
+                  <div *dxTemplate="let data of 'huCountTemplate'" class="text-center">
+                    <input type="text" class="form-control grid-input-box" [ngModelOptions]="{standalone: true}"
+                      [(ngModel)]="data.key.huCount" name="huCount" #huCount>
+                  </div>
+
+                  <div *dxTemplate="let data of 'piecesTemplate'" class="text-center">
+                    <input type="text" class="form-control grid-input-box" [ngModelOptions]="{standalone: true}"
+                      [(ngModel)]="data.key.pieces" name="pieces" #pieces>
+                  </div>
+
+                  <div *dxTemplate="let data of 'weightTemplate'" class="text-center">
+                    <input type="text" class="form-control grid-input-box"
+                      [ngClass]="{'valid': data.key.weight != '' && data.key.weight != null, 'error-2': data.key.weight == '' || data.key.weight == null}"
+                      [ngModelOptions]="{standalone: true}" [(ngModel)]="data.key.weight" name="weight" #weight>
+                  </div>
+
+                  <div *dxTemplate="let data of 'lengthTemplate'" class="text-center">
+                    <input type="text" class="form-control grid-input-box" [ngModelOptions]="{standalone: true}"
+                      [(ngModel)]="data.key.length" name="length" #length>
+                  </div>
+
+                  <div *dxTemplate="let data of 'widthTemplate'" class="text-center">
+                    <input type="text" class="form-control grid-input-box" [ngModelOptions]="{standalone: true}"
+                      [(ngModel)]="data.key.width" name="width" #width>
+                  </div>
+
+                  <div *dxTemplate="let data of 'heightTemplate'" class="text-center">
+                    <input type="text" class="form-control grid-input-box" [ngModelOptions]="{standalone: true}"
+                      [(ngModel)]="data.key.height" name="height" #height>
+                  </div>
+
+                  <div *dxTemplate="let data of 'cubeTemplate'" class="text-center">
+                    <input type="text" class="form-control grid-input-box" [ngModelOptions]="{standalone: true}"
+                      [(ngModel)]="data.key.cube" name="cube" #cube>
+                  </div>
+
+                  <div *dxTemplate="let data of 'actionTemplate'" style="margin-top: 8px;">
+                    <span (click)="removeFreight(data)">
+                      <i class="icon-cross del-icon"></i>
+                    </span>
+                  </div>
+
+                </dx-data-grid>
+              </div>
+            </fieldset>
+          </section>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-sm-12">
+      <div class="at-contentbox">
+        <form class="at-formtheme at-formemployeedetail">
+          <section>
+            <fieldset class="section-header">
+              <div class="form-group">
+                <label class="section-header-label">Rates</label>
+                <!-- <i class="fa fa-chevron-right section-header-icon" aria-hidden="true"></i> -->
+                <i class="fa fa-chevron-down section-header-icon" aria-hidden="true"></i>
+              </div>
+            </fieldset>
+
+            <fieldset class="section-body">
+              <div class="form-group">
+                <button *ngIf="!isPlaced" type="button" class="at-btn at-btnborderradius float-right"
+                  (click)="getRates()">
+                  Get Rates
+                </button>
+              </div>
+
+              <div class="form-group">
+                <dx-data-grid [dataSource]="rateList" class="pull-right" [columnAutoWidth]="true"
+                  class="pmt-order rate-grid">
+                  <dxo-paging [enabled]="true" [pageSize]="20"></dxo-paging>
+                  <dxi-column dataField="vendor.logo.path" cellTemplate="logoTemplate" caption="{{'Vendor' | i18n}}">
+                  </dxi-column>
+                  <dxi-column dataField="pieces" width="150" caption="{{'Pieces' | i18n}}" hint="Pieces"
+                    dataType="number">
+                  </dxi-column>
+                  <dxi-column dataField="weight" width="150" caption="{{'Weight' | i18n}}" hint="Weight"
+                    dataType="number">
+                  </dxi-column>
+                  <dxi-column dataField="distance" caption="{{'Distance' | i18n}}" hint="Distance" dataType="number">
+                  </dxi-column>
+                  <dxi-column dataField="service" caption="{{'Service' | i18n}}" hint="Service" dataType="string">
+                  </dxi-column>
+                  <dxi-column dataField="appliedRate" width="150" cellTemplate="rateTemplate"
+                    caption="{{'Freight Charge' | i18n}}" hint="Freight Charge" dataType="number">
+                  </dxi-column>
+                  <dxi-column dataField="otherCharges" caption="{{'Other Charges' | i18n}}" hint="Other Charges"
+                    dataType="number">
+                  </dxi-column>
+                  <dxi-column dataField="totalUSD" cellTemplate="totalUSDTemplate" caption="{{'Total USD' | i18n}}"
+                    hint="Total USD" dataType="number">
+                  </dxi-column>
+                  Total USD
+                  <dxi-column caption="{{'Action' | i18n}}" cellTemplate="actionTemplate" width="80"></dxi-column>
+
+                  <div *dxTemplate="let data of 'logoTemplate'">
+                    <img src="{{BASE_PATH + '/' + data.key?.vendor?.logo?.fileName}}" height="75" width="75"
+                      class="img-responsive" alt="">
+                    <br>
+                    <span>{{data.key?.vendor?.name}}</span>
+                  </div>
+
+                  <div *dxTemplate="let data of 'rateTemplate'">
+                    <span> {{data.key?.appliedRate || 0}} </span>
+                  </div>
+
+                  <div *dxTemplate="let data of 'totalUSDTemplate'">
+                    <b>
+                      <span> {{(data.key?.appliedRate || 0) + (data.key?.otherCharges || 0)}} </span>
+                    </b>
+                  </div>
+
+                  <div *dxTemplate="let data of 'actionTemplate'">
+                    <span>
+                      <button [disabled]="isSelect" type="button" (click)="selectRate(data.key.id)"
+                        class="primary button select-btn">{{'Select' | i18n}}</button>
+                    </span>
+                  </div>
+                </dx-data-grid>
+              </div>
+            </fieldset>
+          </section>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-sm-12">
+      <div class="at-contentbox">
+        <form class="at-formtheme at-formemployeedetail">
+          <section>
+            <fieldset class="section-header">
+              <div class="form-group">
+                <label class="section-header-label">Services</label>
+                <!-- <i class="fa fa-chevron-right section-header-icon" aria-hidden="true"></i> -->
+                <i class="fa fa-chevron-down section-header-icon" aria-hidden="true"></i>
+              </div>
+            </fieldset>
+
+            <fieldset class="section-body">
+              <div class="form-group">
+                <label class="checkbox-wrapper" *ngFor="let service of serviceList">
+                  <dx-check-box [value]="service.value" text="{{service.name}}" class="width100"></dx-check-box>
+                </label>
+              </div>
+            </fieldset>
+          </section>
+        </form>
+      </div>
+    </div>
+
+
+    <div class="col-sm-12" *ngIf="orderObj?.invoices?.length > 0">
+      <div class="at-contentbox">
+        <form class="at-formtheme at-formemployeedetail">
+          <section>
+            <fieldset class="section-header">
+              <div class="form-group">
+                <label class="section-header-label">Invoices</label>
+                <!-- <i class="fa fa-chevron-right section-header-icon" aria-hidden="true"></i> -->
+                <i class="fa fa-chevron-down section-header-icon" aria-hidden="true"></i>
+              </div>
+            </fieldset>
+
+            <fieldset class="section-body">
+              <div class="form-group">
+                <dx-data-grid [dataSource]="orderObj?.invoices[0]?.carrierInvoice" class="dx-table pull-right"
+                  [columnAutoWidth]="true">
+                  <dxo-paging [enabled]="true" [pageSize]="20"></dxo-paging>
+                  <dxi-column dataField="invoiceNo" caption="{{'Invoice No' | i18n}}" dataType="string">
+                  </dxi-column>
+                  <dxi-column dataField="invoiceDate" cellTemplate="dateTemplate" caption="{{'Invoice Date' | i18n}}">
+                  </dxi-column>
+                  <dxi-column dataField="version" cellTemplate="versionTemplate" caption="{{'Version' | i18n}}">
+                  </dxi-column>
+                  <dxi-column dataField="status" caption="{{'Status' | i18n}}" dataType="string">
+                  </dxi-column>
+                  <dxi-column caption="{{'Action' | i18n}}" cellTemplate="actionTemplate" width="80"></dxi-column>
+
+                  <div *dxTemplate="let data of 'dateTemplate'">
+                    <span> {{data.key?.invoiceDate | date:'dd.MM.yyyy'}} </span>
+                  </div>
+
+                  <div *dxTemplate="let data of 'versionTemplate'">
+                    <span> {{data.rowIndex + 1}} </span>
+                  </div>
+
+                  <div *dxTemplate="let data of 'actionTemplate'">
+                    <a class="edit" (click)="openCarrierInvoice(popUp, data.key)">
+                      <span class="fa fa-eye at-margin-right"></span>
+                      <span>{{'View' | i18n}}</span>
+                    </a>
+                  </div>
+                </dx-data-grid>
+              </div>
+            </fieldset>
+          </section>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-sm-6" *ngIf="orderObj?.invoices?.length > 0">
+      <div class="at-contentbox">
+        <form class="at-formtheme at-formemployeedetail">
+          <section>
+            <fieldset class="section-header">
+              <div class="form-group">
+                <label class="section-header-label">Calculated as per Rate Sheet</label>
+                <!-- <i class="fa fa-chevron-right section-header-icon" aria-hidden="true"></i> -->
+                <i class="fa fa-chevron-down section-header-icon" aria-hidden="true"></i>
+              </div>
+            </fieldset>
+
+            <fieldset class="section-body">
+              <div class="form-group">
+                <dx-data-grid [dataSource]="originalQuotationRateSheet" class="dx-table">
+                  <dxo-paging [enabled]="false"></dxo-paging>
+                  <dxo-editing mode="cell" [allowUpdating]="false">
+                  </dxo-editing>
+                  <dxi-column dataField="item" caption="{{'Items' | i18n}}" [allowEditing]="false" hint="Items"
+                    dataType="string" columnAutoWidth="true" [allowSorting]="false"></dxi-column>
+                  <dxi-column dataField="amount" caption="{{'Amount' | i18n}}" dataType="number" hint="Amount"
+                    [allowSorting]="false">
+                  </dxi-column>
+                  <dxi-column dataField="currency" caption="Currency" [allowEditing]="false" hint="Currency"
+                    dataType="string" columnAutoWidth="true" [allowSorting]="false"></dxi-column>
+                </dx-data-grid>
+              </div>
+            </fieldset>
+          </section>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-sm-6" *ngIf="orderObj?.invoices?.length > 0">
+      <div class="at-contentbox">
+        <form class="at-formtheme at-formemployeedetail">
+          <section>
+            <fieldset class="section-header">
+              <div class="form-group">
+                <label class="section-header-label">Carrier Invoice (Cost)</label>
+                <!-- <i class="fa fa-chevron-right section-header-icon" aria-hidden="true"></i> -->
+                <i class="fa fa-chevron-down section-header-icon" aria-hidden="true"></i>
+              </div>
+            </fieldset>
+
+            <fieldset class="section-body">
+              <div class="form-group">
+                <dx-data-grid [dataSource]="specificCarrierInvoice" class="dx-table">
+                  <dxo-paging [enabled]="false"></dxo-paging>
+                  <dxo-editing mode="cell" [allowUpdating]="false">
+                  </dxo-editing>
+                  <dxi-column dataField="item" caption="{{'Items' | i18n}}" hint="Items" dataType="string"
+                    columnAutoWidth="true" [allowSorting]="false"></dxi-column>
+                  <dxi-column dataField="amount" caption="{{'Amount' | i18n}}" dataType="number" hint="Amount"
+                    [allowSorting]="false">
+                  </dxi-column>
+                  <dxi-column dataField="currency" caption="Currency" hint="Currency" dataType="string"
+                    columnAutoWidth="true" [allowSorting]="false"></dxi-column>
+                </dx-data-grid>
+              </div>
+            </fieldset>
+          </section>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-sm-6" *ngIf="orderObj?.invoices?.length > 0">
+      <div class="at-contentbox">
+        <form class="at-formtheme at-formemployeedetail">
+          <section>
+            <fieldset class="section-header">
+              <div class="form-group">
+                <label class="section-header-label">Customer Quotation</label>
+                <!-- <i class="fa fa-chevron-right section-header-icon" aria-hidden="true"></i> -->
+                <i class="fa fa-chevron-down section-header-icon" aria-hidden="true"></i>
+              </div>
+            </fieldset>
+
+            <fieldset class="section-body">
+              <div class="form-group">
+                <dx-data-grid [dataSource]="originalQuotationMargin" class="dx-table">
+                  <dxo-paging [enabled]="false"></dxo-paging>
+                  <dxo-editing mode="cell" [allowUpdating]="false">
+                  </dxo-editing>
+                  <dxi-column dataField="item" caption="{{'Items' | i18n}}" [allowEditing]="false" hint="Items"
+                    dataType="string" columnAutoWidth="true" [allowSorting]="false"></dxi-column>
+                  <dxi-column dataField="amount" caption="{{'Amount' | i18n}}" dataType="number" hint="Amount"
+                    [allowSorting]="false">
+                  </dxi-column>
+                  <dxi-column dataField="currency" caption="Currency" [allowEditing]="false" hint="Currency"
+                    dataType="string" columnAutoWidth="true" [allowSorting]="false"></dxi-column>
+                </dx-data-grid>
+              </div>
+            </fieldset>
+          </section>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-sm-6" *ngIf="orderObj?.invoices?.length > 0">
+      <div class="at-contentbox">
+        <form class="at-formtheme at-formemployeedetail">
+          <section>
+            <fieldset class="section-header">
+              <div class="form-group">
+                <label class="section-header-label">Customer Invoice (Sales)</label>
+                <!-- <i class="fa fa-chevron-right section-header-icon" aria-hidden="true"></i> -->
+                <i class="fa fa-chevron-down section-header-icon" aria-hidden="true"></i>
+              </div>
+            </fieldset>
+
+            <fieldset class="section-body">
+              <div class="form-group" *ngIf="invoiceStatus == 'Accept' || invoiceStatus == 'Cancel'">
+                <button type="button" class="at-btn at-btnborderradius float-right" (click)="addCustomerBilling()">
+                  Add
+                </button>
+              </div>
+
+              <div class="form-group">
+                <dx-data-grid [dataSource]="customerBilling" class="dx-table">
+                  <dxo-paging [enabled]="false"></dxo-paging>
+                  <dxo-editing mode="cell" [allowUpdating]="true">
+                  </dxo-editing>
+                  <dxi-column dataField="item" caption="{{'Items' | i18n}}" [allowEditing]="true" hint="Items"
+                    dataType="string" columnAutoWidth="true" [allowSorting]="false"></dxi-column>
+                  <dxi-column dataField="amount" caption="{{'Amount' | i18n}}" dataType="number" hint="Amount"
+                    [allowSorting]="false">
+                  </dxi-column>
+                  <dxi-column dataField="currency" caption="Currency" [allowEditing]="true" hint="Currency"
+                    dataType="string" columnAutoWidth="true" [allowSorting]="false"></dxi-column>
+                </dx-data-grid>
+              </div>
+
+              <div class="form-group" *ngIf="invoiceStatus == 'Accept' || invoiceStatus == 'Cancel'">
+                <button type="button" class="at-btn at-btnborderradius float-right" (click)="createInvoice('Reject')">
+                  {{'Create Invoice' | i18n}}
+                </button>
+              </div>
+            </fieldset>
+          </section>
+        </form>
+      </div>
+    </div>
+
+
+    <div class="col-sm-12">
+      <a class="at-btnadduser" *ngIf="!saveFlag && !isEdit" href="javascript:void(0)" (click)="saveOrder()">
+        <i class="fa fa-save"></i>
+      </a>
+      <a class="at-btnadduser" *ngIf="!saveFlag && isEdit" href="javascript:void(0)" (click)="editOrder()">
+        <i class="fa fa-save"></i>
+      </a>
+      <a class="at-btnadduser" href="javascript:void(0)" *ngIf="saveFlag">
+        <i class="fa fa-refresh fa-spin"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ng-template #popUp>
+  <div id="modal-report">
+    <div class="modal-header well-color">
+      <h4 class="padding-title pull-left">
+        <strong>{{'Carrier Invoice (Cost)' | i18n}}</strong>
+      </h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-sm-12 col-md-12">
+          <dx-data-grid [dataSource]="carrierInvoice" class="dx-table">
+            <dxo-paging [enabled]="false"></dxo-paging>
+            <dxo-editing mode="cell" [allowUpdating]="false">
+            </dxo-editing>
+            <dxi-column dataField="item" caption="{{'Items' | i18n}}" hint="Items" dataType="string"
+              columnAutoWidth="true" [allowSorting]="false"></dxi-column>
+            <dxi-column dataField="amount" caption="{{'Amount' | i18n}}" dataType="number" hint="Amount"
+              [allowSorting]="false">
+            </dxi-column>
+            <dxi-column dataField="currency" caption="Currency" hint="Currency" dataType="string" columnAutoWidth="true"
+              [allowSorting]="false"></dxi-column>
+          </dx-data-grid>
+
+          <div class="row margin-top-5">
+            <div class="col-md-4">
+              <b class="pull-left margin-left-total">Total</b>
+            </div>
+            <div class="col-md-4">
+              <b class="pull-right margin-right-val">{{claculateTotalCarrierInvoiceAmount()}}</b>
+            </div>
+            <div class="col-md-4">
+              <b class="pull-left margin-left-currency">USD</b>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-sm-12 col-md-12" style="margin-top: 10px;">
+          <button *ngIf="carrierInvoiceStatus == 'Pending'"
+            class="btn btn-danger btn-md pull-right btn-margin-bottom-grid" (click)="setInvoiceStatus('Reject')">
+            {{'Reject'}}
+          </button>
+          <button *ngIf="carrierInvoiceStatus == 'Pending'"
+            class="btn btn-primary btn-md pull-right btn-margin-bottom-grid btn-mrgin-right"
+            (click)="setInvoiceStatus('Accept')">
+            {{'Accept'}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #popUpProduct>
+  <div id="modal-report">
+    <div class="modal-header well-color">
+      <h4 class="padding-title pull-left">
+        <strong>{{'Add Product' | i18n}}</strong>
+      </h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="productModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="productsFormGroup">
+        <fieldset>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>{{'Name' | i18n}}</label>
+                <input type="text" class="form-control" name="name" placeholder="{{'Name' | i18n}}"
+                  formControlName="name">
+              </div>
+
+              <div class="form-group">
+                <label>{{'NMFC' | i18n}}</label>
+                <input type="text" class="form-control" name="nmfc" placeholder="{{'NMFC' | i18n}}"
+                  formControlName="nmfc">
+              </div>
+
+              <div class="form-group">
+                <label>{{'Handling Unit' | i18n}}</label>
+                <dx-select-box [dataSource]="handlingUnitList" displayExpr="name" valueExpr="id" fieldTemplate="field"
+                  formControlName="handlingUnit">
+                  <div *dxTemplate="let data of 'field'">
+                    <dx-text-box [value]="data && data.name | i18n" [readOnly]="true" placeholder="Select">
+                    </dx-text-box>
+                  </div>
+                  <div *dxTemplate="let data of 'item'">
+                    <div>
+                      {{data.name | i18n}}
+                    </div>
+                  </div>
+                </dx-select-box>
+              </div>
+
+              <div class="form-group">
+                <label>{{'Class' | i18n}}</label>
+                <dx-select-box [dataSource]="classList" displayExpr="name" valueExpr="id" fieldTemplate="field"
+                  formControlName="classType">
+                  <div *dxTemplate="let data of 'field'">
+                    <dx-text-box [value]="data && data.name | i18n" [readOnly]="true" placeholder="Select">
+                    </dx-text-box>
+                  </div>
+                  <div *dxTemplate="let data of 'item'">
+                    <div>
+                      {{data.name | i18n}}
+                    </div>
+                  </div>
+                </dx-select-box>
+              </div>
+
+              <div class="form-group">
+                <label>{{'HU Count' | i18n}}</label>
+                <input type="text" class="form-control" name="huCount" placeholder="{{'HU Count' | i18n}}"
+                  formControlName="huCount">
+              </div>
+
+              <button mat-raised-button class="btn btn-primary pull-right" (click)="addProduct()">
+                <i class="fa fa-plus"></i>
+                {{'Add' | i18n}}
+              </button>
+
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,33 @@
+table {
+  border: 1px solid #e6e6eb;
+}
+
+.at-themetable tbody td:first-child,
+.at-themetable thead th:first-child {
+  text-align: left;
+}
+
+.at-themetableholder {
+  margin: 0;
+}
+
+.edit>span {
+  display: inline-block !important;
+}
+
+.edit>span:hover {
+  color: #3a7ddd;
+}
+
+.at-margin-right {
+  margin-right: 5px;
+  ;
+}
+
+.at-pagehead {
+  margin-bottom: 20px;
+}
+
+.at-pagehead>h4 {
+  float: left
+}

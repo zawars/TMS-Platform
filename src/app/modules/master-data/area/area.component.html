@@ -1,0 +1,72 @@
+<div class="row row-min-height">
+  <div class="col-sm-12 col-md-12">
+    <button class="btn btn-info pull-right" [routerLink]="['/masterData/area/create']">
+      <i class="fa fa-plus at-margin-right"></i>
+      Create</button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12 col-md-12 card-margin-top">
+    <!-- <dx-data-grid [dataSource]="areaList" hoverStateEnabled="true">
+      <dxo-paging [enabled]="true" [pageSize]="25"></dxo-paging>
+      <dxo-search-panel [visible]="true" [width]="240" placeholder="{{'Search' | i18n}}"></dxo-search-panel>
+
+      <dxi-column dataField="name" caption="{{'Name' | i18n}}" dataType="string">
+      </dxi-column>
+      <dxi-column dataField="description" caption="{{'Description' | i18n}}" dataType="string">
+      </dxi-column>
+      <dxi-column caption="{{'Action' | i18n}}" cellTemplate="actionTemplate"></dxi-column>
+
+      <div *dxTemplate="let data of 'actionTemplate'">
+        <span>
+          <a [routerLink]="['/masterData/area/create', {areaId: data.key.id}]">
+            <span class="fa fa-pencil"></span>
+            <span>{{'Edit' | i18n}}</span>
+          </a>
+        </span>
+      </div>
+
+    </dx-data-grid> -->
+
+    <div class="card">
+      <div class="card-body">
+        <!-- <h5 class="card-title">Basic Datatable</h5> -->
+        <div class="table-responsive">
+          <table id="zero_config" class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th>{{'Name' | i18n}}</th>
+                <th>{{'Description' | i18n}}</th>
+                <th>{{'Action' | i18n}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let area of areaList">
+                <td>{{area?.name}}</td>
+                <td>{{area?.description}}</td>
+                <td>
+                  <span>
+                    <a [routerLink]="['/masterData/area/create', {areaId: area?.id}]">
+                      <span class="ti-pencil at-margin-right"></span>
+                      <span>{{'Edit' | i18n}}</span>
+                    </a>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th>{{'Name' | i18n}}</th>
+                <th>{{'Description' | i18n}}</th>
+                <th>{{'Action' | i18n}}</th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+    
+      </div>
+    </div>
+
+  </div>
+</div>

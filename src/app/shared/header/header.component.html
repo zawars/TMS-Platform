@@ -1,0 +1,67 @@
+<header id="at-header" class="at-header at-haslayout">
+  <div class="at-logoholder">
+    <strong class="at-logo">
+      <a [routerLink]="['/dashboard']">
+        <!-- <img src="assets/img/logo.png" alt="company logo here"> -->
+        <h4>RL-TMS</h4>
+      </a>
+    </strong>
+    <a class="at-btnclosemenu" href="javascript:void(0);">
+      <img src="assets/img/menu-icon.png" alt="menu-icon">
+    </a>
+  </div>
+  <div class="at-rightarea">
+    <ul class="at-settingnoti">
+      <li>
+        <a href="javascript:void(0);">
+          <i class="icon-setting_icon"></i>
+        </a>
+      </li>
+      <li>
+        <a href="javascript:void(0);">
+          <span class="at-notibadge"></span>
+          <i class="icon-notification_icon"></i>
+        </a>
+        <div class="at-notidropdown">
+          <div class="at-notihead">
+            <h3>Notifications</h3>
+            <a class="at-btnmarkallread" href="javascript:void(0);">Mark all as read</a>
+          </div>
+          <ul class="at-notifications">
+
+            <li *ngFor="let item of utilityService.notificationsList" (click)="openNotification(item)">
+              <div class="at-notification at-hrnorification">
+                <div class="at-notificationhead">
+                  <h4><a href="javascript:void(0);">{{item.actor.lastName}}, {{item.actor.firstName}} </a></h4>
+                  <time datetime="2019-12-12">{{item.createdAt | timeago:live}}</time>
+                </div>
+                <div class="at-description">
+                  <p>{{item.action}}</p>
+                </div>
+              </div>
+            </li>
+
+            <li class="at-btnviewall">
+              <a class="at-btnview" href="javascript:void(0);">View All</a>
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+    <div class="at-themedropdown dropdown">
+      <button type="button" data-toggle="dropdown">
+        <figure class="at-userprofileimg"
+          style="background: url('assets/img/user-img.png'); -webkit-background-size: cover;background-size: cover;">
+        </figure>
+        <i class="icon-arrow_down_icon"></i>
+      </button>
+      <div class="at-themedropdownmenu dropdown-menu">
+        <a class="dropdown-item">
+          <span class="at-username">{{userObj.lastName}}, {{userObj.firstName}}</span>
+          <span>{{userObj.email}}</span>
+        </a>
+        <a class="dropdown-item" href="my-profile.php">My Profile</a>
+        <a class="dropdown-item" href="javascript:void(0);" (click)="logout()">Logout</a>
+      </div>
+    </div>
+  </div>

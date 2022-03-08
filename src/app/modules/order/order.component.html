@@ -1,0 +1,66 @@
+<div class="at-maincontentholder at-pendingovertimes">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 float-left">
+    <div class="at-pagehead">
+      <h2>{{'Orders'| i18n}}</h2>
+
+      <!-- <div class="at-formtheme at-formsearchemployee">
+        <button class="at-btn at-btnborderradius float-right" routerLink="create">
+          <i class="fa fa-plus at-margin-right"></i>
+          <span>
+            {{'Order' | i18n}}
+          </span>
+        </button>
+      </div> -->
+    </div>
+
+    <div class="at-contentbox">
+      <div class="at-themetableholder">
+        <table class="table at-themetable at-tableemployees">
+          <thead>
+            <tr>
+              <th>{{'Order No' | i18n}}</th>
+              <th>{{'Vendor' | i18n}}</th>
+              <th>{{'Customer' | i18n}}</th>
+              <th>{{'Shipper Name' | i18n}}</th>
+              <th>{{'Consignee Name' | i18n}}</th>
+              <th>{{'PickUp Date' | i18n}}</th>
+              <th>{{'Delivery Date' | i18n}}</th>
+              <th>{{'BOL Number' | i18n}}</th>
+              <th>{{'Status' | i18n}}</th>
+              <th>{{'Invoice Status' | i18n}}</th>
+              <th>{{'Action' | i18n}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of ordersList">
+              <td>{{item.orderNumber}}</td>
+              <td>
+                <h3>{{item?.vendor?.name}}</h3>
+              </td>
+              <td>{{item?.customer?.name}}</td>
+              <td>{{item?.shipperName}}</td>
+              <td>{{item?.consigneeName}}</td>
+              <td>{{item?.pickUpDate | date}}</td>
+              <td>{{item?.deliveryDate | date}}</td>
+              <td>{{item?.bolNumber}}</td>
+              <td>{{item?.status}}</td>
+              <td>{{item?.invoices[0]?.status}}</td>
+              <td>
+                <span>
+                  <a class="edit" [routerLink]="['/order/' + item.id]">
+                    <span class="icon-pencil at-margin-right"></span>
+                    <span>{{'Edit' | i18n}}</span>
+                  </a>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <mat-paginator [length]="totalCount" [pageSize]="10" (page)="onPageChange($event)">
+      </mat-paginator>
+
+    </div>
+  </div>
+</div>

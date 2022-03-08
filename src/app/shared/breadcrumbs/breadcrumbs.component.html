@@ -1,0 +1,32 @@
+<!-- <div class="breadcrumbs">
+  <h2>{{getTitle()}}</h2>
+  <ul>
+    <li>
+      <img src="/assets/bootstrap-3.3.7-dist/images/side-icon-one.png" alt="" />
+    </li>
+    >
+    <li>
+      <a href="javascript:">Home </a>
+    </li>
+    >
+    <li>
+      <a href="javascript:">{{getTitle()}}</a>
+    </li>
+  </ul>
+</div> -->
+
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">{{getTitle()}}</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{getTitle()}}</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,263 @@
+<div class="at-maincontentholder at-pendingovertimes">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 float-left">
+    <div class="at-pagehead">
+      <h2>{{'Field Administration'| i18n}}</h2>
+    </div>
+
+    <div class="at-contentbox">
+      <div class="at-themetableholder">
+        <table class="table at-themetable at-tableemployees">
+          <thead>
+            <tr>
+              <th>{{'Field Name' | i18n}}</th>
+              <th>{{'Action' | i18n}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of dataList">
+              <td>
+                <h3>{{item.field}}</h3>
+              </td>
+              <td>
+                <span>
+                  <a class="edit" (click)="openEditDialog(popUp, item)">
+                    <span class="icon-pencil at-margin-right"></span>
+                    <span>{{'Edit' | i18n}}</span>
+                  </a>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<ng-template #popUp>
+  <div id="modal-report" class="at-thememodal at-customfieldsmodal">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+          <img class="at-themesvg" src="assets/img/svg-icons/close-icon.svg">
+        </button>
+
+        <h4>{{ formObj.field | i18n}}</h4>
+
+        <form class="at-formtheme at-formcustomfield">
+          <fieldset>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <ul class="list-group">
+                    <li id="at-field-li" class="list-group-item" *ngFor="let item of formObj.data.values">
+                      <div class="row">
+                        <div *ngIf="formObj.field != 'Cities' && formObj.field != 'Charge Type'" class="col-sm-8"
+                          style="text-align: left;">
+                          <span>{{item.name | i18n}}</span>
+                        </div>
+                        <div *ngIf="formObj.field == 'Cities' || formObj.field == 'Charge Type'" class="col-sm-7"
+                          style="text-align: left;">
+                          <span>{{item.name | i18n}}</span>
+                        </div>
+                        <div *ngIf="formObj.field == 'Cities' || formObj.field == 'Charge Type'" class="col-sm-1">
+                          <a *ngIf="formObj.field == 'Cities'" class="pull-right"
+                            (click)="getPostalCodes(postalCodePopUp, item)">
+                            <i class="fa fa-list" style="cursor: pointer;"></i>
+                          </a>
+                          <a *ngIf="formObj.field == 'Charge Type'" class="pull-right"
+                            (click)="getChargeUOM(chargeUOMPopUp, item)">
+                            <i class="fa fa-list" style="cursor: pointer;"></i>
+                          </a>
+                        </div>
+                        <div class="col-sm-1">
+                          <a class="pull-right" (click)="editItem(item, formObj)">
+                            <i class="ti-pencil" style="color: blue; cursor: pointer;"></i>
+                          </a>
+                        </div>
+                        <div class="col-sm-1">
+                          <a class="pull-right" (click)="deleteItem(item.id, formObj)">
+                            <i class="fa fa-trash" style="color: red; cursor: pointer;"></i>
+                          </a>
+                        </div>
+                        <div class="col-sm-1">
+                          <a class="pull-right" (click)="moveRowUp(item.id)">
+                            <i class="fa fa-arrow-up" style="cursor: pointer;"></i>
+                          </a>
+                        </div>
+                        <div class="col-sm-1">
+                          <a class="pull-right" (click)="moveRowDown(item.id)">
+                            <i class="fa fa-arrow-down" style="cursor: pointer;"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+
+                <div>
+                  <button class="at-btn at-btnborderradius float-right" (click)="savePosition()">
+                    <i class="fa fa-floppy-o"></i>
+                    {{'Save Position' | i18n}}
+                  </button>
+                </div>
+
+                <div class="form-group">
+                  <label>{{!isEdit ? 'Add New Field (English)' : 'Edit Field (English)' | i18n}}</label>
+                  <input type="text" class="form-control input-lg" name="translation" [(ngModel)]="inputField"
+                    placeholder="Add Field">
+                </div>
+
+                <div class="form-group">
+                  <label>{{!isEdit ? 'Add New Field (Deutsch)' : 'Edit Field (Deutsch)' | i18n}}</label>
+                  <input type="text" class="form-control input-lg" name="translation" [(ngModel)]="deInputField"
+                    placeholder="Add Field">
+                </div>
+
+                <div class="form-group">
+                  <label>{{!isEdit ? 'Add New Field (French)' : 'Edit Field (French)' | i18n}}</label>
+                  <input type="text" class="form-control input-lg" name="translation" [(ngModel)]="frInputField"
+                    placeholder="Add Field">
+                </div>
+
+
+                <div class="form-group">
+                  <button class="at-btn at-btnborderradius float-right" (click)="save(formObj)">
+                    <i class="fa fa-floppy-o"></i>
+                    {{'Save' | i18n}}
+                  </button>
+                </div>
+
+                <div class="form-group">
+                  <button class="at-btn at-btnborderradius float-left" (click)="resetInputFields()">
+                    <i class="fa fa-refresh"></i>
+                    {{'Reset' | i18n}}
+                  </button>
+                </div>
+
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</ng-template>
+
+
+<ng-template #postalCodePopUp>
+  <div id="modal-settings">
+    <div class="modal-header">
+      <h3 class="padding-title pull-left">
+        {{ cityName | i18n}}
+      </h3>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="closePostalCodeModel()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="block">
+            <ul class="list-group">
+              <li id="at-field-li" class="list-group-item" *ngFor="let item of postalCodesList">
+                <div class="row">
+                  <div class="col-sm-10">
+                    <span>{{item.name | i18n}}</span>
+                  </div>
+                  <div class="col-sm-1">
+                    <a class="pull-right" (click)="editPostalCode(item)">
+                      <i class="ti-pencil" style="color: blue; cursor: pointer;"></i>
+                    </a>
+                  </div>
+                  <div class="col-sm-1">
+                    <a class="pull-right" (click)="deletePostalCode(item.id)">
+                      <i class="fa fa-trash" style="color: red; cursor: pointer;"></i>
+                    </a>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <div class="form-group">
+            <span class="label" for="inputField">
+              {{!isPostalCodeEdit ? 'Add New Postal Code' : 'Edit Postal Code' | i18n}}</span>
+            <input type="text" class="form-control input-lg" [(ngModel)]="postalCode" placeholder="Add Field">
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <button mat-raised-button class="btn btn-primary pull-right" (click)="savePostalCode()">
+            <i class="fa fa-floppy-o"></i>
+            {{'Save' | i18n}}
+          </button>
+          <button mat-raised-button class="btn btn-info" (click)="resetPostalCode()">
+            <i class="fa fa-refresh"></i>
+            {{'Reset' | i18n}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #chargeUOMPopUp>
+  <div id="modal-settings">
+    <div class="modal-header">
+      <h3 class="padding-title pull-left">
+        {{ chargeType | i18n}}
+      </h3>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="closeChargeUOMModel()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="block">
+            <ul class="list-group">
+              <li id="at-field-li" class="list-group-item" *ngFor="let item of chargeUOMList">
+                <div class="row">
+                  <div class="col-sm-10">
+                    <span>{{item.name | i18n}}</span>
+                  </div>
+                  <div class="col-sm-1">
+                    <a class="pull-right" (click)="editChargeUOM(item)">
+                      <i class="ti-pencil" style="color: blue; cursor: pointer;"></i>
+                    </a>
+                  </div>
+                  <div class="col-sm-1">
+                    <a class="pull-right" (click)="deleteChargeUOM(item.id)">
+                      <i class="fa fa-trash" style="color: red; cursor: pointer;"></i>
+                    </a>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <div class="form-group">
+            <span class="label" for="inputField">
+              {{!isChargeUOMEdit ? 'Add New Charge UOM' : 'Edit Charge UOM' | i18n}}</span>
+            <input type="text" class="form-control input-lg" [(ngModel)]="chargeUOM" placeholder="Add Field">
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <button mat-raised-button class="btn btn-primary pull-right" (click)="saveChargeUOM()">
+            <i class="fa fa-floppy-o"></i>
+            {{'Save' | i18n}}
+          </button>
+          <button mat-raised-button class="btn btn-info" (click)="resetChargeUOM()">
+            <i class="fa fa-refresh"></i>
+            {{'Reset' | i18n}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

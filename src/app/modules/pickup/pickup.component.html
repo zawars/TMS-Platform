@@ -1,0 +1,47 @@
+<div class="at-maincontentholder at-pendingovertimes">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 float-left">
+    <div class="at-pagehead">
+      <h2>{{'Pickup Requests'| i18n}}</h2>
+    </div>
+
+    <div class="at-contentbox">
+      <div class="at-themetableholder">
+        <table class="table at-themetable at-tableemployees">
+          <thead>
+            <tr>
+              <th>{{'Pickup #' | i18n}}</th>
+              <th>{{'Status' | i18n}}</th>
+              <th>{{'Supplier' | i18n}}</th>
+              <th>{{'Buyer' | i18n}}</th>
+              <th>{{'Pickup Date' | i18n}}</th>
+              <th>{{'Action' | i18n}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of ordersList">
+              <td>{{item.orderNumber}}</td>
+              <td>
+                <h3>{{item.consigneeName}}</h3>
+              </td>
+              <td>{{item.payerCompanyName}}</td>
+              <td>{{item.pickUpDate | date:'dd.MM.yyyy'}}</td>
+              <td>{{item.status}}</td>
+              <td>
+                <span>
+                  <a class="edit" [routerLink]="['/pickup/edit', {orderId: item.id}]">
+                    <span class="icon-pencil at-margin-right"></span>
+                    <span>{{'Edit' | i18n}}</span>
+                  </a>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <mat-paginator [length]="totalCount" [pageSize]="10" (page)="onPageChange($event)">
+      </mat-paginator>
+
+    </div>
+  </div>
+</div>

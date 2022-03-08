@@ -1,0 +1,249 @@
+<div class="at-maincontentholder at-admindashboard">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+    <div class="at-title">
+      <h2>Dashboard</h2>
+    </div>
+
+    <div class="at-contentbox">
+      <form class="at-formtheme at-formemployeedetail">
+        <section>
+          <fieldset class="section-header">
+            <div class="form-group">
+              <label class="section-header-label">Filters</label>
+            </div>
+          </fieldset>
+        </section>
+
+        <fieldset class="section-body">
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>{{'Search' | i18n}}</label>
+                <input type="text" name="employee-name" class="form-control" placeholder="Search">
+              </div>
+            </div>
+
+            <div class=" col-sm-3">
+              <div class="form-group">
+                <label>{{'Arrival Status' | i18n}}</label>
+                <dx-select-box displayExpr="name" valueExpr="id">
+                </dx-select-box>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>{{'Transportation Mode' | i18n}}</label>
+                <dx-select-box displayExpr="name" valueExpr="id">
+                </dx-select-box>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>{{'Regions' | i18n}}</label>
+                <dx-select-box displayExpr="name" valueExpr="id">
+                </dx-select-box>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>{{'Carriers' | i18n}}</label>
+                <dx-select-box displayExpr="name" valueExpr="id">
+                </dx-select-box>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>{{'Milestone Category' | i18n}}</label>
+                <dx-select-box displayExpr="name" valueExpr="id">
+                </dx-select-box>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>{{'Origin' | i18n}}</label>
+                <dx-select-box displayExpr="name" valueExpr="id">
+                </dx-select-box>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>{{'Destination' | i18n}}</label>
+                <dx-select-box displayExpr="name" valueExpr="id">
+                </dx-select-box>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>{{'Brands' | i18n}}</label>
+                <dx-select-box displayExpr="name" valueExpr="id">
+                </dx-select-box>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>{{'Estimated Delivery' | i18n}}</label>
+                <dx-select-box displayExpr="name" valueExpr="id">
+                </dx-select-box>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label style="color: white !important;">.</label>
+                <button class="at-btn at-btnborderradius float-right btn-responsive">Apply</button>
+                <button class="at-btn at-btnborderradius at-btnwhite float-right btn-responsive"
+                  style="margin-right: 20px;">Reset</button>
+              </div>
+            </div>
+
+          </div>
+        </fieldset>
+
+      </form>
+    </div>
+
+  </div>
+
+  <div class="flex-wrap-display">
+    <div class="col-sm-3">
+      <div class="at-contentbox">
+        <h3>Total Orders</h3>
+        <h1 style="text-align: center;">{{orderCountObj?.totalOrders || 0}}</h1>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="at-contentbox">
+        <h3>New Orders</h3>
+        <h1 style="text-align: center;">{{orderCountObj?.newOrders || 0}}</h1>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="at-contentbox">
+        <h3>Orders In Transit</h3>
+        <h1 style="text-align: center;">{{orderCountObj?.inTransitOrders || 0}}</h1>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="at-contentbox">
+        <h3>Delivered</h3>
+        <h1 style="text-align: center;">{{orderCountObj?.deliveredOrders || 0}}</h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex-wrap-display">
+    <div class="col-sm-6">
+      <div class="at-contentbox">
+        <dx-pie-chart id="pie" type="doughnut" title="Number of Loads per Customer" palette="Soft Pastel"
+          [dataSource]="populationByRegions">
+          <dxi-series argumentField="region">
+            <dxo-label [visible]="true" format="millions">
+              <dxo-connector [visible]="true"></dxo-connector>
+            </dxo-label>
+          </dxi-series>
+          <dxo-export [enabled]="true"></dxo-export>
+          <dxo-legend [margin]="0" horizontalAlignment="right" verticalAlignment="top"></dxo-legend>
+          <dxo-tooltip [enabled]="true" format="millions">
+          </dxo-tooltip>
+        </dx-pie-chart>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="at-contentbox">
+        <dx-chart [dataSource]="dataSource" title="Billed per Customer" palette="Soft Pastel">
+          <dxi-series valueField="young" name="0-14"></dxi-series>
+          <dxi-series valueField="middle" name="15-64"></dxi-series>
+          <dxi-series valueField="older" name="65 and older"></dxi-series>
+          <dxi-value-axis position="right">
+            <dxo-title text="millions"></dxo-title>
+          </dxi-value-axis>
+          <dxo-common-series-settings argumentField="state" type="stackedBar">
+          </dxo-common-series-settings>
+          <dxo-legend verticalAlignment="bottom" horizontalAlignment="center" itemTextPosition="top">
+          </dxo-legend>
+          <dxo-export [enabled]="true"></dxo-export>
+          <dxo-tooltip [enabled]="true" location="edge">
+          </dxo-tooltip>
+        </dx-chart>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="at-contentbox">
+        <dx-chart [dataSource]="dataSource" title="Invoiced per Carrier" palette="Soft Pastel">
+          <dxi-series valueField="young" name="0-14"></dxi-series>
+          <dxi-series valueField="middle" name="15-64"></dxi-series>
+          <dxi-series valueField="older" name="65 and older"></dxi-series>
+          <dxi-value-axis position="right">
+            <dxo-title text="millions"></dxo-title>
+          </dxi-value-axis>
+          <dxo-common-series-settings argumentField="state" type="stackedBar">
+          </dxo-common-series-settings>
+          <dxo-legend verticalAlignment="bottom" horizontalAlignment="center" itemTextPosition="top">
+          </dxo-legend>
+          <dxo-export [enabled]="true"></dxo-export>
+          <dxo-tooltip [enabled]="true" location="edge">
+          </dxo-tooltip>
+        </dx-chart>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="at-contentbox">
+        <dx-pie-chart id="pie" type="doughnut" title="Weight Volume per Carrier" palette="Soft Pastel"
+          [dataSource]="populationByRegions">
+          <dxi-series argumentField="region">
+            <dxo-label [visible]="true" format="millions">
+              <dxo-connector [visible]="true"></dxo-connector>
+            </dxo-label>
+          </dxi-series>
+          <dxo-export [enabled]="true"></dxo-export>
+          <dxo-legend [margin]="0" horizontalAlignment="right" verticalAlignment="top"></dxo-legend>
+          <dxo-tooltip [enabled]="true" format="millions">
+          </dxo-tooltip>
+        </dx-pie-chart>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="at-contentbox">
+        <dx-chart [class]="isFirstLevel?'pointer-on-bars':''" [dataSource]="dataSourceDrillDown" palette="Soft Pastel"
+          (onPointClick)="onPointClick($event)" title="Number of Load per State">
+          <dxi-series type="bar"></dxi-series>
+          <dxo-legend [visible]="false"></dxo-legend>
+          <dxi-value-axis [showZero]="false"></dxi-value-axis>
+        </dx-chart>
+        <dx-button class="button-container" text="Back" icon="chevronleft" [visible]="!isFirstLevel"
+          (onClick)="onButtonClick()">
+        </dx-button>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="at-contentbox">
+        <dx-chart [class]="isFirstLevel?'pointer-on-bars':''" [dataSource]="dataSourceDrillDown" palette="Soft Pastel"
+          (onPointClick)="onPointClick($event)" title="Billed per State">
+          <dxi-series type="bar"></dxi-series>
+          <dxo-legend [visible]="false"></dxo-legend>
+          <dxi-value-axis [showZero]="false"></dxi-value-axis>
+        </dx-chart>
+        <dx-button class="button-container" text="Back" icon="chevronleft" [visible]="!isFirstLevel"
+          (onClick)="onButtonClick()">
+        </dx-button>
+      </div>
+    </div>
+
+  </div>
+</div>

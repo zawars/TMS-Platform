@@ -1,0 +1,21 @@
+.at-valid {
+  // color: #17dF92;
+  border: 1px solid #17dF92;
+}
+
+.at-invalid {
+  // color: red;
+  border: 1px solid red;
+}
+
+i.at-valid:before,
+input:not(:placeholder-shown)+i.at-valid:before,
+input:not(:placeholder-shown)+label+i.at-valid:before {
+  color: #17dF92;
+}
+
+i.at-invalid:before,
+input:not(:placeholder-shown)+i.at-invalid:before,
+input:not(:placeholder-shown)+label+i.at-invalid:before {
+  color: red;
+}

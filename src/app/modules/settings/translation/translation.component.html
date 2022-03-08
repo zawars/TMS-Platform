@@ -1,0 +1,140 @@
+<div class="row margin-top-button">
+  <div class="col-sm-12 col-md-12 buttons">
+    <button mat-raised-button class=" btn btn-info pull-right" (click)="openEditDialog(popUp, '', 'New')">
+      <span class="fa fa-plus at-margin-right"></span>
+      {{'Translation' | i18n}}
+    </button>
+    <button mat-raised-button id="button-gap" class="btn btn-info pull-right button-gap" (click)="refreshGrid()">
+      <span class="fa fa-refresh at-margin-right"></span>
+      {{'Refresh' | i18n}}
+    </button>
+  </div>
+</div>
+
+<div class="padding-top-grid">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 card-margin-top">
+      <!-- <dx-data-grid id="settings-grid" [dataSource]="translationList" hoverStateEnabled="true">
+        <dxo-paging [enabled]="true" [pageSize]="20"></dxo-paging>
+        <dxo-editing mode="cell" [allowUpdating]="false"></dxo-editing>
+        <dxo-search-panel [visible]="true" [width]="240" placeholder="{{'Search' | i18n}}"></dxo-search-panel>
+        <dxi-column dataField="en" caption="{{'Field Name' | i18n}}" hint="Field Name" dataType="string"
+          columnAutoWidth="true">
+        </dxi-column>
+        <dxi-column dataField="de" caption="{{'German' | i18n}}" hint="German" dataType="string" columnAutoWidth="true">
+        </dxi-column>
+        <dxi-column dataField="fr" caption="{{'French' | i18n}}" hint="French" dataType="string" columnAutoWidth="true">
+        </dxi-column>
+        <dxi-column caption="{{'Action' | i18n}}" cellTemplate="actionTemplate" width="150"></dxi-column>
+
+        <div *dxTemplate="let data of 'actionTemplate'">
+          <a class="edit" (click)="openEditDialog(popUp, data.key, 'Edit')">
+            <span class="fa fa-pencil"></span>
+            <span class="at-margin-right">{{'Edit' | i18n}}</span>
+          </a>
+
+          <a class="delete" (click)="deleteTranslation(data.key)">
+            <span class="fa fa-trash"></span>
+            <span>{{'Delete' | i18n}}</span>
+          </a>
+        </div>
+      </dx-data-grid> -->
+
+      <div class="card">
+        <div class="card-body">
+          <!-- <h5 class="card-title">Basic Datatable</h5> -->
+          <div class="table-responsive">
+            <table id="zero_config" class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th>{{'Field Name' | i18n}}</th>
+                  <th>{{'German' | i18n}}</th>
+                  <th>{{'French' | i18n}}</th>
+                  <th>{{'Action' | i18n}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let translation of translationList">
+                  <td>{{translation?.en}}</td>
+                  <td>{{translation?.de}}</td>
+                  <td>{{translation?.fr}}</td>
+                  <td>
+                    <a class="edit" (click)="openEditDialog(popUp, translation, 'Edit')">
+                      <span class="ti-pencil at-margin-right"></span>
+                      <span>{{'Edit' | i18n}}</span>
+                    </a>
+                  
+                    <a class="delete" (click)="deleteTranslation(translation)">
+                      <span class="fa fa-trash at-margin-right"></span>
+                      <span>{{'Delete' | i18n}}</span>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>{{'Field Name' | i18n}}</th>
+                  <th>{{'German' | i18n}}</th>
+                  <th>{{'French' | i18n}}</th>
+                  <th>{{'Action' | i18n}}</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+      
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<ng-template #popUp>
+  <div id="modal-settings">
+    <div class="modal-header">
+      <h3 class="padding-title pull-left">
+        {{ 'Translation' | i18n}}
+      </h3>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="closeModel()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <span class="label" for="inputField">
+              {{!isEdit ? 'Add New Field (English)' : 'Edit Field (English)' | i18n}}</span>
+            <input type="text" class="form-control input-lg" [(ngModel)]="inputField" placeholder="Add Field">
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <div class="form-group">
+            <span class="label" for="inputField">
+              {{!isEdit ? 'Add New Field (Deutsch)' : 'Edit Field (Deutsch)' | i18n}}</span>
+            <input type="text" class="form-control input-lg" [(ngModel)]="inputFieldDe" placeholder="Add Field">
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <div class="form-group">
+            <span class="label" for="inputField">
+              {{!isEdit ? 'Add New Field (French)' : 'Edit Field (French)' | i18n}}</span>
+            <input type="text" class="form-control input-lg" [(ngModel)]="inputFieldFr" placeholder="Add Field">
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <div class="form-group">
+            <button *ngIf="!isEdit" mat-raised-button class="btn btn-primary pull-right" (click)="saveTranslation()">
+              <i class="fa fa-floppy-o"></i>
+              {{'Save' | i18n}}
+            </button>
+            <button *ngIf="isEdit" mat-raised-button class="btn btn-primary pull-right" (click)="updateTranslation()">
+              <i class="fa fa-floppy-o"></i>
+              {{'Update' | i18n}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

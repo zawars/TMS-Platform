@@ -1,0 +1,116 @@
+<!-- <dx-data-grid [dataSource]="tradingpartnersList" hoverStateEnabled="true">
+        <dxo-paging [enabled]="false"></dxo-paging>
+        <dxo-editing mode="cell" [allowUpdating]="false"></dxo-editing>
+
+        <dxi-column dataField="name" caption="{{'Partner Name' | i18n}}" hint="Partner Name" dataType="string">
+        </dxi-column>
+        <dxi-column dataField="number" caption="{{'Number' | i18n}}" hint="Number" dataType="string">
+        </dxi-column>
+        <dxi-column dataField="type" caption="{{'Type' | i18n}}" hint="Type" dataType="string">
+        </dxi-column>
+        <dxi-column dataField="city.name" caption="{{'City' | i18n}}" hint="City" dataType="string">
+        </dxi-column>
+        <dxi-column caption="{{'Action' | i18n}}" cellTemplate="actionTemplate" width="105"></dxi-column>
+
+        <div *dxTemplate="let data of 'fieldTemplate'">
+          {{data.key.field | i18n}}
+        </div>
+
+        <div *dxTemplate="let data of 'actionTemplate'">
+          <span *ngIf="data.key.type == 'Vendor'">
+            <a class="edit" [routerLink]="['/masterData/vendor', {partnerId: data.key.id}]">
+              <span class="fa fa-pencil"></span>
+              <span class="at-margin-right">{{'Edit' | i18n}}</span>
+            </a>
+          </span>
+          <span *ngIf="data.key.type == 'Customer'">
+            <a class="edit" [routerLink]="['/masterData/customer', {partnerId: data.key.id}]">
+              <span class="fa fa-pencil"></span>
+              <span class="at-margin-right">{{'Edit' | i18n}}</span>
+            </a>
+          </span>
+        </div>
+
+      </dx-data-grid> -->
+
+<div class="at-maincontentholder at-pendingovertimes">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 float-left">
+    <div class="at-pagehead">
+      <h2>{{'Trading Partners'| i18n}}</h2>
+
+      <div class="at-formtheme at-formsearchemployee">
+        <button class="at-btn at-btnborderradius float-right" routerLink="create">
+          <i class="fa fa-plus at-margin-right"></i>
+          <span>
+            {{'Trading Partner' | i18n}}
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <div class="at-contentbox">
+      <div class="at-themetableholder">
+        <table class="table at-themetable at-tableemployees">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>{{'Partner Name' | i18n}}</th>
+              <th>{{'Contact Number' | i18n}}</th>
+              <th>{{'Type' | i18n}}</th>
+              <th>{{'City' | i18n}}</th>
+              <th>{{'Action' | i18n}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of tradingpartners">
+              <td><span>{{item.uid}}</span></td>
+              <td>
+                <h3>{{item?.name}}</h3>
+              </td>
+              <td>{{item?.contactNumber}}</td>
+              <td>
+                {{item.isCustomer == true ? 'C': ''}} {{item.isVendor == true ? 'V': ''}}
+                {{item.isThirdParty == true ? 'T': ''}}
+              </td>
+              <td>{{item?.city?.name}}</td>
+              <td>
+                <span>
+                  <a class="edit" [routerLink]="['/masterData/tradingPartners/' + item.id]">
+                    <span class="icon-pencil at-margin-right"></span>
+                    <span>{{'Edit' | i18n}}</span>
+                  </a>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- <div class="at-pagination">
+        <ul>
+          <li>
+            <a href="javascript:void(0)">
+              <img class="at-themesvg" src="assets/img/svg-icons/arrow_left_icon.svg">
+            </a>
+          </li>
+          <li *ngFor="let page of pages"><a href="javascript:void(0)">{{page}}</a></li> -->
+      <!-- <li><a href="javascript:void(0)">2</a></li>
+          <li><a href="javascript:void(0)">3</a></li>
+          <li><a href="javascript:void(0)">4</a></li>
+          <li><a href="javascript:void(0)">5</a></li> -->
+      <!-- <li>
+            <a href="javascript:void(0)">
+              <img class="at-themesvg" src="assets/img/svg-icons/arrow_right_icon.svg">
+            </a>
+          </li>
+        </ul>
+      </div> -->
+
+
+      <mat-paginator [length]="totalCount" [pageSize]="10" (page)="onPageChange($event)">
+      </mat-paginator>
+
+    </div>
+
+  </div>
+</div>

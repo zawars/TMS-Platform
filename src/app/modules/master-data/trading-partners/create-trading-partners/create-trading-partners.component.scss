@@ -1,0 +1,128 @@
+.at-userimage {
+  width: 130px;
+  height: 130px;
+  cursor: pointer;
+  position: relative;
+  border-radius: 50%;
+  border: 1px dotted grey;
+  display: block;
+  margin: 15px 0;
+  background: transparent;
+}
+
+.at-userimage img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: 50%;
+}
+
+.at-userimage span {
+  right: 0;
+  bottom: 0;
+  font-size: 25px;
+  position: absolute;
+  border-radius: 50%;
+  color: grey;
+}
+
+.section-body {
+  // border-bottom: 1px solid #ccc;
+  // border-top: 0px;
+}
+
+.uploadimg {
+  margin: 0;
+  overflow: hidden;
+  margin: 0 auto 25px;
+}
+
+.form-group {
+  width: 100%;
+  float: left;
+  margin: 0 0 20px !important;
+}
+
+.at-formcustomfield .form-group label {
+  width: 100%;
+  float: left;
+  opacity: 1 !important;
+  // color: #44454d;
+  font-size: 14px;
+  text-align: left;
+  line-height: 14px;
+}
+
+.at-formcustomfield dx-select-box {
+  display: flex;
+}
+
+.at-formcustomfield dx-tag-box {
+  display: flex;
+}
+
+::ng-deep.at-formcustomfield dx-select-box .dx-dropdowneditor-input-wrapper {
+  width: 100%;
+}
+
+::ng-deep.at-formcustomfield dx-select-box .dx-placeholder:before {
+  padding-left: 20px;
+}
+
+.edit>span {
+  display: inline-block !important;
+}
+
+.edit>span:hover {
+  color: #3a7ddd;
+}
+
+.at-margin-right {
+  margin-right: 5px;
+  ;
+}
+
+.at-pagehead {
+  margin-bottom: 20px;
+}
+
+.at-pagehead>h4 {
+  float: left
+}
+
+.margin-top-20 {
+  margin-top: 20px;
+}
+
+::ng-deep.dx-texteditor .dx-state-hover {
+  border-color: none;
+}
+
+::ng-deep.at-formcustomfield dx-tag-box .dx-dropdowneditor-input-wrapper {
+  width: 100%;
+}
+
+::ng-deep.dx-tag {
+  margin: auto 0;
+}
+
+::ng-deep.dx-tag-content {
+  margin-top: 0;
+}
+
+table {
+  border: 1px solid #e6e6eb;
+}
+
+.at-themetable tbody td:first-child,
+.at-themetable thead th:first-child {
+  text-align: left;
+}
+
+.at-themetableholder {
+  margin: 0;
+}
+
+.red:hover {
+  color: red !important;
+}

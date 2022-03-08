@@ -1,0 +1,211 @@
+<div class="at-maincontentholder at-pendingovertimes">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 float-left">
+    <div class="at-pagehead">
+      <h2>{{'User Management'| i18n}}</h2>
+
+      <div class="at-formtheme at-formsearchemployee">
+        <button class="at-btn at-btnborderradius float-right" (click)="openEditDialog(popUp, 'New')">
+          <i class="fa fa-plus at-margin-right"></i>
+          <span>
+            {{'User' | i18n}}
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <div class="row margin-bottom-20">
+      <div class="col-sm-6 col-md-6">
+        <input class="form-control input-lg float-left" placeholder="{{'Enter query' | i18n}}" type="text" name="query"
+          [(ngModel)]="query" (keyup)="onQueryChange($event)">
+      </div>
+    </div>
+
+    <div class="at-contentbox">
+
+      <div class="at-themetableholder">
+        <table class="table at-themetable at-tableemployees">
+          <thead>
+            <tr>
+              <th>{{'Name' | i18n}}</th>
+              <th>{{'Email' | i18n}}</th>
+              <th>{{'Role' | i18n}}</th>
+              <th>{{'Action' | i18n}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of usersList">
+              <td>
+                <h3>{{item?.firstName}}, {{item?.lastName}}</h3>
+              </td>
+              <td>{{item?.email}}</td>
+              <td>{{item?.roles}}</td>
+              <td>
+                <span>
+                  <a class="edit" (click)="openEditDialog(popUp, item)">
+                    <span class="icon-pencil at-margin-right"></span>
+                    <span>{{'Edit' | i18n}}</span>
+                  </a>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+
+<ng-template #popUp>
+  <div id="modal-report" class="at-thememodal at-customfieldsmodal">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+          <img class="at-themesvg" src="assets/img/svg-icons/close-icon.svg">
+        </button>
+
+        <h4 *ngIf="!isEdit">{{'Add User' | i18n}}</h4>
+        <h4 *ngIf="isEdit">{{'Edit User' | i18n}}</h4>
+
+        <form class="at-formtheme at-formcustomfield" [formGroup]="userForm" (ngSubmit)="save()">
+          <fieldset>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label>{{'First Name' | i18n}} <span style="color: red;">*</span></label>
+                  <input type="text" class="form-control" placeholder="{{'First Name' | i18n}}" name="firstName"
+                    formControlName="firstName"
+                    [ngClass]="{'is-invalid': isSubmitted && form.firstName.invalid && form.firstName.errors.required}">
+
+                  <span *ngIf="isSubmitted && form.firstName.invalid && form.firstName.errors.required">
+                    First name is required.
+                  </span>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Last Name' | i18n}} <span style="color: red;">*</span></label>
+                  <input type="text" class="form-control" placeholder="{{'Last Name' | i18n}}" name="lastName"
+                    formControlName="lastName"
+                    [ngClass]="{'is-invalid': isSubmitted && form.lastName.invalid && form.lastName.errors.required}">
+
+                  <span *ngIf="isSubmitted && form.lastName.invalid && form.lastName.errors.required">
+                    Last name is required.
+                  </span>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Email' | i18n}} <span style="color: red;">*</span></label>
+                  <input type="text" class="form-control" placeholder="{{'Email' | i18n}}" name="email"
+                    formControlName="email" (keyup)="checkEmailValidation()"
+                    [ngClass]="{'at-valid': isEmailValid == 'valid', 'at-invalid': isEmailValid == 'invalid' || isEmailValid == 'Not Available' }">
+
+                  <div *ngIf="isSubmitted && form.email.invalid">
+                    <span *ngIf="form.email.errors.required">
+                      Email is required.
+                    </span>
+                    <span *ngIf="form.email.errors.email">
+                      Email is invalid.
+                    </span>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Phone' | i18n}}</label>
+                  <input type="text" class="form-control" formControlName="phone" name="phone"
+                    placeholder="{{'Phone' | i18n}}">
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Password' | i18n}} <span style="color: red;">*</span></label>
+                  <input type="password" class="form-control" formControlName="password" name="password"
+                    placeholder="{{'Password' | i18n}}"
+                    [ngClass]="{'is-invalid': isSubmitted && form.password.invalid && (form.password.errors.required ||
+                     (form.password.errors?.minlength?.actualLength < form.password.errors?.minlength?.requiredLength))}">
+
+                  <div *ngIf="isSubmitted && form.password.invalid">
+                    <span *ngIf="form.password.errors.required">
+                      Password is required.
+                    </span>
+                    <span
+                      *ngIf="(form.password.errors?.minlength?.actualLength < form.password.errors?.minlength?.requiredLength)">
+                      Minimum length of password is 8.
+                    </span>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Confirm Password' | i18n}} <span style="color: red;">*</span></label>
+                  <input type="password" class="form-control" formControlName="cpassword" name="cpassword"
+                    placeholder="{{'Confirm Password' | i18n}}"
+                    [ngClass]="{'is-invalid': isSubmitted && form.cpassword.invalid && (form.cpassword.errors.required ||
+                     (form.cpassword.errors?.minlength?.actualLength < form.cpassword.errors?.minlength?.requiredLength))}">
+
+                  <div *ngIf="isSubmitted && form.cpassword.invalid">
+                    <span *ngIf="form.cpassword.errors.required">
+                      Confirm Password is required.
+                    </span>
+                    <span
+                      *ngIf="(form.cpassword.errors?.minlength?.actualLength < form.cpassword.errors?.minlength?.requiredLength)">
+                      Minimum length of password is 8.
+                    </span>
+                  </div>
+                  <span *ngIf="userForm.valid && isPasswordNotMatched"
+                    [ngClass]="{'ng-invalid': userForm.valid && isPasswordNotMatched}">
+                    Password do not match.
+                  </span>
+                </div>
+
+                <!-- <div class="form-group">
+                      <label>{{'Permission' | i18n}}</label>
+                      <dx-tag-box [dataSource]="permissionList" [maxDisplayedTags]="5" [hideSelectedItems]="true"
+                        (onValueChanged)="permissionChanged($event.value)" [value]="role">
+                      </dx-tag-box>
+                      <span class="help-block"></span>
+                    </div> -->
+
+                <div class="form-group">
+                  <label>{{'Organisation' | i18n}} <span style="color: red;">*</span></label>
+                  <dx-select-box [dataSource]="organisationsList" displayExpr="name" [searchEnabled]="true"
+                    [minSearchLength]="0" [searchExpr]="['name']" [showDropDownButton]="false"
+                    (onSelectionChanged)="organisationValueChanged($event)" (onInput)="organisationOnInputEvent($event)"
+                    name="organisation" formControlName="organisation"
+                    [ngClass]="{'is-invalid': isSubmitted && form.organisation.invalid && form.organisation.errors.required}">
+                  </dx-select-box>
+
+                  <span *ngIf="isSubmitted && form.organisation.invalid && form.organisation.errors.required">
+                    Organisation is required.
+                  </span>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Role' | i18n}} <span style="color: red;">*</span></label>
+                  <dx-tag-box [items]="rolesList" [hideSelectedItems]="true" [searchEnabled]="true"
+                    formControlName="roles"
+                    [ngClass]="{'is-invalid': isSubmitted && form.roles.invalid && form.roles.errors.required}">
+                  </dx-tag-box>
+
+                  <span *ngIf="isSubmitted && form.roles.invalid && form.roles.errors.required">
+                    Confirm password is required.
+                  </span>
+                </div>
+
+                <div class="form-group at-marginbottomzero">
+                  <button [disabled]="isLocked" class="at-btn at-btnborderradius" *ngIf="!isEdit else falsyTemplate">
+                    <i class="fa fa-floppy-o"></i> {{'Save' | i18n}}</button>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</ng-template>
+
+<ng-template #falsyTemplate>
+  <button [disabled]="isLocked" class="at-btn at-btnborderradius" (click)="edit()">
+    <i class="fa fa-floppy-o"></i> {{'Save' | i18n}}</button>
+</ng-template>

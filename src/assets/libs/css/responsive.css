@@ -1,0 +1,179 @@
+@media (max-width:1680px) {
+  .at-calendarbody {
+    padding: 8px 15px 0;
+  }
+
+  .at-jobjd li {
+    padding: 0 5px;
+  }
+
+  .at-comingeventlists {
+    padding: 15px 25px 20px;
+  }
+
+  .calTitle {
+    padding: 20px 20px !important;
+  }
+
+  .at-contentbox p {
+    font-size: 13px;
+    line-height: 13px;
+  }
+
+  .at-chartholder {
+    padding: 25px;
+  }
+}
+
+@media (max-width:1440px) {
+  .at-jobjd {
+    font-size: 10px;
+    line-height: 10px;
+    padding: 0 0 8px;
+  }
+
+  .calTbody span {
+    font-size: 13px !important;
+  }
+
+  #calTbody .a-date.current span {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+  }
+
+  .at-contentbox p {
+    font-size: 11px;
+    line-height: 11px;
+  }
+}
+
+@media (max-width:1300px) {
+  #calTbody .a-date.current span {
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+  }
+
+  .at-nextprevholder button {
+    width: 26px !important;
+    height: 26px !important;
+    line-height: 22px !important;
+  }
+
+  #calTitle button svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .at-pendigtasks ul li a {
+    right: 20px;
+  }
+
+  .at-jobjd li {
+    padding: 0 2px;
+  }
+
+  .at-jobjd li span {
+    padding: 0 0 0 8px;
+  }
+
+  .at-jobjd li span:before {
+    width: 5px;
+    height: 5px;
+  }
+}
+
+@media (max-width:1200px) {
+  .at-wrapper {
+    padding: 0 0 0 110px;
+  }
+
+  .at-sidebarwrapper {
+    width: 110px;
+  }
+
+  .at-hidesidebar .at-sidebarwrapper {
+    width: 295px;
+  }
+
+  .at-navigation>ul>li {
+    width: 47px;
+  }
+
+  .at-hidesidebar .at-navigation>ul>li {
+    width: 100%;
+  }
+
+  .at-hidesidebar .at-navigation ul li a span {
+    padding: 0 0 0 15px;
+  }
+
+  .at-pendigtasks ul li i {
+    right: 25px;
+  }
+}
+
+@media (max-width:1199px) {}
+
+@media (max-width:1080px) {
+  .at-wrapper {
+    padding: 0;
+  }
+
+  .at-sidebarwrapper {
+    width: 0;
+  }
+
+  .at-pendigtasks ul li {
+    padding: 25px 15px;
+  }
+
+  .at-pendigtasks ul li i {
+    right: 15px;
+  }
+
+  .owl-next {
+    right: -10px;
+  }
+
+  .owl-prev {
+    left: -10px;
+  }
+}
+
+@media (max-width:991px) {
+  .at-overviewchart {}
+}
+
+@media (max-width:800px) {}
+
+@media (max-width:767px) {
+  .at-dropdowarrow {
+    display: block;
+  }
+
+  .at-nav {
+    width: auto;
+    float: right;
+  }
+
+  .sub-menu,
+  .mega-menu {
+    clear: both;
+    float: left;
+    display: none;
+    position: static;
+    width: 100% !important;
+  }
+}
+
+@media (max-width:640px) {}
+
+@media (max-width:568px) {}
+
+@media (max-width:480px) {}
+
+@media (max-width:479px) {}
+
+@media (max-width:320px) {}

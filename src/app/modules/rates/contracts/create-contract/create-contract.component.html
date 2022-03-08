@@ -1,0 +1,726 @@
+<div class="at-maincontentholder at-evaluations">
+  <form class="at-formtheme at-formemployeedetail" [formGroup]="contractFormGroup">
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 float-left">
+      <div class="at-pagehead">
+        <h2> Create Contract</h2>
+      </div>
+
+      <div class="at-contentbox">
+        <section>
+          <fieldset class="section-header">
+            <div class="form-group">
+              <label class="section-header-label">General</label>
+              <!-- <i class="fa fa-chevron-right section-header-icon" aria-hidden="true"></i> -->
+              <i class="fa fa-chevron-down section-header-icon" aria-hidden="true"></i>
+            </div>
+          </fieldset>
+
+          <fieldset class="section-body">
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group">
+                  <label>{{'Contract Name'| i18n}}</label>
+                  <input type="text" class="form-control" name="name" placeholder="{{'Name' | i18n}}"
+                    formControlName="name">
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Description'| i18n}} ({{contractFormGroup.get('description').value?.length}} / 150)</label>
+                  <textarea maxlength="150" formControlName="description" placeholder="{{'Description' | i18n}}"
+                    cols="30" rows="10" style="height: 60px;"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Vendor'| i18n}}</label>
+                  <!-- <dx-select-box [dataSource]="vendorsList" displayExpr="name" valueExpr="id" fieldTemplate="field"
+                    formControlName="vendor">
+                    <div *dxTemplate="let val of 'field'">
+                      <dx-text-box [value]="val && val.name | i18n" [readOnly]="true" placeholder="Select">
+                      </dx-text-box>
+                    </div>
+                    <div *dxTemplate="let item of 'item'">
+                      <div>
+                        {{item.name | i18n}}
+                      </div>
+                    </div>
+                  </dx-select-box> -->
+                  <dx-select-box [dataSource]="vendorsList" displayExpr="name" valueExpr="id" [searchEnabled]="true"
+                    [minSearchLength]="0" [searchExpr]="['name']" [showDropDownButton]="false" formControlName="vendor"
+                    (onSelectionChanged)="vendorValueChanged($event)" (onInput)="vendorOnInputEvent($event)" #vendor>
+                  </dx-select-box>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Reference'| i18n}}</label>
+                  <input type="text" class="form-control" name="reference" placeholder="{{'Reference' | i18n}}"
+                    formControlName="reference">
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Contract Type'| i18n}}</label>
+                  <dx-select-box [dataSource]="contractTypeList" displayExpr="name" valueExpr="id" fieldTemplate="field"
+                    formControlName="contractType">
+                    <div *dxTemplate="let val of 'field'">
+                      <dx-text-box [value]="val && val.name | i18n" [readOnly]="true" placeholder="Select">
+                      </dx-text-box>
+                    </div>
+                    <div *dxTemplate="let item of 'item'">
+                      <div>
+                        {{item.name | i18n}}
+                      </div>
+                    </div>
+                  </dx-select-box>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Client Specific'| i18n}}</label>
+                  <!-- <dx-select-box [dataSource]="clientsList" displayExpr="name" valueExpr="id" fieldTemplate="field"
+                    formControlName="client">
+                    <div *dxTemplate="let val of 'field'">
+                      <dx-text-box [value]="val && val.name | i18n" [readOnly]="true" placeholder="Select">
+                      </dx-text-box>
+                    </div>
+                    <div *dxTemplate="let item of 'item'">
+                      <div>
+                        {{item.name | i18n}}
+                      </div>
+                    </div>
+                  </dx-select-box> -->
+                  <dx-select-box [dataSource]="clientsList" displayExpr="name" valueExpr="id" [searchEnabled]="true"
+                    [minSearchLength]="0" [searchExpr]="['name']" [showDropDownButton]="false" formControlName="client"
+                    (onSelectionChanged)="customerValueChanged($event)" (onInput)="customerOnInputEvent($event)"
+                    #client>
+                  </dx-select-box>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Effective From'| i18n}}</label>
+                  <dx-date-box [min]="effectiveFromMinDate" formControlName="effectiveFrom" width="100%"
+                    openOnFieldClick="true">
+                  </dx-date-box>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Expiry Date'| i18n}}</label>
+                  <dx-date-box [min]="expiryMinDate" formControlName="expiryDate" width="100%" openOnFieldClick="true">
+                  </dx-date-box>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Renewal Date'| i18n}}</label>
+                  <dx-date-box [min]="renewalMinDate" formControlName="renewalDate" width="100%"
+                    openOnFieldClick="true">
+                  </dx-date-box>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Currency'| i18n}}</label>
+                  <dx-select-box [dataSource]="currencyList" displayExpr="name" valueExpr="id" fieldTemplate="field"
+                    formControlName="currency">
+                    <div *dxTemplate="let val of 'field'">
+                      <dx-text-box [value]="val && val.name | i18n" [readOnly]="true" placeholder="Select">
+                      </dx-text-box>
+                    </div>
+                    <div *dxTemplate="let item of 'item'">
+                      <div>
+                        {{item.name | i18n}}
+                      </div>
+                    </div>
+                  </dx-select-box>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Weight Breaks'| i18n}}</label>
+                  <input type="text" class="form-control" name="name" formControlName="weightBreaks"
+                    placeholder="{{'Weight Breaks' | i18n}}">
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Status'| i18n}}</label>
+                  <dx-select-box [dataSource]="contractStatusList" displayExpr="name" valueExpr="id"
+                    fieldTemplate="field" formControlName="contractStatus">
+                    <div *dxTemplate="let val of 'field'">
+                      <dx-text-box [value]="val && val.name | i18n" [readOnly]="true" placeholder="Select">
+                      </dx-text-box>
+                    </div>
+                    <div *dxTemplate="let item of 'item'">
+                      <div>
+                        {{item.name | i18n}}
+                      </div>
+                    </div>
+                  </dx-select-box>
+                </div>
+
+              </div>
+            </div>
+          </fieldset>
+        </section>
+      </div>
+
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 float-left">
+      <div class="at-contentbox">
+        <section>
+          <fieldset class="section-header">
+            <div class="form-group">
+              <label class="section-header-label">Rates</label>
+              <!-- <i class="fa fa-chevron-right section-header-icon" aria-hidden="true"></i> -->
+              <i class="fa fa-chevron-down section-header-icon" aria-hidden="true"></i>
+            </div>
+          </fieldset>
+
+          <fieldset class="section-body">
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="at-pagehead margin-top-20">
+                  <h4>Rates</h4>
+
+                  <div class="at-formtheme at-formsearchemployee">
+                    <button class="at-btn at-btnborderradius float-right" [disabled]="isDisabledAddRateSheet()"
+                      (click)="openAddRateSheetPopup(popUp)">
+                      <i class="fa fa-plus"></i>
+                      {{'Add Rate Sheet'}}
+                    </button>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="at-themetableholder">
+                    <table class="table at-themetable at-tableemployees">
+                      <thead>
+                        <tr>
+                          <th>{{'ID' | i18n}}</th>
+                          <th>{{'Name' | i18n}}</th>
+                          <th>{{'Rate Type' | i18n}}</th>
+                          <th>{{'Rate Calc UOM' | i18n}}</th>
+                          <th>{{'Rate Calc Type' | i18n}}</th>
+                          <th>{{'Rate Breaks' | i18n}}</th>
+                          <th>{{'Rate Break UOM' | i18n}}</th>
+                          <th>{{'Currency' | i18n}}</th>
+                          <th>{{'Action' | i18n}}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of contractRatesList">
+                          <td>{{item?.uid}}</td>
+                          <td>
+                            <h3>{{item?.name}}</h3>
+                          </td>
+                          <td>{{item?.rateType.name}}</td>
+                          <td>{{item?.rateCalcUOM.name}}</td>
+                          <td>{{item?.rateCalcType.name}}</td>
+                          <td>{{item?.rateBreaks.name}}</td>
+                          <td>{{item?.rateBreakUOM.name}}</td>
+                          <td>{{item?.currency.name}}</td>
+                          <td>
+                            <span>
+                              <a class="edit" (click)="openEditDialog(popUp, item)">
+                                <span class="icon-pencil at-margin-right"></span>
+                                <span>{{'Edit' | i18n}}</span>
+                              </a>
+                            </span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </fieldset>
+        </section>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 float-left">
+      <div class="at-contentbox">
+        <section>
+          <fieldset class="section-header">
+            <div class="form-group">
+              <label class="section-header-label">Services</label>
+              <!-- <i class="fa fa-chevron-right section-header-icon" aria-hidden="true"></i> -->
+              <i class="fa fa-chevron-down section-header-icon" aria-hidden="true"></i>
+            </div>
+          </fieldset>
+
+          <fieldset class="section-body">
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="at-pagehead margin-top-20">
+                  <h4>Services</h4>
+
+                  <div class="at-formtheme at-formsearchemployee">
+                    <button class="at-btn at-btnborderradius float-right" [disabled]="isContractEdit"
+                      (click)="openAccessorialPopup(accessorialPopup)">
+                      <i class="fa fa-plus"></i>
+                      {{'Add Service'}}
+                    </button>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="at-themetableholder">
+                    <table class="table at-themetable at-tableemployees">
+                      <thead>
+                        <tr>
+                          <th>{{'Service' | i18n}}</th>
+                          <th>{{'Effective Date' | i18n}}</th>
+                          <th>{{'Charge Type' | i18n}}</th>
+                          <th>{{'Charge UOM' | i18n}}</th>
+                          <th>{{'Action' | i18n}}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of accessorialList">
+                          <td>
+                            <h3>{{item.service.name}}</h3>
+                          </td>
+                          <td>{{item?.effectiveDate | date}}</td>
+                          <td>{{item?.chargeType.name}}</td>
+                          <td *ngIf="data.key.chargeUOM">{{item?.chargeUOM.name}}</td>
+                          <td *ngIf="!data.key.chargeUOM">{{'Not Applicable' | i18n}}</td>
+                          <td>
+                            <span>
+                              <a class="edit" (click)="openEditAccessorialDialog(popUp, item)">
+                                <span class="icon-pencil at-margin-right"></span>
+                                <span>{{'Edit' | i18n}}</span>
+                              </a>
+                            </span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+
+                <a class="at-btnadduser" href="javascript:void(0)" *ngIf="!isContractEdit && !isBlocked"
+                  (click)="create()">
+                  <i class="fa fa-save"></i>
+                </a>
+                <a class="at-btnadduser" href="javascript:void(0)" *ngIf="isContractEdit && !isBlocked"
+                  (click)="update()">
+                  <i class="fa fa-save"></i>
+                </a>
+                <a class="at-btnadduser" href="javascript:void(0)" *ngIf="isBlocked">
+                  <i class="fa fa-refresh fa-spin"></i>
+                </a>
+
+
+              </div>
+            </div>
+          </fieldset>
+        </section>
+      </div>
+    </div>
+
+  </form>
+</div>
+
+<ng-template #popUp>
+  <div id="modal-report" class="at-thememodal at-customfieldsmodal">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+          <img class="at-themesvg" src="assets/img/svg-icons/close-icon.svg">
+        </button>
+
+        <h4>{{'Add Rate Sheet' | i18n}}</h4>
+
+        <form class="at-formtheme at-formcustomfield" [formGroup]="ratesFormGroup">
+          <fieldset>
+            <div class="row">
+              <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                  <label>{{'Name'| i18n}}</label>
+                  <input type="text" class="form-control" name="name" formControlName="name"
+                    placeholder="{{'Name' | i18n}}">
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Description'| i18n}}
+                    ({{ratesFormGroup.get('description').value?.length}} / 150)
+                  </label>
+                  <textarea maxlength="150" formControlName="description" placeholder="{{'Description' | i18n}}"
+                    cols="30" rows="10" style="height: 75px;"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Rate Type'| i18n}}</label>
+                  <dx-select-box [dataSource]="rateTypeList" displayExpr="name" valueExpr="id" fieldTemplate="field"
+                    formControlName="rateType">
+                    <div *dxTemplate="let val of 'field'">
+                      <dx-text-box [value]="val && val.name | i18n" [readOnly]="true" placeholder="Select">
+                      </dx-text-box>
+                    </div>
+                    <div *dxTemplate="let item of 'item'">
+                      <div>
+                        {{item.name | i18n}}
+                      </div>
+                    </div>
+                  </dx-select-box>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Rate Calc UOM'| i18n}}</label>
+                  <dx-select-box [dataSource]="rateCalcUOMList" displayExpr="name" valueExpr="id" fieldTemplate="field"
+                    formControlName="rateCalcUOM">
+                    <div *dxTemplate="let val of 'field'">
+                      <dx-text-box [value]="val && val.name | i18n" [readOnly]="true" placeholder="Select">
+                      </dx-text-box>
+                    </div>
+                    <div *dxTemplate="let item of 'item'">
+                      <div>
+                        {{item.name | i18n}}
+                      </div>
+                    </div>
+                  </dx-select-box>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Rate Calc Type'| i18n}}</label>
+                  <dx-select-box [dataSource]="rateCalcTypeList" displayExpr="name" valueExpr="id" fieldTemplate="field"
+                    formControlName="rateCalcType">
+                    <div *dxTemplate="let val of 'field'">
+                      <dx-text-box [value]="val && val.name | i18n" [readOnly]="true" placeholder="Select">
+                      </dx-text-box>
+                    </div>
+                    <div *dxTemplate="let item of 'item'">
+                      <div>
+                        {{item.name | i18n}}
+                      </div>
+                    </div>
+                  </dx-select-box>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Rate Breaks'| i18n}}</label>
+                  <dx-select-box [dataSource]="rateBreaksList" displayExpr="name" valueExpr="id" fieldTemplate="field"
+                    formControlName="rateBreaks">
+                    <div *dxTemplate="let val of 'field'">
+                      <dx-text-box [value]="val && val.name | i18n" [readOnly]="true" placeholder="Select">
+                      </dx-text-box>
+                    </div>
+                    <div *dxTemplate="let item of 'item'">
+                      <div>
+                        {{item.name | i18n}}
+                      </div>
+                    </div>
+                  </dx-select-box>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Rate Break UOM'| i18n}}</label>
+                  <dx-select-box [dataSource]="rateBreakUOMList" displayExpr="name" valueExpr="id" fieldTemplate="field"
+                    formControlName="rateBreakUOM">
+                    <div *dxTemplate="let val of 'field'">
+                      <dx-text-box [value]="val && val.name | i18n" [readOnly]="true" placeholder="Select">
+                      </dx-text-box>
+                    </div>
+                    <div *dxTemplate="let item of 'item'">
+                      <div>
+                        {{item.name | i18n}}
+                      </div>
+                    </div>
+                  </dx-select-box>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Currency'| i18n}}</label>
+                  <dx-select-box [dataSource]="currencyList" displayExpr="name" valueExpr="id" fieldTemplate="field"
+                    formControlName="currency">
+                    <div *dxTemplate="let val of 'field'">
+                      <dx-text-box [value]="val && val.name | i18n" [readOnly]="true" placeholder="Select">
+                      </dx-text-box>
+                    </div>
+                    <div *dxTemplate="let item of 'item'">
+                      <div>
+                        {{item.name | i18n}}
+                      </div>
+                    </div>
+                  </dx-select-box>
+                </div>
+              </div>
+
+              <div class="col-sm-12">
+                <div class="card-body">
+                  <dx-data-grid [dataSource]="rates" [columnAutoWidth]="true" class="dx-table">
+                    <dxo-editing mode="cell" [allowUpdating]="true"> </dxo-editing>
+
+                    <dxi-column dataField="name" caption="{{'Rate Sheet Name' | i18n}}" dataType="string"></dxi-column>
+                    <dxi-column dataField="originCity" caption="{{'Origin City' | i18n}}" dataType="string">
+                    </dxi-column>
+                    <dxi-column dataField="originState" caption="{{'Origin State' | i18n}}" dataType="string">
+                    </dxi-column>
+                    <dxi-column dataField="originPostalCode" caption="{{'Origin Postal Code' | i18n}}"
+                      dataType="string">
+                    </dxi-column>
+                    <dxi-column dataField="originArea" caption="{{'Origin Area' | i18n}}" dataType="string">
+                    </dxi-column>
+                    <dxi-column dataField="originCountry" caption="{{'Origin Country' | i18n}}" dataType="string">
+                    </dxi-column>
+                    <dxi-column dataField="destinationCity" caption="{{'Destination City' | i18n}}" dataType="string">
+                    </dxi-column>
+                    <dxi-column dataField="destinationState" caption="{{'Destination State' | i18n}}" dataType="string">
+                    </dxi-column>
+                    <dxi-column dataField="destinationPostalCode" caption="{{'Destination Postal Code' | i18n}}"
+                      dataType="string">
+                    </dxi-column>
+                    <dxi-column dataField="destinationArea" caption="{{'Destination Area' | i18n}}" dataType="string">
+                    </dxi-column>
+                    <dxi-column dataField="destinationCountry" caption="{{'Destination Country' | i18n}}"
+                      dataType="string">
+                    </dxi-column>
+                    <dxi-column dataField="minCharge" caption="{{'Min Charge' | i18n}}" dataType="number"></dxi-column>
+                    <dxi-column dataField="maxCharge" caption="{{'Max Charge' | i18n}}" dataType="number"></dxi-column>
+                    <span *ngFor="let weight of contractFormGroup.get('weightBreaks').value?.split(',')">
+                      <dxi-column dataField="Rate-Break-{{weight.trim()}}"
+                        caption="{{'Rate-Break-' + weight.trim() | i18n}}" dataType="number">
+                      </dxi-column>
+                    </span>
+
+                  </dx-data-grid>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group at-marginbottomzero">
+                  <span style="margin-bottom: 10px;">
+                    <button [disabled]="!showDownloadButton()" [@fileAnimation]="isFileAdded ? 'close': 'open'"
+                      class="at-btn at-btnborderradius float-left" (click)="downloadSheet()"
+                      style="width: auto; padding: 0 7%; margin-right: 10px;">
+                      {{'Download' | i18n}}
+                    </button>
+                    <button *ngIf="!isFileAdded" [@fileAnimation]="isFileAdded ? 'close': 'open'"
+                      class="at-btn at-btnborderradius float-left" (click)="fileToUpload.click()"
+                      style="width: auto; padding: 0 7%;">
+                      {{'Upload Rates' | i18n}}
+                    </button>
+                    <input #fileToUpload type="file" style="display:none;" (change)="uploadRates($event)">
+                  </span>
+                  <button class="at-btn at-btnborderradius float-right" *ngIf="!isEditUser" (click)="addRateSheet()"
+                    style="width: auto; padding: 0 7%;">
+                    {{'Save' | i18n}}
+                  </button>
+                  <button class="at-btn at-btnborderradius float-right" *ngIf="isEditUser" (click)="updateRateSheet()"
+                    style="width: auto; padding: 0 7%;">
+                    {{'Save' | i18n}}
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </fieldset>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #accessorialPopup>
+  <div id="modal-report" class="at-thememodal at-customfieldsmodal">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+          <img class="at-themesvg" src="assets/img/svg-icons/close-icon.svg">
+        </button>
+
+        <h4>{{'Add Service' | i18n}}</h4>
+
+        <form class="at-formtheme at-formcustomfield" [formGroup]="accessorialFormGroup">
+          <fieldset>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group">
+                  <label>{{'Service'| i18n}}</label>
+                  <dx-select-box [dataSource]="servicesList" displayExpr="name" valueExpr="id" fieldTemplate="field"
+                    formControlName="service">
+                    <div *dxTemplate="let val of 'field'">
+                      <dx-text-box [value]="val && val.name | i18n" [readOnly]="true" placeholder="Select">
+                      </dx-text-box>
+                    </div>
+                    <div *dxTemplate="let item of 'item'">
+                      <div>
+                        {{item.name | i18n}}
+                      </div>
+                    </div>
+                  </dx-select-box>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Description'| i18n}}
+                    ({{accessorialFormGroup.get('description').value?.length}} / 150)
+                  </label>
+                  <textarea maxlength="150" formControlName="description" placeholder="{{'Description' | i18n}}"
+                    cols="30" rows="10" style="height: 75px;"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Effective Date'| i18n}}</label>
+                  <dx-date-box formControlName="effectiveDate" width="100%" openOnFieldClick="true"
+                    style="display: flex;">
+                  </dx-date-box>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Origin Area'| i18n}}</label>
+                  <input type="text" class="form-control" name="startArea" placeholder="{{'Start Area' | i18n}}">
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Destination Area'| i18n}}</label>
+                  <input type="text" class="form-control" name="endArea" placeholder="{{'End Area' | i18n}}">
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-sm-6">
+                    <label>{{'Charge Type'| i18n}}</label>
+                  </div>
+                  <div class="col-sm-6">
+                    <label>{{'Charge UOM'| i18n}}</label>
+                  </div>
+                  <div class="col-sm-6">
+                    <select (change)="chargeTypeChange($event)" name="chargeType" class="form-control"
+                      formControlName="chargeType">
+                      <option value="" disabled selected>Select</option>
+                      <option *ngFor="let data of chargeTypeList" value="{{data?.id}}">{{data?.name}}</option>
+                    </select>
+                  </div>
+                  <div class="col-sm-6">
+                    <select name="chargeUOM" class="form-control" formControlName="chargeUOM">
+                      <option value="" disabled selected>NotApplicable</option>
+                      <option *ngFor="let data of chargeUOMList" value="{{data?.id}}">{{data?.name}}</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-sm-6">
+                    <label>{{'Fixed Charge'| i18n}}</label>
+                  </div>
+                  <div class="col-sm-6">
+                    <label>{{'Currency'| i18n}}</label>
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="number" min="0" class="form-control" name="fixedCharge" formControlName="fixedCharge"
+                      placeholder="{{'Fixed Charge' | i18n}}">
+                  </div>
+                  <div class="col-sm-6">
+                    <dx-select-box [dataSource]="currencyList" displayExpr="name" valueExpr="id" fieldTemplate="field"
+                      formControlName="fixedChargeCurrency">
+                      <div *dxTemplate="let val of 'field'">
+                        <dx-text-box [value]="val && val.name | i18n" [readOnly]="true" placeholder="Select">
+                        </dx-text-box>
+                      </div>
+                      <div *dxTemplate="let item of 'item'">
+                        <div>
+                          {{item.name | i18n}}
+                        </div>
+                      </div>
+                    </dx-select-box>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-sm-6">
+                    <label>{{'Min Charge'| i18n}}</label>
+                  </div>
+                  <div class="col-sm-6">
+                    <label>{{'Currency'| i18n}}</label>
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="number" min="0" class="form-control" name="minCharge" formControlName="minCharge"
+                      placeholder="{{'Min Charge' | i18n}}">
+                  </div>
+                  <div class="col-sm-6">
+                    <dx-select-box [dataSource]="currencyList" displayExpr="name" valueExpr="id" fieldTemplate="field"
+                      formControlName="minChargeCurrency">
+                      <div *dxTemplate="let val of 'field'">
+                        <dx-text-box [value]="val && val.name | i18n" [readOnly]="true" placeholder="Select">
+                        </dx-text-box>
+                      </div>
+                      <div *dxTemplate="let item of 'item'">
+                        <div>
+                          {{item.name | i18n}}
+                        </div>
+                      </div>
+                    </dx-select-box>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-sm-6">
+                    <label>{{'Max Charge'| i18n}}</label>
+                  </div>
+                  <div class="col-sm-6">
+                    <label>{{'Currency'| i18n}}</label>
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="number" min="0" class="form-control" name="maxCharge" formControlName="maxCharge"
+                      placeholder="{{'Max Charge' | i18n}}">
+                  </div>
+                  <div class="col-sm-6">
+                    <dx-select-box [dataSource]="currencyList" displayExpr="name" valueExpr="id" fieldTemplate="field"
+                      formControlName="maxChargeCurrency">
+                      <div *dxTemplate="let val of 'field'">
+                        <dx-text-box [value]="val && val.name | i18n" [readOnly]="true" placeholder="Select">
+                        </dx-text-box>
+                      </div>
+                      <div *dxTemplate="let item of 'item'">
+                        <div>
+                          {{item.name | i18n}}
+                        </div>
+                      </div>
+                    </dx-select-box>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-sm-6">
+                    <label>{{'PerUnit Charge'| i18n}}</label>
+                  </div>
+                  <div class="col-sm-6">
+                    <label>{{'Currency'| i18n}}</label>
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="number" min="0" class="form-control" name="perUnitCharge"
+                      formControlName="perUnitCharge" placeholder="{{'PerUnit Charge' | i18n}}">
+                  </div>
+                  <div class="col-sm-6">
+                    <dx-select-box [dataSource]="currencyList" displayExpr="name" valueExpr="id" fieldTemplate="field"
+                      formControlName="perUnitChargeCurrency">
+                      <div *dxTemplate="let val of 'field'">
+                        <dx-text-box [value]="val && val.name | i18n" [readOnly]="true" placeholder="Select">
+                        </dx-text-box>
+                      </div>
+                      <div *dxTemplate="let item of 'item'">
+                        <div>
+                          {{item.name | i18n}}
+                        </div>
+                      </div>
+                    </dx-select-box>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group at-marginbottomzero">
+                  <button class="at-btn at-btnborderradius" *ngIf="!isAccessorialEdit" (click)="addAccessorial()">
+                    {{'Save' | i18n}}
+                  </button>
+                  <button class="at-btn at-btnborderradius" *ngIf="isAccessorialEdit" (click)="updateAccessorial()">
+                    {{'Save' | i18n}}
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</ng-template>

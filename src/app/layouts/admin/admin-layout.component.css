@@ -1,0 +1,11 @@
+.content-width {
+  width: calc(100% - 200px) !important;   /*280px*/
+}
+
+.side-bar {
+  width: 0 !important;
+}
+
+.side-bar-width {
+  width: 200px !important;
+}

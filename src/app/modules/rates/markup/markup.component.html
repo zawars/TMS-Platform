@@ -1,0 +1,58 @@
+<div class="at-maincontentholder at-pendingovertimes">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 float-left">
+    <div class="at-pagehead">
+      <h2>{{'Markup'| i18n}}</h2>
+
+      <div class="at-formtheme at-formsearchemployee">
+        <button class="at-btn at-btnborderradius float-right" routerLink="create">
+          <i class="fa fa-plus at-margin-right"></i>
+          <span>
+            {{'Markup' | i18n}}
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <div class="at-contentbox">
+      <div class="at-themetableholder">
+        <table class="table at-themetable at-tableemployees">
+          <thead>
+            <tr>
+              <th>{{'Markup Name' | i18n}}</th>
+              <th>{{'Client' | i18n}}</th>
+              <th>{{'Vendor' | i18n}}</th>
+              <th>{{'Effective Date' | i18n}}</th>
+              <th>{{'Action' | i18n}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of markupCollection">
+              <!-- <td><span>{{item.uid}}</span></td> -->
+              <td>
+                <h3>{{item?.name}}</h3>
+              </td>
+              <td>{{item?.vendor?.name}}</td>
+              <td>{{item?.client?.name}}</td>
+              <td>{{item?.vendor?.name}}</td>
+              <td>{{item?.effectiveDate | date}}</td>
+              <td>
+                <span>
+                  <a class="edit" [routerLink]="['/rates/markup/' + item.id]">
+                    <span class="icon-pencil at-margin-right"></span>
+                    <span>{{'Edit' | i18n}}</span>
+                  </a>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <mat-paginator [length]="totalCount" [pageSize]="10" (page)="onPageChange($event)">
+      </mat-paginator>
+
+    </div>
+
+
+  </div>
+</div>
