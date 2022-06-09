@@ -3,8 +3,8 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 @Injectable()
 export class ApiService {
-  public BASE_PATH = "http://localhost:1337/api/v1";
-  // public BASE_PATH = "http://109.203.126.97:1344/api/v1";
+  // public BASE_PATH = "http://localhost:1337/api/v1";
+  public BASE_PATH = "http://109.203.126.97:1344/api/v1";
   public IMAGE_PATH = "http://109.203.126.97:1344/";
   public FrontEndPATH = "http://tms.megowork.solutions/#/";
   public httpOptions;
